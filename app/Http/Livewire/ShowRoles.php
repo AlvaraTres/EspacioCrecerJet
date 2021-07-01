@@ -11,6 +11,8 @@ class ShowRoles extends Component
     public $sort = 'id';
     public $direction = 'asc';
 
+    protected $listeners = ['render_add_rol' => 'render'];
+
     public function render()
     {
         $roles_users = Roleuser::where('tipo_usuario', 'like', '%' . $this->search . '%')

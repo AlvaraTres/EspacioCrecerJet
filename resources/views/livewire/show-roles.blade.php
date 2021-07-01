@@ -6,6 +6,7 @@
             <input type="text"
                 class="flex-shrink flex-grow w-px leading-normal rounded rounded-l-none px-3 relative focus:border-blue focus:shadow border border-black mr-4"
                 placeholder="Tipo usuario" wire:model="search">
+            @livewire('create-rol')
         </div>
 
     </div>
