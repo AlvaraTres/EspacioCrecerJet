@@ -26,7 +26,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id_users_rol',
+        'rut_usuario',
+        'nombre_usuario',
+        'apellido_pat_usuario',
+        'apellido_mat_usuario',
+        'telefono',
+        'email',
+        'especialidad',
+        'password',
     ];
 
     /**
@@ -58,4 +66,8 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function roluser(){
+        return $this->belongsTo('App\Model\Roleuser');
+    }
 }
