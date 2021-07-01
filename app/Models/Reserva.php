@@ -35,3 +35,4 @@ class Reserva extends Model
     public function horarios(){
         return $this->belongsTo('App\Model\Horario');
     }
+}
