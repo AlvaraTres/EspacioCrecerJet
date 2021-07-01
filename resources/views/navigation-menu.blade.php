@@ -1,8 +1,8 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-blue-300 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+        <div class="flex relative justify-between h-16">
+            <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
@@ -11,9 +11,33 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-4 sm-block sm:-my-px sm:ml-10 sm:flex items-center">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="#" :active="request()->routeIs('psicologos')">
+                        Psicólogos
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="#" :active="request()->routeIs('pacientes')">
+                        Pacientes
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="#" :active="request()->routeIs('pagos')">
+                        Pagos
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
+                        Calendario Reservas
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="#" :active="request()->routeIs('calendariohorarios')">
+                        Calendario Horarios
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="#" :active="request()->routeIs('tags')">
+                        Tags
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -139,7 +163,25 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                Inicio
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('psicologos')">
+                Psicólogos
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pacientes')">
+                Pacientes
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pagos')">
+                Pagos
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
+                Calendario Reservas
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendariohorarios')">
+                Calendario Horarios
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')">
+                Tags
             </x-jet-responsive-nav-link>
         </div>
 
