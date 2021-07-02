@@ -12,12 +12,15 @@
             <div class="mb-4">
                 <x-jet-label value="Nombre Rol:"/>
                 <x-jet-input type="text" class="w-full" wire:model.defer="tipo_usuario"/>
+                
+                <x-jet-input-error for="tipo_usuario"/>
+
             </div>
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="save">Crear Rol</x-jet-secondary-button>
-            <x-jet-danger-button wire:click="$set('open', false)">Cancelar</x-jet-secondary-button>
+            <x-jet-secondary-button wire:click="save" wire:loading.attr="disabled" wire:target="save" class="disabled:opacity-25">Crear Rol</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="$set('open', false)" wire:loading.attr="disabled" wire:target="save" class="disabled:opacity-25">Cancelar</x-jet-secondary-button>
         </x-slot>
     </x-jet-dialog-modal>
 </div>

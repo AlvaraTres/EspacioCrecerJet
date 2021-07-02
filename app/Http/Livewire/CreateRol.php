@@ -11,7 +11,13 @@ class CreateRol extends Component
 
     public $tipo_usuario;
 
+    protected $rules = [
+        'tipo_usuario' => 'required|max:50',
+    ];
+
     public function save(){
+        $this->validate();
+
         Roleuser::create([
             'tipo_usuario' => $this->tipo_usuario,
         ]);
