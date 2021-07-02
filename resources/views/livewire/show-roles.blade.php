@@ -11,7 +11,7 @@
 
     </div>
 
-    @if ($roles_users->count())
+    @if ($rols->count())
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
@@ -51,20 +51,20 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($roles_users as $user_rol)
+                @foreach ($rols as $rol)
                     <tr>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                {{ $user_rol->id }}
+                                {{ $rol->id }}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500">
                             <div class="text-sm text-gray-900">
-                                {{ $user_rol->tipo_usuario }}
+                                {{ $rol->tipo_usuario }}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            <a href="#" class="text-indigo-600 hover:text-indigo-900" wire:click="edit({{$rol->id}})">Edit</a>
                         </td>
                     </tr>
                 @endforeach
@@ -78,4 +78,25 @@
         </div>
     @endif
 
+
+    <!-- Modal de Edición -->
+    <x-jet-dialog-modal wire:model="openEditModal">
+        <x-slot name="title">
+            Editar Rol
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="mb-4">
+                <x-jet-label value="Nombre Rol:" />
+                <x-jet-input id="tipo_usuario" type="text" class="text-black mt-1 block w-full" wire:model.defer="tipo_usuario"  />
+                <x-jet-input-error for="tipo_usuario" />
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="updateRol" wire:loading.attr="disabled" class="disabled:opacity-25">Editar Rol</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="$set('openEditModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
+        </x-slot>
+
+    </x-jet-dialog-modal>
 </div>
