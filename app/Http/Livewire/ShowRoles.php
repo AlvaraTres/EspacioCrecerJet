@@ -16,6 +16,7 @@ class ShowRoles extends Component
     public $tipo_usuario;
 
     public $openEditModal = false;
+    public $openDeleteModal = false;
 
     protected $rules = [
         'tipo_usuario' => 'required|max:50',
@@ -65,6 +66,25 @@ class ShowRoles extends Component
 
         $this->reset([
             'openEditModal',
+            'rol_id',
+            'rol',
+            'tipo_usuario',
+        ]);
+    }
+
+    public function delete($id){
+        $rol = Roleuser::find($id);
+        $this->rol_id = $rol->id;
+        $this->tipo_usuario = $rol->tipo_usuario;
+        $this->openDeleteModal = true;
+    }
+
+    public function destroyRol(){
+        $rol = Roleuser::find($this->rol_id);
+        $rol->delete();
+
+        $this->reset([
+            'openDeleteModal',
             'rol_id',
             'rol',
             'tipo_usuario',

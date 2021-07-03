@@ -64,12 +64,12 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900" wire:click="edit({{$rol->id}})">Edit</a>
+                            <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition'" wire:click="edit({{$rol->id}})">Editar</a>
+                            <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'" wire:click="delete({{$rol->id}})">Eliminar</a>
                         </td>
                     </tr>
                 @endforeach
 
-                <!-- More people... -->
             </tbody>
         </table>
     @else
@@ -96,6 +96,25 @@
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="updateRol" wire:loading.attr="disabled" class="disabled:opacity-25">Editar Rol</x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('openEditModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
+        </x-slot>
+
+    </x-jet-dialog-modal>
+
+    <!-- Modal de Eliminación -->
+    <x-jet-dialog-modal wire:model="openDeleteModal">
+        <x-slot name="title">
+            Eliminar Rol
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="mb-4">
+                <p id="tipo_usuario" wire:model.defer="tipo_usuario">¿Estás seguro de eliminar este rol?</p>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="destroyRol" wire:loading.attr="disabled" class="disabled:opacity-25">Eliminar Rol</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="$set('openDeleteModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
         </x-slot>
 
     </x-jet-dialog-modal>
