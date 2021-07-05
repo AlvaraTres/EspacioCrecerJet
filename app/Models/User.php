@@ -33,6 +33,7 @@ class User extends Authenticatable
         'apellido_mat_usuario',
         'telefono',
         'email',
+        'fecha_nacimiento',
         'especialidad',
         'password',
     ];

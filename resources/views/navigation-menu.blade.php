@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="#" :active="request()->routeIs('psicologos')">
+                    <x-jet-nav-link href="{{route('psicologos')}}" :active="request()->routeIs('psicologos')">
                         Psicólogos
                     </x-jet-nav-link>
 

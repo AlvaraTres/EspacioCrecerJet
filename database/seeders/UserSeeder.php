@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -27,5 +28,6 @@ class UserSeeder extends Seeder
         $user->especialidad = 'Ninguna';
         $user->fecha_nacimiento = Carbon::create('1992', '08', '12');
         $user->save();
+
     }
 }

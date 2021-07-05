@@ -72,6 +72,9 @@
 
             </tbody>
         </table>
+
+    {{ $rols->links() }}
+
     @else
         <div class="px-6 py-4 text-center">
             No existe ningún registro coincidente.

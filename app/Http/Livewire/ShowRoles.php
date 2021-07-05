@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Roleuser;
 
 class ShowRoles extends Component
 {
+    use WithPagination;
+
     public $search;
     public $sort = 'id';
     public $direction = 'asc';
@@ -28,7 +31,7 @@ class ShowRoles extends Component
     {
         $rols = Roleuser::where('tipo_usuario', 'like', '%' . $this->search . '%')
                                 ->orderBy($this->sort, $this->direction)                        
-                                ->get();
+                                ->paginate(5);
 
         return view('livewire.show-roles', compact('rols'));
     }
