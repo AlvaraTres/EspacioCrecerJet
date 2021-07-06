@@ -20,7 +20,7 @@
                         Psicólogos
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="#" :active="request()->routeIs('pacientes')">
+                    <x-jet-nav-link href="{{route('pacientes')}}" :active="request()->routeIs('pacientes')">
                         Pacientes
                     </x-jet-nav-link>
 

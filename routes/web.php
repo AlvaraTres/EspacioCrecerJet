@@ -24,3 +24,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/psicologos', function(){
     return view('psicologo.psicologos');
 })->name('psicologos');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/pacientes', function(){
+    return view('paciente.pacientes');
+})->name('pacientes');

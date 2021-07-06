@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+
+use Freshwork\ChileanBundle\Rut;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -28,6 +30,12 @@ class CreatePsicologo extends Component
     public function save(){
         //$this->fecha = Carbon::parse($this->fecha_nacimiento);
         //dd($this->fecha);
+        //if(Rut::parse($this->rut_usuario)->quiet()->validate() == false){
+        //    dd("rut falso");
+        //}else{
+        //    dd("rut true");
+        //}
+        
         $this->validate();
 
         User::create([

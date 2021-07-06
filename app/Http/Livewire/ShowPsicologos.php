@@ -3,7 +3,10 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+
+use Freshwork\ChileanBundle\Rut;
 use Livewire\WithPagination;
+use Carbon\Carbon;
 use App\Models\Roleuser;
 use App\Models\User;
 use DB;
@@ -17,10 +20,11 @@ class ShowPsicologos extends Component
     public $direction = 'asc';
 
     public $psicologo;
-    public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $telefono, $email, $especialidad;
+    public $psicologo_id;
+    public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $fecha_nacimiento, $telefono, $email, $especialidad;
 
-    public $openEditModal = false;
-    public $openDeleteModal = false;
+    public $openEditPsicologoModal = false;
+    public $openDeletePsicologoModal = false;
 
     protected $rules = [
         'rut_usuario' => 'required',
@@ -59,6 +63,68 @@ class ShowPsicologos extends Component
             $this->sort = $sort;
             $this->direction = 'asc';
         }
+    }
+
+    public function editPsicologo($id){
+        $psicologo = User::find($id);
+        $this->psicologo_id = $psicologo->id;
+        $this->rut_usuario = $psicologo->rut_usuario; 
+        $this->nombre_usuario = $psicologo->nombre_usuario; 
+        $this->apellido_pat_usuario = $psicologo->apellido_pat_usuario; 
+        $this->apellido_mat_usuario = $psicologo->apellido_mat_usuario; 
+        $this->telefono = $psicologo->telefono; 
+        $this->email = $psicologo->email; 
+        $this->especialidad = $psicologo->especialidad;
+        $this->fecha_nacimiento = $psicologo->fecha_nacimiento;
+        
+        $this->openEditPsicologoModal = true;
+    }
+
+    public function updateRol(){
+        $this->validate();
+
+        $psicologo = User::find($this->psicologo_id);
+
+        $psicologo->update([
+            'rut_usuario' => $this->rut_usuario,
+            'nombre_usuario' => $this->nombre_usuario,
+            'apellido_pat_usuario' => $this->apellido_pat_usuario,
+            'apellido_mat_usuario' => $this->apellido_mat_usuario,
+            'telefono' => $this->telefono,
+            'email' => $this->email,
+            'especialidad' => $this->especialidad,
+            'fecha_nacimiento' => Carbon::parse($this->fecha_nacimiento),
+        ]);
+
+        $this->reset([
+            'rut_usuario',
+            'nombre_usuario',
+            'apellido_pat_usuario',
+            'apellido_mat_usuario',
+            'telefono',
+            'email',
+            'especialidad',
+            'fecha_nacimiento',
+            'psicologo',
+            'openEditPsicologoModal'
+        ]);
+    }
+
+    public function deletePsicologo($id){
+        $psicologo = User::find($id);
+        $this->psicologo_id = $psicologo->id;
+        $this->openDeletePsicologoModal = true;
+    }
+
+    public function destroyPsicologo(){
+        $psicologo = User::find($this->psicologo_id);
+        $psicologo->delete();
+
+        $this->reset([
+            'openDeletePsicologoModal',
+            'psicologo_id',
+            'psicologo',
+        ]);
     }
 
 }
