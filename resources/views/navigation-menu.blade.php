@@ -36,7 +36,7 @@
                         Calendario Horarios
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="#" :active="request()->routeIs('tags')">
+                    <x-jet-nav-link href="{{ route('tags_trastornos') }}" :active="request()->routeIs('tags')">
                         Tags
                     </x-jet-nav-link>
                 </div>

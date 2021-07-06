@@ -28,3 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/psicologos', function(){
 Route::middleware(['auth:sanctum', 'verified'])->get('/pacientes', function(){
     return view('paciente.pacientes');
 })->name('pacientes');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('tags_trastornos', function(){
+    return view('tag.tags');
+})->name('tags_trastornos');
