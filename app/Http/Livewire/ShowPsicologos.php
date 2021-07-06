@@ -80,7 +80,7 @@ class ShowPsicologos extends Component
         $this->openEditPsicologoModal = true;
     }
 
-    public function updateRol(){
+    public function updatePsicologo(){
         $this->validate();
 
         $psicologo = User::find($this->psicologo_id);

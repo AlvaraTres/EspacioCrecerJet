@@ -256,7 +256,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="updateRol" wire:loading.attr="disabled" class="disabled:opacity-25">Editar Rol</x-jet-secondary-button>
+            <x-jet-secondary-button wire:click="updatePsicologo" wire:loading.attr="disabled" class="disabled:opacity-25">Editar Psicólogo</x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('openEditPsicologoModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
         </x-slot>
 
