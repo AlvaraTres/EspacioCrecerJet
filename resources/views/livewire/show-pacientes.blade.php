@@ -106,7 +106,7 @@
                     </th>
             </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-600">
+        <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($pacientes as $paciente)
                     <tr>
                         <td class="px-6 py-4">
@@ -145,6 +145,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center text-sm font-medium flex items-stretch">
+                            <a href="#" class="inline-flix mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition" wire:click="verPaciente({{$paciente->id}})">Ver</a>
                             <a href="#" class="inline-flex items-center justify-center px-4 py-2 mr-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition'" wire:click="editPaciente({{$paciente->id}})">Editar</a>
                             <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'" wire:click="deletePaciente({{$paciente->id}})">Eliminar</a>
                         </td>
@@ -248,6 +249,41 @@
             <x-jet-secondary-button wire:click="updatePaciente" wire:loading.attr="disabled" class="disabled:opacity-25">Editar Paciente</x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('openEditPacienteModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
         </x-slot>
+    </x-jet-dialog-modal>
 
+    <!-- MODAL VER PACIENTE -->
+    <x-jet-dialog-modal wire:model="openVerPacienteModal">
+        <x-slot name="title">
+            <div class="items-center text-center font-extrabold">Perfil Paciente: {{$nombre_paciente}}&nbsp;{{$ap_pat_paciente}}&nbsp;{{$ap_mat_paciente}}</div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Nombre: </h1>&nbsp;<h1>{{$nombre_paciente}}&nbsp;{{$ap_pat_paciente}}&nbsp;{{$ap_mat_paciente}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Rut: </h1>&nbsp;<h1>{{$rut_paciente}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Edad: </h1>&nbsp;<h1>{{$edad_calculada}}</h1>&nbsp;<h1>años</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Correo: </h1>&nbsp;<h1>{{$email}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Teléfono: </h1>&nbsp;<h1>{{$telefono_paciente}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Profesión: </h1>&nbsp;<h1>{{$profesion}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Alergias: </h1>&nbsp;<h1>{{$alergia}}</h1>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="verFichaPaciente" wire:loading.attr="disabled" class="disabled:opacity-25">Ver Fichas</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="$set('openVerPacienteModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cerrar</x-jet-danger-button>
+        </x-slot>
     </x-jet-dialog-modal>
 </div>

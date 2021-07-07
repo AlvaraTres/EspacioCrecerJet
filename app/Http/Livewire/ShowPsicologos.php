@@ -25,6 +25,7 @@ class ShowPsicologos extends Component
 
     public $openEditPsicologoModal = false;
     public $openDeletePsicologoModal = false;
+    public $openVerPsicologoModal = false;
 
     protected $rules = [
         'rut_usuario' => 'required',
@@ -127,4 +128,17 @@ class ShowPsicologos extends Component
         ]);
     }
 
+    public function verPsicologo($id){
+        $psicologo = User::find($id);
+        $this->rut_usuario = $psicologo->rut_usuario; 
+        $this->nombre_usuario = $psicologo->nombre_usuario; 
+        $this->apellido_pat_usuario = $psicologo->apellido_pat_usuario; 
+        $this->apellido_mat_usuario = $psicologo->apellido_mat_usuario; 
+        $this->telefono = $psicologo->telefono; 
+        $this->email = $psicologo->email; 
+        $this->especialidad = $psicologo->especialidad;
+        $this->fecha_nacimiento = $psicologo->fecha_nacimiento;
+
+        $this->openVerPsicologoModal = true;
+    }
 }

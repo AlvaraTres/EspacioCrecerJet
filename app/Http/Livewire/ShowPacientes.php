@@ -24,6 +24,9 @@ class ShowPacientes extends Component
     public $paciente_id;
     public $user;
     public $user_id;
+    public $edad_calculada;
+    public $fecha_actual;
+    public $anio_actual;
 
     //variables de paciente
     public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente, $profesion, $telefono_paciente, $email, $fecha_nacimiento_paciente, $alergia;
@@ -33,6 +36,7 @@ class ShowPacientes extends Component
 
     public $openEditPacienteModal = false;
     public $openDeletePacienteModal = false;
+    public $openVerPacienteModal = false;
 
     protected $rules = [
         'rut_paciente' => 'required',
@@ -158,5 +162,27 @@ class ShowPacientes extends Component
             'user',
             'user_id',
         ]);
+    }
+
+    public function verPaciente($id){
+        $paciente = Paciente::find($id);
+        $this->paciente_id = $paciente->id;
+        $this->rut_paciente = $paciente->rut_paciente; 
+        $this->nombre_paciente = $paciente->nombre_paciente; 
+        $this->ap_pat_paciente = $paciente->ap_pat_paciente; 
+        $this->ap_mat_paciente = $paciente->ap_mat_paciente; 
+        $this->profesion = $paciente->profesion; 
+        $this->telefono_paciente = $paciente->telefono_paciente; 
+        $this->email = $paciente->email; 
+        $this->fecha_nacimiento_paciente = $paciente->fecha_nacimiento_paciente; 
+        $this->alergia = $paciente->alergia;
+
+        //calcular Edad
+        $this->fecha_actual = Carbon::now('America/Santiago');
+        $this->anio_actual = Carbon::parse($this->fecha_nacimiento_paciente);
+        $this->edad_calculada = $this->anio_actual->diffInYears($this->fecha_actual);
+        //dd($this->edad_calculada); 
+
+        $this->openVerPacienteModal = true;
     }
 }

@@ -12,18 +12,6 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" wire:click="order('id')">
-                        ID
-                        @if($sort == 'id')
-                            @if($direction == 'asc')
-                                <i class="fas fa-sort-numeric-up float-right mt-1"></i>
-                            @else
-                                <i class="fas fa-sort-numeric-down-alt float-right mt-1"></i>
-                            @endif
-                        @else
-                            <i class="fas fa-sort float-right mt-1"></i>
-                        @endif
-                    </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" wire:click="order('rut_usuario')">
                         RUT
                         @if ($sort == 'rut_usuario')
@@ -76,18 +64,6 @@
                             <i class="fas fa-sort float-right mt-1"></i>
                         @endif
                     </th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" wire:click="order('telefono')">
-                        Teléfono
-                        @if($sort == 'telefono')
-                            @if($direction == 'asc')
-                                <i class="fas fa-sort-numeric-up float-right mt-1"></i>
-                            @else
-                                <i class="fas fa-sort-numeric-down-alt float-right mt-1"></i>
-                            @endif
-                        @else
-                            <i class="fas fa-sort float-right mt-1"></i>
-                        @endif
-                    </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" wire:click="order('email')">
                         Email
                         @if ($sort == 'email')
@@ -119,14 +95,9 @@
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-600">
+            <tbody class="bg-white divide-y divide-gray-300">
                 @foreach ($psicologos as $psicologo)
                     <tr>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">
-                                {{ $psicologo->id }}
-                            </div>
-                        </td>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
                                 {{ $psicologo->rut_usuario }}
@@ -149,11 +120,6 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                {{ $psicologo->telefono }}
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">
                                 {{ $psicologo->email }}
                             </div>
                         </td>
@@ -162,8 +128,9 @@
                                 {{ $psicologo->especialidad }}
                             </div>
                         </td>
-                        <td class="px-6 py-4 text-right text-sm font-medium">
-                            <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition'" wire:click="editPsicologo({{$psicologo->id}})">Editar</a>
+                        <td class="px-6 py-4 text-right text-sm font-medium flex items-stretch">
+                            <a href="#" class="inline-flix mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition" wire:click="verPsicologo({{$psicologo->id}})">Ver</a>
+                            <a href="#" class="inline-flex mr-2 items-center justify-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition'" wire:click="editPsicologo({{$psicologo->id}})">Editar</a>
                             <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'" wire:click="deletePsicologo({{$psicologo->id}})">Eliminar</a>
                         </td>
                     </tr>
@@ -258,6 +225,36 @@
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="updatePsicologo" wire:loading.attr="disabled" class="disabled:opacity-25">Editar Psicólogo</x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('openEditPsicologoModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
+        </x-slot>
+
+    </x-jet-dialog-modal>
+
+    <!-- MODAL VER PSICOLOGO -->
+    <x-jet-dialog-modal wire:model="openVerPsicologoModal">
+        <x-slot name="title">
+            <div class="items-center text-center font-extrabold">Perfil Psicólogo: {{$nombre_usuario}}</div>
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Nombre: </h1>&nbsp;<h1>{{$nombre_usuario}} {{$apellido_pat_usuario}} {{$apellido_mat_usuario}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Rut: </h1>&nbsp;<h1>{{$rut_usuario}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Correo: </h1>&nbsp;<h1>{{$email}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Teléfono: </h1>&nbsp;<h1>{{$telefono}}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Especialidad: </h1>&nbsp;<h1>{{$especialidad}}</h1>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-danger-button wire:click="$set('openVerPsicologoModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cerrar</x-jet-danger-button>
         </x-slot>
 
     </x-jet-dialog-modal>
