@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\LiveWire\EnlistarFichasModal;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/pacientes', function(){
 Route::middleware(['auth:sanctum', 'verified'])->get('tags_trastornos', function(){
     return view('tag.tags');
 })->name('tags_trastornos');
+
+Route::get('/fichaPdf', [EnlistarFichasModal::class, 'fichaPacientePdf']);

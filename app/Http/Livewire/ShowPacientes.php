@@ -10,7 +10,9 @@ use Carbon\Carbon;
 use App\Models\Paciente;
 use App\Models\User;
 use App\Models\Roleuser;
+use App\Models\Fichapaciente;
 use DB;
+use PDF;
 
 class ShowPacientes extends Component
 {
@@ -28,15 +30,22 @@ class ShowPacientes extends Component
     public $fecha_actual;
     public $anio_actual;
 
+    public $ficha_pdf;
+
     //variables de paciente
     public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente, $profesion, $telefono_paciente, $email, $fecha_nacimiento_paciente, $alergia;
 
     //variables de usuario
     //public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $fecha_nacimiento, $telefono, $especialidad;
 
+    //variables ficha paciente
+    public array $ficha_paciente;
+    public $cuenta_fichas;
+
     public $openEditPacienteModal = false;
     public $openDeletePacienteModal = false;
     public $openVerPacienteModal = false;
+    public $openVerFichasModal = false;
 
     protected $rules = [
         'rut_paciente' => 'required',
