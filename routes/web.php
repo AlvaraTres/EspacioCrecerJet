@@ -34,4 +34,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('tags_trastornos', function
     return view('tag.tags');
 })->name('tags_trastornos');
 
-Route::get('/fichaPdf', [EnlistarFichasModal::class, 'fichaPacientePdf']);
+Route::get('/fichaPdf/{ficha_id}', [EnlistarFichasModal::class, 'fichaPacientePdf']);

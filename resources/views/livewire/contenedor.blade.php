@@ -36,11 +36,19 @@
     </div>
     <!-- información de los profesionales -->
     <div class="container" style="margin-top: 4%;">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div class="bg-gray-200 p-4 text-center">PROFESIONAL 1</div>
-            <div class="bg-gray-200 p-4 text-center">PROFESIONAL 2</div>
-            <div class="bg-gray-200 p-4 text-center">PROFESIONAL 3</div>
-            <div class="bg-gray-200 p-4 text-center">PROFESIONAL 4</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="bg-blue-300 text-center rounded-lg">
+                <img class="rounded-lg" src="{{asset('images/perfil_barbara.jpeg')}}" alt="">
+            </div>
+            <div class="bg-blue-300 text-center rounded-lg">
+                <img class="rounded-lg" src="{{asset('images/perfil_daska.jpeg')}}" alt="">
+            </div>
+            <div class="bg-blue-300 text-center rounded-lg">
+                <img class="rounded-lg" src="{{asset('images/perfil_nicolas.jpeg')}}" alt="">
+            </div>
+            <div class="bg-blue-300 text-center rounded-lg">
+                <img class="rounded-lg" src="{{asset('images/perfil_sofia.jpeg')}}" alt="">
+            </div>
         </div>
     </div>
 
