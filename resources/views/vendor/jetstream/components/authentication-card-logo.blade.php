@@ -1,1 +1,1 @@
-<img class=" lg:block h-10 w-auto" src="{{ asset('/images/LogoEspacioCrecersinfondo.svg') }}" alt="Espacio Crecer">
+<!--<img class=" lg:block h-25 w-25" src="" alt="Espacio Crecer">-->
