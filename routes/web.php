@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\LiveWire\EnlistarFichasModal;
+use App\Http\Controllers\ReservasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('tags_trastornos', function
 })->name('tags_trastornos');
 
 Route::get('/fichaPdf/{ficha_id}', [EnlistarFichasModal::class, 'fichaPacientePdf']);
+
+Route::get('/calendarioreservas', [ReservasController::class, 'index'])->name('calendarioreservas');

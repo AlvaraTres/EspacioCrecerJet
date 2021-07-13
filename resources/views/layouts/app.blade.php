@@ -13,12 +13,15 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css">
 
         @livewireStyles
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -35,6 +38,8 @@
                 </header>
             @endif
 
+            
+            <script src="{{ asset('js/calendario.js') }}" defer></script>
             <!-- Page Content -->
             <main>
                 {{ $slot }}
