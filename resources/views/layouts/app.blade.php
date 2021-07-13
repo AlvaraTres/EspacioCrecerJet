@@ -39,7 +39,6 @@
             @endif
 
             
-            <script src="{{ asset('js/calendario.js') }}" defer></script>
             <!-- Page Content -->
             <main>
                 {{ $slot }}

@@ -1,6 +1,6 @@
 <div>
-    <x-jet-secondary-button wire:click="$set('openVerFichasModal', true)" wire:loading.attr="disabled"
-        class="disabled:opacity-25 mr-2">Ver Fichas</x-jet-secondary-button>
+    <a href="#" class="px-8 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition'" wire:click="$set('openVerFichasModal', true)" wire:loading.attr="disabled"
+    class="disabled:opacity-25">Fichas</a>
 
     <!-- MODAL FICHAS PACIENTES -->
     <x-jet-dialog-modal wire:model="openVerFichasModal">
@@ -9,11 +9,9 @@
                 {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }}
             </div>
         </x-slot>
-
         <x-slot name="content">
             <div class="container mt-4 mx-auto place-items-center">
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 items-center">
-                    @if ($ficha_paciente->count())
                         @foreach ($ficha_paciente as $ficha)
                             <div class="flex items-center justify-center">
                                 <h1 class="font-semibold items-center mr-4">Fecha de atención:
@@ -25,9 +23,8 @@
                             </div>
                         @endforeach
                 </div>
-
             </div>
-        @else
+            @if(!$ficha_paciente->count())
             <div class="flex items-stretch mb-4 mt-4">
                 <h1 class="font-semibold">No hay registros de fichas para este paciente.</h1>
             </div>

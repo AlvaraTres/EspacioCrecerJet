@@ -10,7 +10,6 @@ class Reserva extends Model
     protected $table = 'reservas';
 
     protected $fillable = [
-        'id_pago',
         'id_usuario',
         'id_paciente',
         'fecha_reserva',
@@ -20,8 +19,8 @@ class Reserva extends Model
         'cert_alumno_regular',
     ];
 
-    public function pagos(){
-        return $this->belongsTo('App\Model\Pago');
+    public function reservas(){
+        return $this->hasOne('App\Model\Pago');
     }
 
     public function users(){

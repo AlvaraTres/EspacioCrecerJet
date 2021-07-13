@@ -13,35 +13,21 @@ class EnlistarFichasModal extends Component
     public $openVerFichasModal = false;
     public $paciente;
     public $paciente_rut;
+    public $count_fichas=1;
 
     public function render()
     {
         $ficha_paciente = DB::table('fichas_pacientes')
                     ->join('users', 'users.id', '=', 'fichas_pacientes.id_usuario')
                     ->join('pacientes', 'pacientes.id', '=', 'fichas_pacientes.id_paciente')
-                    ->where('users.id', '=', 2)
+                    ->where('users.id', '=', 1)
                     ->where('pacientes.id', '=', $this->paciente->id)
                     ->select('fichas_pacientes.*')
                     ->get();
 
-        return view('livewire.enlistar-fichas-modal', compact('ficha_paciente'));
-    }
+        $this->count_fichas = 2;
 
-    public function verFichasPaciente(){
-        $this->ficha_paciente = DB::table('fichas_pacientes')
-                    ->join('users', 'users.id', '=', 'fichas_pacientes.id_usuario')
-                    ->join('pacientes', 'pacientes.id', '=', 'fichas_pacientes.id_paciente')
-                    ->where('users.id', '=', 2)
-                    ->where('pacientes.id', '=', 1)
-                    ->select('fichas_pacientes.*')
-                    ->get();
-        
-        //dd($fichas);
-        $this->cuenta_fichas = $this->ficha_paciente->count();
-        
-        
-        $this->openVerPacienteModal = false;
-        $this->openVerFichasModal = true;
+        return view('livewire.enlistar-fichas-modal', compact('ficha_paciente'));
     }
 
     public function fichaPacientePdf($ficha_id){

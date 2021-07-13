@@ -18,20 +18,6 @@
                 <tr>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                        wire:click="order('id')">
-                        ID
-                        @if ($sort == 'id')
-                            @if ($direction == 'asc')
-                                <i class="fas fa-sort-numeric-up float-right mt-1"></i>
-                            @else
-                                <i class="fas fa-sort-numeric-down-alt float-right mt-1"></i>
-                            @endif
-                        @else
-                            <i class="fas fa-sort float-right mt-1"></i>
-                        @endif
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                         wire:click="order('rut_paciente')">
                         RUT
                         @if ($sort == 'rut_paciente')
@@ -48,7 +34,6 @@
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                         wire:click="order('nombre_paciente')">
-                        Nombre
                         @if ($sort == 'nombre_paciente')
                             @if ($direction == 'asc')
                                 <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -130,11 +115,6 @@
                     <tr>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                {{ $paciente->id }}
-                            </div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="text-sm text-gray-900">
                                 {{ $paciente->rut_paciente }}
                             </div>
                         </td>
@@ -163,17 +143,21 @@
                                 {{ $paciente->email }}
                             </div>
                         </td>
-                        <td class="flex items-stretch px-6 py-4 text-center text-sm font-medium">
-                            <div class="flex items-stretch">
-                                @livewire('ver-paciente-info-modal', ['paciente' => $paciente], key($paciente->id))
+                        <td class="px-6 py-4 text-center text-sm font-medium">
+                            <div class="container">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                    @livewire('ver-paciente-info-modal', ['paciente' => $paciente], key($paciente->id))
+                                </div>
+                                <div class="">
+                                    @livewire('enlistar-fichas-modal', ['paciente' => $paciente], key($paciente->id))
+                                </div>
+                                <div class="">
+                                    @livewire('edit-paciente', ['paciente' => $paciente], key($paciente->id))
+                                </div>
+                                <div class="">
+                                    @livewire('delete-paciente', ['paciente' => $paciente], key($paciente->id))
+                                </div>
                             </div>
-                            <div class="flex items-stretch">
-                                @livewire('edit-paciente', ['paciente' => $paciente], key($paciente->id))
-                            </div>
-                            <div class="flex items-stretch">
-                                @livewire('delete-paciente', ['paciente' => $paciente], key($paciente->id))
-                            </div>
-                            
                         </td>
                     </tr>
                 @endforeach

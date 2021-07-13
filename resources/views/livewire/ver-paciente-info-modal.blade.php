@@ -1,6 +1,6 @@
 <div>
     <a href="#"
-        class="inline-flix mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition"
+        class="px-11 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition"
         wire:click="$set('open', true)">Ver</a>
 
     <!-- MODAL VER PACIENTE -->
@@ -39,7 +39,7 @@
 
         <x-slot name="footer">
             <div class="flex items-stretch">
-                @livewire('enlistar-fichas-modal', ['paciente' => $ver_paciente], key($ver_paciente->id))
+                
                 <x-jet-danger-button wire:click="$set('open', false)" wire:loading.attr="disabled"
                     class="disabled:opacity-25">Cerrar</x-jet-danger-button>
         </x-slot>
