@@ -35,6 +35,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('tags_trastornos', function
     return view('tag.tags');
 })->name('tags_trastornos');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('reservas', function(){
+    return view('reservas.reservas');
+})->name('reservas');
+
 Route::get('/fichaPdf/{ficha_id}', [EnlistarFichasModal::class, 'fichaPacientePdf']);
 
 Route::get('/calendarioreservas', [ReservasController::class, 'index'])->name('calendarioreservas');

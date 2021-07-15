@@ -1291,9 +1291,6 @@ select {
 .h-2 {
 	height: 0.5rem;
 }
-.h-1\/4 {
-	height: 25%;
-}
 .min-h-screen {
 	min-height: 100vh;
 }
@@ -1341,9 +1338,6 @@ select {
 }
 .w-px {
 	width: 1px;
-}
-.w-2\/3 {
-	width: 66.666667%;
 }
 .min-w-0 {
 	min-width: 0px;
@@ -1423,9 +1417,6 @@ select {
 .grid-cols-1 {
 	grid-template-columns: repeat(1, minmax(0, 1fr));
 }
-.grid-cols-2 {
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 .flex-col {
 	flex-direction: column;
 }
@@ -1459,14 +1450,14 @@ select {
 .gap-1 {
 	gap: 0.25rem;
 }
+.gap-5 {
+	gap: 1.25rem;
+}
 .gap-2 {
 	gap: 0.5rem;
 }
 .gap-3 {
 	gap: 0.75rem;
-}
-.gap-5 {
-	gap: 1.25rem;
 }
 .space-x-8 > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-x-reverse: 0;
@@ -1688,33 +1679,17 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(217, 119, 6, var(--tw-bg-opacity));
 }
-.bg-red-900 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(127, 29, 29, var(--tw-bg-opacity));
-}
 .bg-blue-500 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
-}
-.bg-blue-100 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(219, 234, 254, var(--tw-bg-opacity));
 }
 .bg-green-600 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(5, 150, 105, var(--tw-bg-opacity));
 }
-.bg-black {
+.bg-blue-100 {
 	--tw-bg-opacity: 1;
-	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
-}
-.bg-green-400 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
-}
-.bg-green-300 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(110, 231, 183, var(--tw-bg-opacity));
+	background-color: rgba(219, 234, 254, var(--tw-bg-opacity));
 }
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
@@ -1796,25 +1771,17 @@ select {
 	padding-top: 2.5rem;
 	padding-bottom: 2.5rem;
 }
-.px-5 {
-	padding-left: 1.25rem;
-	padding-right: 1.25rem;
-}
-.px-10 {
-	padding-left: 2.5rem;
-	padding-right: 2.5rem;
+.px-11 {
+	padding-left: 2.75rem;
+	padding-right: 2.75rem;
 }
 .px-8 {
 	padding-left: 2rem;
 	padding-right: 2rem;
 }
-.px-11 {
-	padding-left: 2.75rem;
-	padding-right: 2.75rem;
-}
-.px-7 {
-	padding-left: 1.75rem;
-	padding-right: 1.75rem;
+.px-5 {
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
 }
 .pt-6 {
 	padding-top: 1.5rem;
@@ -2615,16 +2582,16 @@ select {
 		display: none;
 	}
 
+	.lg\:grid-cols-2 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
 	.lg\:grid-cols-3 {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
 	.lg\:grid-cols-4 {
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-	}
-
-	.lg\:grid-cols-2 {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.lg\:px-8 {

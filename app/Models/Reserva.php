@@ -17,6 +17,7 @@ class Reserva extends Model
         'fecha_hora_reserva',
         'motivo_reserva',
         'cert_alumno_regular',
+        'fecha_hora_reserva_fin',
     ];
 
     public function reservas(){

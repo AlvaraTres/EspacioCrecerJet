@@ -28,7 +28,7 @@
                         Pagos
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{route('calendarioreservas')}}" :active="request()->routeIs('calendarioreservas')">
+                    <x-jet-nav-link href="{{route('reservas')}}" :active="request()->routeIs('calendarioreservas')">
                         Calendario Reservas
                     </x-jet-nav-link>
 

@@ -20,6 +20,7 @@ class CreateReservasTable extends Migration
             $table->date('fecha_reserva');
             $table->dateTime('hora_reserva');
             $table->dateTime('fecha_hora_reserva');
+            $table->dateTime('fecha_hora_reserva_fin');
             $table->text('motivo_reserva')->nullable();
             $table->string('cert_alumno_regular')->nullable();
             $table->timestamps();
