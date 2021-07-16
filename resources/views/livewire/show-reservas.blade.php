@@ -11,16 +11,16 @@
 
         <x-slot name="content">
             <x-jet-label value="Fecha de Reserva: " />
-            <x-jet-label value="Hora Reserva:" />            
-            <input type="text" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepicker5" data-toggle="datetimepicker"
-                data-target="#datetimepicker5" />
+            <x-jet-label value="Hora Reserva:" />
+            <input type="text" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepicker5"
+                data-toggle="datetimepicker" data-target="#datetimepicker5" />
             <x-jet-input-error for="hora_reserva" />
-            
+
             <x-jet-label value="Motivo:" />
             <x-jet-input type="text" class="w-full" wire:model.defer="motivo_reserva" id="motivo_reserva" />
             <x-jet-input-error for="motivo_reserva" />
 
-            
+
         </x-slot>
 
         <x-slot name="footer">
@@ -39,22 +39,26 @@
 
         <x-slot name="content">
             <x-jet-label value="Fecha de Reserva: " />
-            <input type="text" wire:model.defer="fecha_reserva" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepickerFecha" data-toggle="datetimepicker"
-                data-target="#datetimepickerFecha" />
+            <input type="text" wire:model.defer="fecha_reserva"
+                class="datetimepicker-input border rounded-md border-gray-300" id="datetimepickerFecha"
+                data-toggle="datetimepicker" data-target="#datetimepickerFecha" />
 
-            <x-jet-label value="Hora Reserva:" />            
-            <input type="text" wire:model.defer="hora_reserva" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepickerEdit" data-toggle="datetimepicker"
-                data-target="#datetimepickerEdit" />
+            <x-jet-label value="Hora Reserva:" />
+            <input type="text" wire:model.defer="hora_reserva"
+                class="datetimepicker-input border rounded-md border-gray-300" id="datetimepickerEdit"
+                data-toggle="datetimepicker" data-target="#datetimepickerEdit" />
             <x-jet-input-error for="hora_reserva" />
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_delete_reserva">Cancelar Reserva
+            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_delete_reserva">
+                Cancelar Reserva
             </x-jet-secondary-button>
-            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25 bg-blue-500 text-white" id="btn_edit_reserva">Modificar Reserva
+            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25 bg-blue-500 text-white"
+                id="btn_edit_reserva">Modificar Reserva
             </x-jet-secondary-button>
-            <x-jet-danger-button wire:click="cancelarEdit" wire:loading.attr="disabled"
-                class="disabled:opacity-25">Cancelar</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="cancelarEdit" wire:loading.attr="disabled" class="disabled:opacity-25">
+                Cancelar</x-jet-secondary-button>
         </x-slot>
     </x-jet-dialog-modal>
 
@@ -69,10 +73,11 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_destroy_reserva">Confirmar
+            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_destroy_reserva">
+                Confirmar
             </x-jet-secondary-button>
-            <x-jet-danger-button wire:click="cancelarDel" wire:loading.attr="disabled"
-                class="disabled:opacity-25">Cancelar</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="cancelarDel" wire:loading.attr="disabled" class="disabled:opacity-25">
+                Cancelar</x-jet-secondary-button>
         </x-slot>
     </x-jet-dialog-modal>
 
@@ -88,62 +93,81 @@
                     events: JSON.parse(data),
                     initialView: 'dayGridMonth',
                     locale: "es",
+                    selectable: true,
 
                     headerToolbar: {
                         left: 'prev, next, today',
                         center: 'title',
                         right: 'dayGridMonth, timeGridWeek, listWeek',
                     },
+                    weekends: true,
 
-                    dateClick: function(info) {
+                    dateClick: function(info, start) {
+                        console.log(moment(info));
+                        var selectDate = info.dateStr;
+                        var startDate = moment(selectDate);
                         //alert('Click: '+info.timeStr);
-                        @this.set('open', true);
-                        var date = new Date(info.dateStr + 'T00:00:00');
-                        //alert(description);
-                        document.getElementById("btn_reserva").addEventListener("click", function() {
-                            var startTime = document.getElementById('datetimepicker5').value;
-                            var description = document.getElementById('motivo_reserva').value;
-                            console.log(startTime);
-                            calendar.addEvent({
-                                title: "Nuevo Evento",
-                                start: date,
-                                description: description
-                            });
+                        if (moment(startDate).isBefore(moment())) {
+                            alert('No puedes reservar hora para fechas pasadas.');
+                        } else {
+                            console.log(startDate.isoWeekday());
+                            if (startDate.isoWeekday() == 6 || startDate.isoWeekday() == 7) {
+                                alert('No puedes reservar hora durante fines de semana');
+                            } else {
+                                @this.set('open', true);
+                                var date = new Date(info.dateStr + 'T00:00:00');
+                                //alert(description);
+                                document.getElementById("btn_reserva").addEventListener("click",
+                                    function() {
+                                        var startTime = document.getElementById('datetimepicker5')
+                                            .value;
+                                        var description = document.getElementById('motivo_reserva')
+                                            .value;
+                                        console.log(startTime);
+                                        calendar.addEvent({
+                                            title: "Nuevo Evento",
+                                            start: date,
+                                            description: description
+                                        });
 
-                            var eventAdd = {
-                                title: "Nuevo Evento",
-                                start: date,
-                                description: description
-                            };
-                            @this.storeReserva(eventAdd, startTime);
-                            calendar.refetchEvents();
-                        });
+                                        var eventAdd = {
+                                            title: "Nuevo Evento",
+                                            start: date,
+                                            description: description
+                                        };
+                                        @this.storeReserva(eventAdd, startTime);
+                                        calendar.refetchEvents();
+                                    }
+                                );
+                            }
+                        }
                     },
-                    eventClick: function(info){
+                    eventClick: function(info) {
                         var reserva = info.event;
                         console.log(reserva);
                         @this.editReserva(reserva);
                         @this.set('openEditModal', true);
-                        document.getElementById('btn_edit_reserva').addEventListener("click", function(){
-                           var editFecha = document.getElementById('datetimepickerFecha').value;
-                           var editHora = document.getElementById('datetimepickerEdit').value;
-                           console.log(editHora);
-                           @this.updateReserva(editFecha, editHora);
-                           calendar.refetchEvents();
+                        document.getElementById('btn_edit_reserva').addEventListener("click", function() {
+                            var editFecha = document.getElementById('datetimepickerFecha').value;
+                            var editHora = document.getElementById('datetimepickerEdit').value;
+                            console.log(editHora);
+                            @this.updateReserva(editFecha, editHora);
+                            calendar.refetchEvents();
                         });
-                        document.getElementById("btn_delete_reserva").addEventListener("click", function(){
+                        document.getElementById("btn_delete_reserva").addEventListener("click", function() {
                             @this.set('openEditModal', false);
                             @this.set('openDelModal', true);
-                            document.getElementById("btn_destroy_reserva").addEventListener("click", function(){
-                                @this.destroyReserva();
-                            });
+                            document.getElementById("btn_destroy_reserva").addEventListener("click",
+                                function() {
+                                    @this.destroyReserva();
+                                });
                         });
                     },
-                    loading: function(isLoading){
-                        if(!isLoading){
+                    loading: function(isLoading) {
+                        if (!isLoading) {
                             //resetear eventos
-                            this.getEvents().forEach(function(e){
-                                if(e.source === null){
+                            this.getEvents().forEach(function(e) {
+                                if (e.source === null) {
                                     e.remove();
                                 }
                             });
