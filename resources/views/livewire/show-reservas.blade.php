@@ -58,6 +58,24 @@
         </x-slot>
     </x-jet-dialog-modal>
 
+    <!-- MODAL DE DELETE RESERVAS -->
+    <x-jet-dialog-modal wire:model="openDelModal" id="del_res">
+        <x-slot name="title">
+            Cancelar Reserva
+        </x-slot>
+
+        <x-slot name="content">
+            ¿Estás seguro de cancelar tu reserva de hora?
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_destroy_reserva">Confirmar
+            </x-jet-secondary-button>
+            <x-jet-danger-button wire:click="cancelarDel" wire:loading.attr="disabled"
+                class="disabled:opacity-25">Cancelar</x-jet-secondary-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+
     @push('js')
         <script>
             document.addEventListener('livewire:load', function() {
@@ -112,6 +130,13 @@
                            console.log(editHora);
                            @this.updateReserva(editFecha, editHora);
                            calendar.refetchEvents();
+                        });
+                        document.getElementById("btn_delete_reserva").addEventListener("click", function(){
+                            @this.set('openEditModal', false);
+                            @this.set('openDelModal', true);
+                            document.getElementById("btn_destroy_reserva").addEventListener("click", function(){
+                                @this.destroyReserva();
+                            });
                         });
                     },
                     loading: function(isLoading){

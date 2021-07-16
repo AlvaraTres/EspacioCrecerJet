@@ -12,6 +12,7 @@ class ShowReservas extends Component
 {
     public $open = false;
     public $openEditModal = false;
+    public $openDelModal = false;
 
     public $events = '';
 
@@ -128,6 +129,33 @@ class ShowReservas extends Component
             'fecha_reserva',
             'hora_reserva',
             'openEditModal'
+        ]);
+
+        return redirect()->to('/reservas');
+    }
+
+    public function deleteReserva(){
+        $res_del = Reserva::find($this->reserva_id);
+        $this->openEditModal = false;
+        $this->openDelModal = true;
+    }
+
+    public function cancelarDel(){
+        $this->openDelModal = true;
+        return redirect()->to('/reservas');
+    }
+
+    public function destroyReserva(){
+        $res_dest = Reserva::find($this->reserva_id);
+        $res_dest->delete();
+
+        $this->reset([
+            'reserva_id',
+            'motivo_reserva',
+            'fecha_reserva',
+            'hora_reserva',
+            'openEditModal',
+            'openDelModal'
         ]);
 
         return redirect()->to('/reservas');
