@@ -32,7 +32,7 @@
                         Calendario Reservas
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="#" :active="request()->routeIs('calendariohorarios')">
+                    <x-jet-nav-link href="{{route('horarios')}}" :active="request()->routeIs('calendariohorarios')">
                         Calendario Horarios
                     </x-jet-nav-link>
 
@@ -177,7 +177,7 @@
             <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
                 Calendario Reservas
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendariohorarios')">
+            <x-jet-responsive-nav-link href="{{route('horarios')}}" :active="request()->routeIs('calendariohorarios')">
                 Calendario Horarios
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')">
