@@ -51,7 +51,7 @@
 
         @stack('modals')
 
-         @stack('js')
+        @stack('js')
 
         @livewireScripts
         <script>

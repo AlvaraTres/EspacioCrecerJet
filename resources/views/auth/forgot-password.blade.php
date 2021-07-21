@@ -5,7 +5,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('¿Olvidaste tu contraseña? No hay problema. Sólo ingresa tu correo electrónico y te enviaremos un link para que puedas cambiar tu contraseña.') }}
         </div>
 
         @if (session('status'))
@@ -25,7 +25,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
+                <x-jet-button class="ml-4 bg-blue-600 hover:bg-blue-500">
                     {{ __('Email Password Reset Link') }}
                 </x-jet-button>
             </div>

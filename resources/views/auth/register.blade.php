@@ -10,8 +10,46 @@
             @csrf
 
             <div>
-                <x-jet-label for="name" value="{{ __('Name') }}" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-jet-label for="rut_paciente" value="{{ __('Rut') }}" />
+                <x-jet-input id="rut_paciente" class="block mt-1 w-full" type="text" name="rut_paciente" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="nombre_paciente" value="{{ __('Nombre') }}" />
+                <x-jet-input id="nombre_paciente" class="block mt-1 w-full" type="text" name="nombre_paciente" :value="old('nombre_paciente')" required autofocus autocomplete="nombre_paciente" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="apellido_pat_paciente" value="{{ __('Apellido Paterno') }}" />
+                <x-jet-input id="apellido_pat_paciente" class="block mt-1 w-full" type="text" name="apellido_pat_paciente" :value="old('apellido_pat_paciente')" required autofocus autocomplete="apellido_pat_paciente" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="apellido_mat_paciente" value="{{ __('Apellido Materno') }}" />
+                <x-jet-input id="apellido_mat_paciente" class="block mt-1 w-full" type="text" name="apellido_mat_paciente" :value="old('apellido_mat_paciente')" required autofocus autocomplete="apellido_mat_paciente" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="fecha_nacimiento_paciente" value="{{ __('Fecha Nacimiento') }}" />
+                <x-jet-input id="fecha_nacimiento_paciente" class="block mt-1 w-full" type="text" name="fecha_nacimiento_paciente" :value="old('fecha_nacimiento_paciente')" required autofocus autocomplete="fecha_nacimiento_paciente" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="profesion" value="{{ __('Profesión') }}" />
+                <x-jet-input id="profesion" class="block mt-1 w-full" type="text" name="profesion" :value="old('profesion')" required autofocus autocomplete="profesion" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="alergia" value="{{ __('Alergia') }}" />
+                <x-jet-input id="alergia" class="block mt-1 w-full" type="text" name="alergia" :value="old('alergia')" required autofocus autocomplete="alergia" />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="telefono_paciente" value="{{ __('Teléfono') }}" />
+                <div class="flex items-stretch">
+                    <span class="flex items-center bg-grey-200 leading-normal rounded rounded-r-none border border-r-0 border-gray-300   px-2 text-grey-dark whitespace-no-wrap ">+56</span>
+                    <input type="text" class="flex items-center leading-normal rounded rounded-l-none relative focus:border-indigo-300 focus:shadow border border-gray-300 w-full focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm" name="telefono_paciente" id="telefono_paciente" :value="old('telefono_paciente')" required autofocus autocomplete="telefono_paciente">
+                </div>
             </div>
 
             <div class="mt-4">
@@ -20,7 +58,7 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
+                <x-jet-label for="password" value="{{ __('Contraseña') }}" />
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>
 
@@ -48,13 +86,39 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('¿Ya estás registrado?') }}
                 </a>
 
-                <x-jet-button class="ml-4">
-                    {{ __('Register') }}
+                <x-jet-button class="ml-4 bg-blue-600 hover:bg-blue-500">
+                    {{ __('Registrarse') }}
                 </x-jet-button>
             </div>
         </form>
     </x-jet-authentication-card>
+
+    @push('js')
+        <script type="text/javascript">
+            jQuery.datetimepicker.setLocale('es');
+            jQuery('#fecha_nacimiento_paciente').datetimepicker({
+                i18n: {
+                    de: {
+                        months: [
+                            'Enero', 'Febrero', 'Marzo', 'Abril',
+                            'Mayo', 'Junio', 'Julio', 'Agosto',
+                            'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+                        ],
+                        dayOfWeek: [
+                            "Lu.", "Ma", "Mi", "Ju",
+                            "Do", "Fr", "Sa.",
+                        ]
+                    }
+                },
+                container: '#fecha_nacimiento_paciente',
+                orientation: "auto-top",
+                datepicker: true,
+                timepicker: false,
+                format: 'd-m-Y'
+            });
+        </script>
+    @endpush
 </x-guest-layout>
