@@ -119,7 +119,7 @@
                                 //alert(description);
                                 document.getElementById("btn_reserva").addEventListener("click",
                                     function() {
-                                        var startTime = document.getElementById('datetimepicker5')
+                                        /*var startTime = document.getElementById('datetimepicker5')
                                             .value;
                                         var description = document.getElementById('motivo_reserva')
                                             .value;
@@ -136,7 +136,8 @@
                                             description: description
                                         };
                                         @this.storeReserva(eventAdd, startTime);
-                                        calendar.refetchEvents();
+                                        calendar.refetchEvents();*/
+                                        window.location.href = "{{URL::to('/payment')}}"
                                     }
                                 );
                             }

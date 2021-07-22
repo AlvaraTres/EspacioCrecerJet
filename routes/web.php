@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\LiveWire\EnlistarFichasModal;
 use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +47,8 @@ Route::get('/calendarioreservas', [ReservasController::class, 'index'])->name('c
 Route::middleware(['auth:sanctum', 'verified'])->get('horarios', function(){
     return view('horario.horario');
 })->name('horarios');
+
+//RUTA DE PAGO CON PAYPAL
+Route::get('/payment', [PaymentController::class, 'payWithPayPal'])->name('payment');
+Route::get('/payment/cancel', [PaymentController::class, 'paymentCancel'])->name('payment.cancel');
+Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');

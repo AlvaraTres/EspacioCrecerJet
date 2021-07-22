@@ -178,6 +178,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
 
     ],
 
@@ -233,7 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Rut'   => Freshwork\ChileanBundle\Laravel\Facades\Rut::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
     ],
 
 ];
