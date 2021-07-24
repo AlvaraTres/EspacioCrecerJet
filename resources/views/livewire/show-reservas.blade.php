@@ -10,6 +10,7 @@
         </x-slot>
 
         <x-slot name="content">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token">
             <x-jet-label value="Fecha de Reserva: " />
             <x-jet-label value="Hora Reserva:" />
             <input type="text" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepicker5"
@@ -87,10 +88,10 @@
                 var Calendar = FullCalendar.Calendar;
                 var Draggable = FullCalendar.Draggable;
                 var calendarEl = document.getElementById('calendar');
-                var data = @this.events;
-                console.log(data);
+                var datos = @this.events;
+                console.log(datos);
                 var calendar = new FullCalendar.Calendar(calendarEl, {
-                    events: JSON.parse(data),
+                    events: JSON.parse(datos),
                     initialView: 'dayGridMonth',
                     locale: "es",
                     selectable: true,
@@ -119,25 +120,46 @@
                                 //alert(description);
                                 document.getElementById("btn_reserva").addEventListener("click",
                                     function() {
-                                        /*var startTime = document.getElementById('datetimepicker5')
+                                        var startTime = document.getElementById('datetimepicker5')
                                             .value;
                                         var description = document.getElementById('motivo_reserva')
                                             .value;
                                         console.log(startTime);
-                                        calendar.addEvent({
+                                        console.log(description);
+                                        /*calendar.addEvent({
                                             title: "Nuevo Evento",
                                             start: date,
                                             description: description
+                                        });*/
+
+                                        var token = document.getElementById("_token").value;
+                                        console.log(token);
+                                        $.ajax({
+                                            url: 'payment/{date}/{startTime}/{description}',
+                                            method: 'POST',
+                                            data: {
+                                                   'date' : date, 
+                                                   'startTime': startTime,
+                                                   'description' : description,
+                                                   '_token': token
+                                            },
+                                            success: function(response){
+                                                console.log(description);
+                                            },
+                                            error: function(jqXHR, textStatus, errorThrown){
+                                                console.log(JSON.stringify(jqXHR));
+                                                console.log("AJAX ERROR: " + textStatus + ' : ' + errorThrown);
+                                            }
+                                        }).done(function(res){
+                                            var direccion = "{{route('payment', ['date' => 'date' , 'startTime' => 'startTime', 'description' => 'description'])}}";
+                                            direccion = direccion.replace('date', date);
+                                            direccion = direccion.replace('startTime', startTime);
+                                            direccion = direccion.replace('description', description);
+                                            console.log(direccion);
+                                            location.href = direccion;
                                         });
 
-                                        var eventAdd = {
-                                            title: "Nuevo Evento",
-                                            start: date,
-                                            description: description
-                                        };
-                                        @this.storeReserva(eventAdd, startTime);
-                                        calendar.refetchEvents();*/
-                                        window.location.href = "{{URL::to('/payment')}}"
+                                        calendar.refetchEvents();
                                     }
                                 );
                             }

@@ -7,8 +7,11 @@ use Srmklive\PayPal\Services\ExpressCheckout;
 
 class PaymentController extends Controller
 {
-    public function payWithPayPal()
+    public function payWithPayPal($date, $startTime, $description)
     {
+        
+        dd($startTime, $date, $description);
+
         $data = [];
         $data['items'] = [
             [
