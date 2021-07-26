@@ -15,6 +15,7 @@ class ShowReservas extends Component
     public $openDelModal = false;
 
     public $events = '';
+    public $psicologos = [];
 
     public $fecha_res;
     public $reserva_id;
@@ -39,6 +40,12 @@ class ShowReservas extends Component
                         ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
                         ->get();
         //dd($reservas);
+
+        $this->psicologos = DB::table('users')
+                            ->where('id_users_rol', '=', 2)
+                            ->select(DB::raw('CONCAT(users.nombre_usuario, \' \', users.apellido_pat_usuario, \' \', users.apellido_mat_usuario) AS fullNombre'), 'users.id')
+                            ->get();
+        //dd($this->psicologos);
 
         $this->events = json_encode($events);
 

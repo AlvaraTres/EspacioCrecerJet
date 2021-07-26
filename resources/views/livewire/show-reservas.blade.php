@@ -11,7 +11,14 @@
 
         <x-slot name="content">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token">
-            <x-jet-label value="Fecha de Reserva: " />
+            <x-jet-label value="Seleccione un Psicológo: " />
+            <select name="idPsicologo" id="idPsicologo">
+                <option value="">Seleccionar</option>
+                @foreach ($psicologos as $psic)
+                    <option value="{{ $psic->id }}">{{ $psic->fullNombre }}</option>
+                @endforeach
+            </select>
+
             <x-jet-label value="Hora Reserva:" />
             <input type="text" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepicker5"
                 data-toggle="datetimepicker" data-target="#datetimepicker5" />
@@ -116,52 +123,57 @@
                                 alert('No puedes reservar hora durante fines de semana');
                             } else {
                                 @this.set('open', true);
-                                var date = new Date(info.dateStr + 'T00:00:00');
-                                //alert(description);
-                                document.getElementById("btn_reserva").addEventListener("click",
-                                    function() {
-                                        var startTime = document.getElementById('datetimepicker5')
-                                            .value;
-                                        var description = document.getElementById('motivo_reserva')
-                                            .value;
-                                        console.log(startTime);
-                                        console.log(description);
-                                        /*calendar.addEvent({
-                                            title: "Nuevo Evento",
-                                            start: date,
-                                            description: description
-                                        });*/
+                                var fecha = new Date(info.dateStr + 'T00:00:00');
+                                console.log(fecha);
 
-                                        var token = document.getElementById("_token").value;
-                                        console.log(token);
-                                        $.ajax({
-                                            url: 'payment/{date}/{startTime}/{description}',
-                                            method: 'POST',
-                                            data: {
-                                                   'date' : date, 
-                                                   'startTime': startTime,
-                                                   'description' : description,
-                                                   '_token': token
-                                            },
-                                            success: function(response){
-                                                console.log(description);
-                                            },
-                                            error: function(jqXHR, textStatus, errorThrown){
-                                                console.log(JSON.stringify(jqXHR));
-                                                console.log("AJAX ERROR: " + textStatus + ' : ' + errorThrown);
-                                            }
-                                        }).done(function(res){
-                                            var direccion = "{{route('payment', ['date' => 'date' , 'startTime' => 'startTime', 'description' => 'description'])}}";
-                                            direccion = direccion.replace('date', date);
-                                            direccion = direccion.replace('startTime', startTime);
-                                            direccion = direccion.replace('description', description);
-                                            console.log(direccion);
-                                            location.href = direccion;
-                                        });
+                                var date1 = fecha.getFullYear();
+                                var date2 = fecha.getMonth();
+                                var date3 = fecha.getDate();
+                                date2 = date2 + 1;
+                                console.log(date2);
 
-                                        calendar.refetchEvents();
-                                    }
-                                );
+                                $('#idPsicologo').select2();
+                                $('#idPsicologo').on('change', function(e) {
+                                    var pid = $('#idPsicologo').select2("val");
+                                    console.log(pid);
+                                    //alert(description);
+                                    document.getElementById("btn_reserva").addEventListener("click",
+                                        function() {
+                                            var startTime = document.getElementById(
+                                                    'datetimepicker5')
+                                                .value;
+                                            var description = document.getElementById(
+                                                    'motivo_reserva')
+                                                .value;
+                                            console.log(startTime);
+
+
+
+                                            /*calendar.addEvent({
+                                                title: "Nuevo Evento",
+                                                start: date,
+                                                description: description
+                                            });*/
+
+                                            var token = document.getElementById("_token").value;
+
+                                            console.log(token);
+                                            var direccion =
+                                                "{{ route('payment', ['date1' => 'date1', 'date2' => 'date2', 'date3' => 'date3', 'startTime' => 'startTime', 'description' => 'description', 'pid' => 'pid']) }}"
+                                            direccion = direccion.replace('date1', date1);
+                                            direccion = direccion.replace('date2', date2);
+                                            direccion = direccion.replace('date3', date3);
+                                            direccion = direccion.replace('startTime',
+                                                startTime);
+                                            direccion = direccion.replace('description',
+                                                description);
+                                            direccion = direccion.replace('pid', pid);
+                                            window.location.href = direccion;
+
+                                            calendar.refetchEvents();
+                                        }
+                                    );
+                                });
                             }
                         }
                     },
@@ -277,6 +289,9 @@
                 timepicker: false,
                 format: 'd-m-Y'
             });
+        </script>
+        <script type="text/javascript">
+            $('#idPsicologo').select2()
         </script>
     @endpush
 </div>
