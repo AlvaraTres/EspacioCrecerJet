@@ -48,6 +48,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('horarios', function(){
     return view('horario.horario');
 })->name('horarios');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('pagos', function(){
+    return view('pagos.pagos');
+})->name('pagos');
+
 //RUTA DE PAGO CON PAYPAL
 Route::get( '/payment/{date1}/{date2}/{date3}/{startTime}/{description}/{pid}', [PaymentController::class, 'payWithPayPal'])->name('payment');
 Route::get('/payment/cancel', [PaymentController::class, 'paymentCancel'])->name('payment.cancel');

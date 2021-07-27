@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Srmklive\PayPal\Services\ExpressCheckout;
 use Carbon\Carbon;
 use App\Models\Reserva;
+use App\Models\Pago;
 use DB;
 
 class PaymentController extends Controller
@@ -90,6 +91,14 @@ class PaymentController extends Controller
                 'fecha_hora_reserva_fin' => $hora_termino,
             ]);
             $reserva = Reserva::latest()->first();
+
+            Pago::create([
+                'id_reserva' => $reserva->id,
+                'id_paciente' => Auth::user()->id,
+                'fecha_pago' => Carbon::now('America/Santiago'),
+                'monto_pago' => 20000,
+            ]);
+
             return redirect()->route('reservas.success', ['reserva' => $reserva]);
         }
 

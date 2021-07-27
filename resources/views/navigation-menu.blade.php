@@ -24,7 +24,7 @@
                         Pacientes
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="#" :active="request()->routeIs('pagos')">
+                    <x-jet-nav-link href="{{route('pagos')}}" :active="request()->routeIs('pagos')">
                         Pagos
                     </x-jet-nav-link>
 
