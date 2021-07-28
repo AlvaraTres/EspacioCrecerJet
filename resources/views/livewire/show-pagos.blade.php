@@ -2,6 +2,8 @@
     <div class="mx-auto bg-white-200 w-full">
         <p class="px-4 py-2">Filtros de búsqueda</p>
         <div class="flex items-stretch bg-white-300 w-full px-4 py-2">
+            <input type="text" placeholder="Buscar Paciente" class="mr-5 rounded-md border-gray-300" wire:model="paciente">
+            <input type="text" placeholder="Buscar Psicológo" class="mr-5 rounded-md border-gray-300" wire:model="psicologo">
             <input type="text" placeholder="Desde" class="mr-5 datetimepicker-input rounded-md border-gray-300" id="dateDesde" wire:model="from">
             <input type="text" placeholder="Hasta" class="mr-5 datetimepicker-input rounded-md border-gray-300" id="dateHasta" wire:model="to">
         </div>

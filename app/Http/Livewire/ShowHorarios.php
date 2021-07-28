@@ -20,7 +20,7 @@ class ShowHorarios extends Component
     public function render()
     {
         $events = DB::table('horarios')
-                    ->select('horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
+                    ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
                     ->get();
 
         //dd($events);

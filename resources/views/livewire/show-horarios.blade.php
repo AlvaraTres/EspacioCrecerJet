@@ -22,7 +22,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_regis">Eliminar
+            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_regis">Registrar
             </x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('open', false)" wire:loading.attr="disabled"
                 class="disabled:opacity-25">Cancelar</x-jet-secondary-button>
@@ -91,7 +91,8 @@
                     initialView: 'dayGridMonth',
                     locale: "es",
                     selectable: true,
-
+                    eventDisplay: 'block'
+,
                     headerToolbar: {
                         left: 'prev, next, today',
                         center: 'title',
@@ -141,52 +142,29 @@
         <script type="text/javascript">
             jQuery.datetimepicker.setLocale('es');
             jQuery('#hora_inicio').datetimepicker({
-                i18n: {
-                    de: {
-                        months: [
-                            'Enero', 'Febrero', 'Marzo', 'Abril',
-                            'Mayo', 'Junio', 'Julio', 'Agosto',
-                            'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
-                        ],
-                        dayOfWeek: [
-                            "So.", "Mo", "Di", "Mi",
-                            "Do", "Fr", "Sa.",
-                        ]
-                    }
+                format: 'H:i',
+                allowTimes: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
+                onShow: function(ct){
+                    this.setOptions({
+                        maxTime: jQuery('#hora_fin').val()?jQuery('#hora_fin').val():false,
+                    })
                 },
-                container: '#hora_inicio',
-                orientation: "auto-top",
                 datepicker: false,
-                timepicker: true,
-                minTime: '10:00:00',
-                maxTime: '20:00:00',
-                format: 'H:i'
+            });
+            jQuery('#hora_fin').datetimepicker({
+                format: 'H:i',
+                allowTimes: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
+                onShow: function(ct){
+                    this.setOptions({
+                        minTime: jQuery('#hora_inicio').val()?jQuery('#hora_inicio').val():false,
+                    })
+                },
+                datepicker: false,
             });
         </script>
         <script type="text/javascript">
             jQuery.datetimepicker.setLocale('es');
-            jQuery('#hora_fin').datetimepicker({
-                i18n: {
-                    de: {
-                        months: [
-                            'Enero', 'Febrero', 'Marzo', 'Abril',
-                            'Mayo', 'Junio', 'Julio', 'Agosto',
-                            'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
-                        ],
-                        dayOfWeek: [
-                            "So.", "Mo", "Di", "Mi",
-                            "Do", "Fr", "Sa.",
-                        ]
-                    }
-                },
-                container: '#hora_fin',
-                orientation: "auto-top",
-                datepicker: false,
-                timepicker: true,
-                minTime: '10:00:00',
-                maxTime: '20:00:00',
-                format: 'H:i'
-            });
+            
         </script>
         <script type="text/javascript">
             jQuery.datetimepicker.setLocale('es');
@@ -234,7 +212,7 @@
                 datepicker: false,
                 timepicker: true,
                 minTime: '10:00:00',
-                maxTime: '20:00:00',
+                maxTime: '21:00:00',
                 format: 'H:i'
             });
         </script>
