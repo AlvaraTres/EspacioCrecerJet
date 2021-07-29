@@ -74,6 +74,12 @@ class ShowTags extends Component
             'descripcion',
             'openEditTagModal',
         ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El Tag ha sido actualizado con éxito!',
+            'icon' => 'success'
+        ]);
     }
 
     public function deleteTag($id){
@@ -94,6 +100,12 @@ class ShowTags extends Component
             'nombre_tag',
             'descripcion',
             'openDeleteTagModal',
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El Tag ha sido eliminado con éxito!',
+            'icon' => 'success'
         ]);
     }
 }

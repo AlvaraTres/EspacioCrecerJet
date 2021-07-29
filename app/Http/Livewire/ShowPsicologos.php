@@ -109,6 +109,12 @@ class ShowPsicologos extends Component
             'psicologo',
             'openEditPsicologoModal'
         ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El perfil de psicológo fue registrado con éxito!',
+            'icon' => 'success'
+        ]);
     }
 
     public function deletePsicologo($id){
@@ -125,6 +131,12 @@ class ShowPsicologos extends Component
             'openDeletePsicologoModal',
             'psicologo_id',
             'psicologo',
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El perfil de psicológo fue eliminado con éxito!',
+            'icon' => 'success'
         ]);
     }
 

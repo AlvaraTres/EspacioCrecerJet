@@ -109,6 +109,12 @@ class ShowHorarios extends Component
             'openEditModal'
         ]);
 
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'Los datos de la reserva han sido actualizados exitosamente!',
+            'icon' => 'success'
+        ]);
+
         return redirect()->to('/horarios');
     }
 
@@ -125,6 +131,12 @@ class ShowHorarios extends Component
             'fecha_hora_fin',
             'horario_id',
             'openDelModal'
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'Los datos de la reserva han sido eliminados exitosamente!',
+            'icon' => 'success'
         ]);
 
         return redirect()->to('/horarios');

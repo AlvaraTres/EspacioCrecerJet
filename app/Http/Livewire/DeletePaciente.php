@@ -24,9 +24,13 @@ class DeletePaciente extends Component
         $this->reset([
             'openDeleteModal',
         ]);
-        $this->emitTo('show-pacientes', 'render');
+        $this->emitTo('show-pacientes','render');
 
-        $this->emit('alert', 'El paciente ha sido eliminado exitosamente.');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El perfil de paciente ha sido eliminado correctamente.',
+            'icon' => 'success'
+        ]);
     }
 
     public function render()

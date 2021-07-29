@@ -73,6 +73,12 @@ class ShowRoles extends Component
             'rol',
             'tipo_usuario',
         ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El rol ha sido actualizado con éxito!',
+            'icon' => 'success'
+        ]);
     }
 
     public function delete($id){
@@ -91,6 +97,12 @@ class ShowRoles extends Component
             'rol_id',
             'rol',
             'tipo_usuario',
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El ha sido eliminado con éxito!',
+            'icon' => 'success'
         ]);
     }
 }

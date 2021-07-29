@@ -65,7 +65,11 @@ class CreatePsicologo extends Component
         ]);
         
         $this->emit('render_add_psicologo');
-        $this->emit('alert', 'El perfil de psicólogo se ha creado correctamente.');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El perfil de psicólogo se ha creado correctamente.',
+            'icon' => 'success'
+        ]);
     }
 
     public function render()

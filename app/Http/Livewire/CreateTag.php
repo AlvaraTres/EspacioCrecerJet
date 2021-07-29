@@ -31,7 +31,11 @@ class CreateTag extends Component
         ]);
 
         $this->emit('render_add_tag');
-        $this->emit('alert', 'El tag se ha creado correctamente.');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El tag se ha creado con éxito!.',
+            'icon' => 'success'
+        ]);
     }
 
     public function render()

@@ -116,11 +116,19 @@
                         var startDate = moment(selectDate);
                         //alert('Click: '+info.timeStr);
                         if (moment(startDate).isBefore(moment())) {
-                            alert('No puedes reservar hora para fechas pasadas.');
+                            Swal.fire(
+                                'Ooops!',
+                                'No puedes reservar horas durante días que ya transcurrieron',
+                                'error'
+                            )
                         } else {
                             console.log(startDate.isoWeekday());
                             if (startDate.isoWeekday() == 6 || startDate.isoWeekday() == 7) {
-                                alert('No puedes reservar hora durante fines de semana');
+                                Swal.fire(
+                                    'Ooops!',
+                                    'No puedes reservar horas durante los fines de semana',
+                                    'error'
+                                )
                             } else {
                                 @this.set('open', true);
                                 var fecha = new Date(info.dateStr + 'T00:00:00');

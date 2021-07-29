@@ -28,7 +28,11 @@ class CreateRol extends Component
         ]);
         
         $this->emit('render_add_rol');
-        $this->emit('alert', 'El post se ha creado correctamente.');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El rol se ha creado con exito!.',
+            'icon' => 'success'
+        ]);
     }
 
     public function render()

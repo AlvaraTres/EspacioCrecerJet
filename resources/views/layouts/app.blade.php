@@ -57,13 +57,9 @@
 
         @livewireScripts
         <script>
-            Livewire.on('alert', function(message){
-                Swal.fire(
-                    'Good job!',
-                    message,
-                    'success'
-                )
-            })
+            window.addEventListener('swal', function(e){
+                Swal.fire(e.detail);
+            });
         </script>
     </body>
 </html>

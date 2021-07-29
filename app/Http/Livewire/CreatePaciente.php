@@ -71,8 +71,12 @@ class CreatePaciente extends Component
             'alergia',
         ]);
 
-        $this->emit('render_add_paciente');
-        $this->emit('alert', 'El perfil de paciente se ha creado correctamente.');
+        $this->emit('render');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El paciente fue registrado con éxito!',
+            'icon' => 'success'
+        ]);
     }
 
     public function render()

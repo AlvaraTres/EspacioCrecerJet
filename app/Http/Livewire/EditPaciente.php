@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Paciente;
+use App\Models\User;
 
 class EditPaciente extends Component
 {
@@ -35,10 +36,29 @@ class EditPaciente extends Component
         $this->validate();
         $this->paciente->save();
 
+        $user = User::where('rut_usuario', '=', $this->paciente->rut_paciente)->first();
+        $user_id = $user->id;
+        $user = User::find($user_id);
+
+
+        $user->update([
+            'rut_usuario' => $this->paciente->rut_paciente,
+            'nombre_usuario' => $this->paciente->nombre_paciente,
+            'apellido_pat_usuario' => $this->paciente->ap_pat_paciente,
+            'apellido_mat_usuario' => $this->paciente->ap_mat_paciente,
+            'telefono' => $this->paciente->telefono_paciente,
+            'email' => $this->paciente->email,
+            'fecha_nacimiento' => $this->paciente->fecha_nacimiento_paciente,
+        ]);
+
         $this->reset(['openEditPacienteModal']);
 
-        $this->emitTo('show-pacientes', 'render');
+        $this->emitTo('show-pacientes','render');
 
-        $this->emit('alert', 'El paciente ha sido actualizado exitosamente.');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El perfil de paciente se ha modificado correctamente.',
+            'icon' => 'success'
+        ]);
     }
 }

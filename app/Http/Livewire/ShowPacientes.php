@@ -59,11 +59,11 @@ class ShowPacientes extends Component
         'alergia' => 'required',
     ];
 
-    protected $listeners = ['render_add_paciente' => 'render'];
+    protected $listeners = ['render' => 'render'];
 
     public function render()
     {
-        $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy($this->sort, $this->direction)->paginate(10);
+        $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'DESC')->paginate(10);
         
         return view('livewire.show-pacientes', compact('pacientes'));
     }
