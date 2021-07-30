@@ -1,7 +1,5 @@
 <div>
-    <div id="calendar">
-
-    </div>
+    
 
     <!-- MODAL DE CREAR RESERVAS -->
     <x-jet-dialog-modal wire:model="open" id="reg_res">

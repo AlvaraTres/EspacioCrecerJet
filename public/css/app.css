@@ -1304,9 +1304,6 @@ select {
 .h-2 {
 	height: 0.5rem;
 }
-.h-28 {
-	height: 7rem;
-}
 .min-h-screen {
 	min-height: 100vh;
 }
@@ -1710,10 +1707,6 @@ select {
 .bg-red-500 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
-}
-.bg-red-400 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
@@ -2497,14 +2490,14 @@ select {
 		border-radius: 0.375rem;
 	}
 
-	.sm\:rounded-t-lg {
-		border-top-left-radius: 0.5rem;
-		border-top-right-radius: 0.5rem;
-	}
-
 	.sm\:rounded-b-lg {
 		border-bottom-right-radius: 0.5rem;
 		border-bottom-left-radius: 0.5rem;
+	}
+
+	.sm\:rounded-t-lg {
+		border-top-left-radius: 0.5rem;
+		border-top-right-radius: 0.5rem;
 	}
 
 	.sm\:rounded-tl-md {

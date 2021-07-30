@@ -20,7 +20,8 @@
                     <div class="flex">
                         <div x-data="{dropdownOpen: false}" class="relative my-32">
                             <button @click="dropdownOpen = !dropdownOpen"
-                                class="flex items-stretch relative z-10 rounded-md bg-blue-300 p-2 focus:outline-none hover:bg-blue-500" onClick="bgFunction(1)" id="usersnav">
+                                class="flex items-stretch relative z-10 rounded-md bg-blue-300 p-2 focus:outline-none hover:bg-blue-500"
+                                onClick="bgFunction(1)" id="usersnav">
                                 <p class="text-white">Usuarios</p>
                                 <svg class="h-5 w-5 items-center text-white" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20" fill="currentColor">
@@ -33,13 +34,16 @@
                             <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10"></div>
 
                             <div x-show="dropdownOpen" class="absolute mt-2 py-2 bg-blue-100 rounded-md shadow-xl z-20">
-                                <a href="{{ route('pacientes') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                <a href="{{ route('pacientes') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
                                     Pacientes
                                 </a>
-                                <a href="{{ route('psicologos') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                <a href="{{ route('psicologos') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
                                     Psicológos
                                 </a>
-                                <a href="{{ route('roles') }}" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                <a href="{{ route('roles') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
                                     Roles
                                 </a>
                             </div>
@@ -62,6 +66,40 @@
                     <x-jet-nav-link href="{{ route('pagos') }}" :active="request()->routeIs('pagos')">
                         Pagos
                     </x-jet-nav-link>
+
+                    <div class="flex">
+                        <div x-data="{dropdownOpen: false}" class="relative my-32">
+                            <button @click="dropdownOpen = !dropdownOpen"
+                                class="flex items-stretch relative z-10 rounded-md bg-blue-300 p-2 focus:outline-none hover:bg-blue-500"
+                                onClick="bgFunction2(1)" id="reportsnav">
+                                <p class="text-white">Reportes</p>
+                                <svg class="h-5 w-5 items-center text-white" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+
+                            <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10"></div>
+
+                            <div x-show="dropdownOpen" class="absolute mt-2 py-2 bg-blue-100 rounded-md shadow-xl z-20">
+                                <a href="{{ route('reportePagos') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                    Reporte Pagos
+                                </a>
+                                <a href="{{ route('reporteReservas') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                    Reporte Reservas
+                                </a>
+                                <a href="{{ route('reportePacientes') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                    Reporte Pacientes
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -304,32 +342,62 @@
         <script type="text/javascript">
             var count = 0;
 
-            function bgFunction(x){
+            function bgFunction(x) {
                 var x;
-                if(x == 1){
-                    count=count+1;
+                if (x == 1) {
+                    count = count + 1;
                 }
-                if(count == 1){
+                if (count == 1) {
                     document.getElementById("usersnav").style.backgroundColor = "rgb(30, 58, 138)";
-                }else if(count == 2){
+                } else if (count == 2) {
                     document.getElementById("usersnav").style.backgroundColor = "rgb(147, 197, 253)";
                     count = 0;
                 }
             }
 
-            if(window.location.href == "{{route('pacientes')}}" || window.location.href == "{{route('psicologos')}}"){
+            if (window.location.href == "{{ route('pacientes') }}" || window.location.href ==
+                "{{ route('psicologos') }}") {
                 document.getElementById("usersnav").style.backgroundColor = "rgb(30, 58, 138)";
             }
-            
+
             const closeclick = document.querySelector("#usersnav");
 
-            document.addEventListener("click", function(event){
-                if(!event.target.closest("#usersnav")){
+            document.addEventListener("click", function(event) {
+                if (!event.target.closest("#usersnav")) {
                     document.getElementById("usersnav").style.backgroundColor = "rgb(147, 197, 253)";
                     count = 0;
                 }
             });
+        </script>
 
+        <script type="text/javascript">
+            var count2 = 0;
+
+            function bgFunction2(y) {
+                var y;
+                if (y == 1) {
+                    count2 = count2 + 1;
+                }
+                if (count2 == 1) {
+                    document.getElementById("reportsnav").style.backgroundColor = "rgb(30, 58, 138)";
+                } else if (count == 2) {
+                    document.getElementById("reportsnav").style.backgroundColor = "rgb(147, 197, 253)";
+                    count2 = 0;
+                }
+            }
+            if (window.location.href == "{{ route('reportePagos') }}" || window.location.href ==
+                "{{ route('reportePacientes') }}" || window.location.href == "{{ route('reporteReservas') }}") {
+                document.getElementById("reportsnav").style.backgroundColor = "rgb(30, 58, 138)";
+            }
+
+            const closeclick2 = document.querySelector("#reportsnav");
+
+            document.addEventListener("click", function(event) {
+                if (!event.target.closest("#reportsnav")) {
+                    document.getElementById("reportsnav").style.backgroundColor = "rgb(147, 197, 253)";
+                    count = 0;
+                }
+            });
         </script>
     @endpush
 </nav>

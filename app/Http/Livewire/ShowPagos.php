@@ -14,6 +14,7 @@ class ShowPagos extends Component
     public $psicologo;
     public $from;
     public $to;
+    public $totalPagos;
 
     public function render()
     {
@@ -48,7 +49,17 @@ class ShowPagos extends Component
                           ->orWhere('pacientes.ap_mat_paciente', 'like', '%'. $this->paciente .'%');
                 })
                 ->get();
-                
+        
+        if($this->to != null && $this->from != null){
+            $cont = $pagos->count();
+            $ttpp = 0;
+            for($i=0; $i<$cont; $i++){
+                $ttpp = $ttpp + $pagos[$i]->monto_pago;
+            }
+            $this->totalPagos = $ttpp;
+        }
+        
+
         return view('livewire.show-pagos', compact('pagos'));
     }
 }

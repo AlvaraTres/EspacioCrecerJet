@@ -56,6 +56,19 @@ Route::middleware(['auth:sanctum', 'verified'])->get('pagos', function(){
     return view('pagos.pagos');
 })->name('pagos');
 
+//RUTAS DE REPORTES
+Route::middleware(['auth:sanctum', 'verified'])->get('/reportePagos', function(){
+    return view('reportes.pagos');
+})->name('reportePagos');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/reportePacientes', function(){
+    return view('reportes.pacientes');
+})->name('reportePacientes');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/reporteReservas', function(){
+    return view('reportes.reservas');
+})->name('reporteReservas');
+
 //RUTA DE PAGO CON PAYPAL
 Route::get( '/payment/{date1}/{date2}/{date3}/{startTime}/{description}/{pid}', [PaymentController::class, 'payWithPayPal'])->name('payment');
 Route::get('/payment/cancel', [PaymentController::class, 'paymentCancel'])->name('payment.cancel');

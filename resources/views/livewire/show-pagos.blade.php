@@ -2,10 +2,15 @@
     <div class="mx-auto bg-white-200 w-full">
         <p class="px-4 py-2">Filtros de búsqueda</p>
         <div class="flex items-stretch bg-white-300 w-full px-4 py-2">
-            <input type="text" placeholder="Buscar Paciente" class="mr-5 rounded-md border-gray-300" wire:model="paciente">
-            <input type="text" placeholder="Buscar Psicológo" class="mr-5 rounded-md border-gray-300" wire:model="psicologo">
-            <input type="text" placeholder="Desde" class="mr-5 datetimepicker-input rounded-md border-gray-300" id="dateDesde" wire:model="from">
-            <input type="text" placeholder="Hasta" class="mr-5 datetimepicker-input rounded-md border-gray-300" id="dateHasta" wire:model="to">
+            <input type="text" placeholder="Buscar Paciente" class="mr-2 rounded-md border-gray-300" wire:model="paciente">
+            <input type="text" placeholder="Buscar Psicológo" class="mr-2 rounded-md border-gray-300" wire:model="psicologo">
+            <input type="text" placeholder="Desde" class="mr-2 datetimepicker-input rounded-md border-gray-300" id="dateDesde" wire:model="from" readonly>
+            <input type="text" placeholder="Hasta" class="mr-2 datetimepicker-input rounded-md border-gray-300" id="dateHasta" wire:model="to" readonly>
+            <div class="flex items-stretch bg-gray-300 rounded-md">
+                <span class="flex items-center rounded-md px-2">Total: </span>
+                <input type="text" placeholder="Total" class="rounded-md border-gray-300" id="total" wire:model.defer="totalPagos" readonly>
+            </div>
+            
         </div>
     </div>
 
