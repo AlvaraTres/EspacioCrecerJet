@@ -1,33 +1,15 @@
 <div>
-    <div class="mx-auto bg-white-200 w-full">
-        <p class="px-4 py-2">Filtros de búsqueda</p>
-        <select class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="anioSearch" id="anioSearch" wire:model="anioSearch">
-            <option value="#">Seleccionar</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-            <option value="2028">2028</option>
-        </select>
-    </div>
-
-    <div id="container"></div>
+    <div id="pagospormes"></div>
 
     @push('js')
-
         <script type="text/javascript">
-            document.addEventListener('livewire:load', function() {
-                var data = @this.datas;
+            document.addEventListener('livewire:load', function(){
+                var pagosXMes = @this.pagosXMes;
+                console.log(pagosXMes);
 
-                console.log(data);
-
-                var chart = Highcharts.chart('container', {
+                var chart = Highcharts.chart('pagospormes', {
                     title: {
-                        text: 'Nuevos Pacientes'
+                        text: 'Reporte de Pagos'
                     },
                     subtitle: {
                         text: 'Fuente: Espacio Crecer S.A.'
@@ -40,7 +22,7 @@
                     },
                     yAxis: {
                         title: {
-                            text: 'Número de pacientes registrados'
+                            text: 'Cantidad de pagos registrados'
                         }
                     },
                     legend: {
@@ -55,8 +37,8 @@
                     },
                     series: [{
                         type: 'column',
-                        name: 'Nuevos pacientes',
-                        data: JSON.parse(data)
+                        name: 'Cantidad de pagos',
+                        data: JSON.parse(pagosXMes)
                     }],
                     responsive: {
                         rules: [{
@@ -75,14 +57,14 @@
                 });
             });
 
-            document.addEventListener("DOMContentLoaded", ()=>{
+            document.addEventListener("DOMContentLoaded", () => {
                 Livewire.hook('element.updated', (el, component) => {
-                    var data = @this.datas;
-                    console.log(data);
+                    var pagosXMes = @this.pagosXMes;
+                    console.log(pagosXMes);
 
-                    var chart = Highcharts.chart('container', {
+                    var chart = Highcharts.chart('pagospormes', {
                     title: {
-                        text: 'Nuevos Pacientes'
+                        text: 'Reporte de Pagos'
                     },
                     subtitle: {
                         text: 'Fuente: Espacio Crecer S.A.'
@@ -95,7 +77,7 @@
                     },
                     yAxis: {
                         title: {
-                            text: 'Número de pacientes registrados'
+                            text: 'Cantidad de pagos registrados'
                         }
                     },
                     legend: {
@@ -110,8 +92,8 @@
                     },
                     series: [{
                         type: 'column',
-                        name: 'Nuevos pacientes',
-                        data: JSON.parse(data)
+                        name: 'Cantidad de pagos',
+                        data: JSON.parse(pagosXMes)
                     }],
                     responsive: {
                         rules: [{
@@ -130,7 +112,6 @@
                 });
                 });
             });
-            
         </script>
     @endpush
 </div>
