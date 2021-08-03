@@ -1,4 +1,15 @@
 <div>
+    <div class="mx-auto bg-white-200 w-full">
+        <p class="px-4 py-2">Filtros de búsqueda</p>
+        <div class="flex items-stretch bg-white-300 w-full px-4 py-2">
+            <select class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="anioSearchTotalPagos" id="anioSearchTotalPagos" wire:model="selectedAnio">
+                <option value="#">Seleccionar</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+            </select>
+        </div>
+    </div>
     <div id="pagospormes"></div>
 
     @push('js')

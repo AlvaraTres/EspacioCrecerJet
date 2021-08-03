@@ -1247,9 +1247,6 @@ select {
 .mt-20 {
 	margin-top: 5rem;
 }
-.ml-5 {
-	margin-left: 1.25rem;
-}
 .block {
 	display: block;
 }
@@ -1838,15 +1835,6 @@ select {
 }
 .pb-20 {
 	padding-bottom: 5rem;
-}
-.pt-12 {
-	padding-top: 3rem;
-}
-.pr-12 {
-	padding-right: 3rem;
-}
-.pl-12 {
-	padding-left: 3rem;
 }
 .pb-12 {
 	padding-bottom: 3rem;

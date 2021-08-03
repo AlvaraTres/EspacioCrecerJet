@@ -15,16 +15,19 @@ class EnlistarFichasModal extends Component
     public $paciente_rut;
     public $count_fichas=1;
 
+    public function mount(Paciente $paciente){
+        $this->paciente = $paciente;
+    }
+
     public function render()
     {
         $ficha_paciente = DB::table('fichas_pacientes')
                     ->join('users', 'users.id', '=', 'fichas_pacientes.id_usuario')
                     ->join('pacientes', 'pacientes.id', '=', 'fichas_pacientes.id_paciente')
-                    ->where('users.id', '=', 1)
+                    ->where('users.id', '=', 1) //cambiar a psicologo que este en el sistema
                     ->where('pacientes.id', '=', $this->paciente->id)
                     ->select('fichas_pacientes.*')
                     ->get();
-
         $this->count_fichas = 2;
 
         return view('livewire.enlistar-fichas-modal', compact('ficha_paciente'));
