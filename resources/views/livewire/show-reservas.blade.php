@@ -1,11 +1,32 @@
 <div>
-    @if (!$datos)
+    @if(\Auth::user()->id_users_rol == 3)
+        @if (!$datos)
+            <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
+                <p class="text-justify ">Hola
+                    {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }},
+                    para reservar tu primera hora con Espacio Crecer, por favor selecciona uno de nuestros
+                    psicológos a continuación, si quieres saber más de nuestros profesionales puedes visitar la
+                    sección de psicológos en la barra de navegación.</p>
+                <select
+                    class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    name="psico" id="psico" wire:model="selectedPsico">
+                    <option value="#">Seleccionar psicológo</option>
+                    @foreach ($filtPsico as $item)
+                        <option value="{{ $item->id }}">{{ $item->psicologo }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @else
+            <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
+                <p class="text-justify ">Hola
+                    {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }},
+                    para reservar otra hora con tu psicológo {{$datos->nombre_usuario}}&nbsp;{{$datos->apellido_pat_usuario}}, selecciona una fecha y horario disponible en el siguiente calendario.</p>
+                
+            </div>
+        @endif
+    @else
+        @if(\Auth::user()->id_users_rol == 1)
         <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
-            <p class="text-justify ">Hola
-                {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }},
-                para reservar tu primera hora con Espacio Crecer, por favor selecciona uno de nuestros
-                psicológos a continuación, si quieres saber más de nuestros profesionales puedes visitar la
-                sección de psicológos en la barra de navegación.</p>
             <select
                 class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 name="psico" id="psico" wire:model="selectedPsico">
@@ -14,14 +35,16 @@
                     <option value="{{ $item->id }}">{{ $item->psicologo }}</option>
                 @endforeach
             </select>
+            <select
+                class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                name="paciente" id="paciente" wire:model="selectedPaciente">
+                <option value="#">Seleccionar paciente</option>
+                @foreach ($filtPaciente as $item)
+                    <option value="{{ $item->id }}">{{ $item->paciente }}</option>
+                @endforeach
+            </select>
         </div>
-    @else
-        <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
-            <p class="text-justify ">Hola
-                {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }},
-                para reservar otra hora con tu psicológo {{$datos->nombre_usuario}}&nbsp;{{$datos->apellido_pat_usuario}}, selecciona una fecha y horario disponible en el siguiente calendario.</p>
-            
-        </div>
+        @endif
     @endif
 
 
