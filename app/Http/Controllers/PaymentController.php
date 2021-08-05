@@ -81,23 +81,54 @@ class PaymentController extends Controller
             $solo_fecha = Carbon::parse($fecha)->format('Y-m-d');
             $fecha = Carbon::parse($fecha)->format('Y-m-d H:i:s');
             $hora_termino = Carbon::parse($fecha)->addHour();
-            Reserva::create([
-                'id_usuario' => $pid,
-                'id_paciente' => Auth::user()->id,
-                'fecha_reserva' => $solo_fecha,
-                'hora_reserva' => $fecha,
-                'fecha_hora_reserva' => $fecha,
-                'motivo_reserva' => $motivo,
-                'fecha_hora_reserva_fin' => $hora_termino,
-            ]);
-            $reserva = Reserva::latest()->first();
 
-            Pago::create([
-                'id_reserva' => $reserva->id,
-                'id_paciente' => Auth::user()->id,
-                'fecha_pago' => Carbon::now('America/Santiago'),
-                'monto_pago' => 20000,
-            ]);
+            if(\Auth::user()->id_users_rol == 3){
+                $paciente = DB::table('pacientes')
+                          ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
+                          ->select('pacientes.*')
+                          ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
+                          ->first();
+
+                Reserva::create([
+                    'id_usuario' => $pid,
+                    'id_paciente' => $paciente->id,
+                    'fecha_reserva' => $solo_fecha,
+                    'hora_reserva' => $fecha,
+                    'fecha_hora_reserva' => $fecha,
+                    'motivo_reserva' => $motivo,
+                    'fecha_hora_reserva_fin' => $hora_termino,
+                ]);
+                
+                $reserva = Reserva::latest()->first();
+
+                Pago::create([
+                    'id_reserva' => $reserva->id,
+                    'id_paciente' => $paciente->id,
+                    'fecha_pago' => Carbon::now('America/Santiago'),
+                    'monto_pago' => 20000,
+                ]);
+            }else{
+                Reserva::create([
+                    'id_usuario' => $pid,
+                    'id_paciente' => Auth::user()->id,
+                    'fecha_reserva' => $solo_fecha,
+                    'hora_reserva' => $fecha,
+                    'fecha_hora_reserva' => $fecha,
+                    'motivo_reserva' => $motivo,
+                    'fecha_hora_reserva_fin' => $hora_termino,
+                ]);
+                $reserva = Reserva::latest()->first();
+
+                Pago::create([
+                    'id_reserva' => $reserva->id,
+                    'id_paciente' => $paciente->id,
+                    'fecha_pago' => Carbon::now('America/Santiago'),
+                    'monto_pago' => 20000,
+                ]);
+            }
+            
+
+            
 
             return redirect()->route('reservas.success', ['reserva' => $reserva]);
         }
@@ -107,12 +138,21 @@ class PaymentController extends Controller
 
     public function successReserva(Request $request, $reserva)
     {
-        $datos = DB::table('reservas')
-                    ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
-                    ->join('users', 'users.id', '=', 'reservas.id_usuario')
-                    ->select('reservas.*', 'pacientes.email as correo','pacientes.*', 'users.*')
-                    ->where('reservas.id', '=', $reserva)
-                    ->get();
+        if(\Auth::user()->id_users_rol == 3){
+            $paciente = DB::table('pacientes')
+                          ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
+                          ->select('pacientes.*')
+                          ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
+                          ->first();
+
+            $datos = DB::table('reservas')
+                ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                ->select('reservas.*', 'pacientes.email as correo','pacientes.*', 'users.*')
+                ->where('reservas.id', '=', $reserva)
+                ->get();
+        }
+        
         
         return view('reservas.reserva_success', compact('datos'));
     }

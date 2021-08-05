@@ -18,7 +18,7 @@ class PacientesSeeder extends Seeder
     {
         $user = new User();
         $user->id_users_rol = '3';
-        $user->rut_usuario = '18.404.255-K';
+        $user->rut_usuario = '16.404.244-K';
         $user->nombre_usuario = 'Alfredo';
         $user->apellido_pat_usuario = 'Lorenzini';
         $user->apellido_mat_usuario = 'Git';

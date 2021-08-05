@@ -10,7 +10,7 @@ use DB;
 
 class ReservasController extends Controller
 {
-    public function index(Request $request){
-        return view('reservas.index');
+    public function index(){
+        //
     }
 }

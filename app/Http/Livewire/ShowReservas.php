@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reserva;
+use App\Models\User;
 use DB;
 use Carbon\Carbon;
 
@@ -22,6 +23,9 @@ class ShowReservas extends Component
     //datos reserva
     public $id_usuario, $id_paciente, $fecha_reserva, $hora_reserva, $fecha_hora_reserva, $motivo_reserva, $cert_alumno_regular, $fecha_hora_reserva_fin;
 
+    public $selectedPsico;
+    public $comparador = false;
+
     protected $rules = [
         'id_usuario' => 'required',
         'id_paciente' => 'required',
@@ -32,14 +36,60 @@ class ShowReservas extends Component
     ];
 
     public function render()
-    {
-        $events = DB::table('reservas')
+    {   $filtPsico;
+
+        if(\Auth::user()->id_users_rol == 3)
+        {
+            $paciente = DB::table('pacientes')
+                          ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
+                          ->select('pacientes.*')
+                          ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
+                          ->first();
+
+            $events = DB::table('reservas')
+                        ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                        ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                        ->where('reservas.id_paciente', '=', $paciente->id)
+                        ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
+                        ->get();
+
+            $filtPsico = User::select(DB::raw('CONCAT(users.nombre_usuario, \' \', users.apellido_pat_usuario) AS psicologo'), 'users.*')->where('users.id_users_rol', '=', 2)->orderBy('users.id', 'ASC')->get();
+            
+            $datos = DB::table('reservas')
+                    ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                    ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                    ->select('users.id as id_user' ,'users.*', 'pacientes.*')
+                    ->where('pacientes.id', '=', $paciente->id)
+                    ->first();
+            if($datos){
+                $events = DB::table('reservas')
+                            ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                            ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                            ->where('reservas.id_paciente', '=', $paciente->id)
+                            ->where('reservas.id_usuario', '=', $datos->id_user)
+                            ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
+                            ->get();
+                $this->selectedPsico = $datos->id_user;
+            }else{
+                if($this->selectedPsico != null){
+                    $events = DB::table('reservas')
+                            ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                            ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                            ->where('reservas.id_usuario', '=', $this->selectedPsico)
+                            ->select(DB::raw("'Hora Reservada' as title"), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
+                            ->get();
+                }
+            }
+        }else{
+            $events = DB::table('reservas')
                         ->join('users', 'users.id', '=', 'reservas.id_usuario')
                         ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
                         ->where('reservas.id_paciente', '=', Auth::user()->id)
                         ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
                         ->get();
-        //dd($reservas);
+            //dd($reservas);
+        }
+        
 
         $this->psicologos = DB::table('users')
                             ->where('id_users_rol', '=', 2)
@@ -49,7 +99,7 @@ class ShowReservas extends Component
 
         $this->events = json_encode($events);
 
-        return view('livewire.show-reservas');
+        return view('livewire.show-reservas', compact('datos', 'filtPsico', 'paciente'));
     }
 
     public function storeReserva($eventAdd, $startTime){
@@ -74,7 +124,7 @@ class ShowReservas extends Component
         //dd($hora_termino);
 
         Reserva::create([
-            'id_usuario' => 1,
+            'id_usuario' => $this->selectedPsico,
             'id_paciente' => Auth::user()->id,
             'fecha_reserva' => $fecha_res_form,
             'hora_reserva' => $fecha_final,
@@ -96,18 +146,36 @@ class ShowReservas extends Component
 
     public function editReserva($reserva){
         $reserva_find = Reserva::where('fecha_hora_reserva', '=', $reserva['start'])->first();
-        //dd($reserva_find);
-        $this->reserva_id = $reserva_find->id;
-        $this->motivo_reserva = $reserva_find->motivo_reserva;
-        $this->fecha_reserva = Carbon::parse($reserva['start'])->format('d-m-Y');
-        $this->hora_reserva = Carbon::parse($reserva['start'])->format('H:i');
-        //dd($format_time);
-
-    }
-
-    public function cancelarEdit(){
-        $this->openEditModal = false;
-        return redirect()->to('/reservas');
+        if(\Auth::user()->id_users_rol == 3){
+            $paciente = DB::table('pacientes')
+                           ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
+                           ->select('pacientes.*')
+                           ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
+                           ->first();
+            if($reserva_find->id_paciente == $paciente->id){
+                $this->openEditModal = true;
+                //dd($reserva_find);
+                $this->reserva_id = $reserva_find->id;
+                $this->motivo_reserva = $reserva_find->motivo_reserva;
+                $this->fecha_reserva = Carbon::parse($reserva['start'])->format('d-m-Y');
+                $this->hora_reserva = Carbon::parse($reserva['start'])->format('H:i');
+                //dd($format_time);
+            }else{
+                $this->dispatchBrowserEvent('swal', [
+                    'title' => 'Error!', 
+                    'text' => 'No puedes modificar horas que no hayas reservado tú.',
+                    'icon' => 'error'
+                ]);
+            }
+        }else{
+            //dd($reserva_find);
+            $this->openEditModal = true;
+            $this->reserva_id = $reserva_find->id;
+            $this->motivo_reserva = $reserva_find->motivo_reserva;
+            $this->fecha_reserva = Carbon::parse($reserva['start'])->format('d-m-Y');
+            $this->hora_reserva = Carbon::parse($reserva['start'])->format('H:i');
+            //dd($format_time);
+        }
     }
 
     public function updateReserva($editFecha, $editHora){
@@ -177,5 +245,28 @@ class ShowReservas extends Component
                     ->get();
 
         return json_encode($reservas);
+    }
+
+    public function checkDate($fecha, $startTime, $pid, $date1, $date2, $date3, $description)
+    {
+        $fecha = Carbon::createFromFormat('Y-m-d',$date1 . '-' . $date2 . '-' . $date3)->format('Y-m-d');
+        //dd($fecha);
+        $hora = Carbon::parse($startTime)->addSeconds('00')->format('H:i:s');
+        //dd($hora);
+        $fecha_hora = Carbon::createFromFormat('Y-m-d H:i:s',$fecha . ' ' . $hora);
+        
+        
+        $comparador = DB::table('reservas')->select('reservas.*')->where('reservas.fecha_hora_reserva', '=', $fecha_hora->format('Y-m-d H:i:s'))->first();
+        if(empty($comparador)){
+            return redirect()->route('payment', ['date1' => $date1, 'date2' => $date2, 'date3' => $date3, 'startTime' => $startTime, 'description' => $description, 'pid' => $pid]);
+        }else{
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'Error!', 
+                'text' => 'La hora seleccionada ya se encuentra reservada, por favor selecciona otra que este disponible.',
+                'icon' => 'error'
+            ]);
+        }
+
+        
     }
 }

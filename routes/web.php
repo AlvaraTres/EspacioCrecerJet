@@ -40,13 +40,13 @@ Route::middleware(['auth:sanctum', 'verified'])->get('tags_trastornos', function
     return view('tag.tags');
 })->name('tags_trastornos');
 
+
 Route::middleware(['auth:sanctum', 'verified'])->get('reservas', function(){
     return view('reservas.reservas');
 })->name('reservas');
 
-Route::get('/fichaPdf/{ficha_id}', [EnlistarFichasModal::class, 'fichaPacientePdf']);
 
-Route::get('/calendarioreservas', [ReservasController::class, 'index'])->name('calendarioreservas');
+Route::get('/fichaPdf/{ficha_id}', [EnlistarFichasModal::class, 'fichaPacientePdf']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('horarios', function(){
     return view('horario.horario');
@@ -55,6 +55,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('horarios', function(){
 Route::middleware(['auth:sanctum', 'verified'])->get('pagos', function(){
     return view('pagos.pagos');
 })->name('pagos');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('misPagos', function(){
+    return view('pagos.misPagos');
+})->name('misPagos');
 
 //RUTAS DE REPORTES
 Route::middleware(['auth:sanctum', 'verified'])->get('/reportePagos', function(){

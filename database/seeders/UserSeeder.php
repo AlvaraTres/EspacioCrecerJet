@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = new User();
-        $user->id_users_rol = '3';
+        $user->id_users_rol = '1';
         $user->rut_usuario = '18.404.255-K';
         $user->nombre_usuario = 'Diego';
         $user->apellido_pat_usuario = 'Alvarado';
