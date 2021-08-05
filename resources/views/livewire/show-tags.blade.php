@@ -5,7 +5,7 @@
                 class="flex items-center bg-blue-200 leading-normal rounded rounded-r-none border border-r-0 border-black px-3 text-grey-dark whitespace-no-wrap ">Buscar</span>
             <input type="text"
                 class="flex-shrink flex-grow w-px leading-normal rounded rounded-l-none px-3 relative focus:border-blue focus:shadow border border-black mr-4"
-                placeholder="Tipo usuario" wire:model="search">
+                placeholder="Buscar Tag" wire:model="search">
             @livewire('create-tag')
         </div>
     </div>

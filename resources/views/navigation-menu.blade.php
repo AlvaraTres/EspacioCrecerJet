@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-blue-300 border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-green-600 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex relative justify-between h-16">
@@ -21,7 +21,7 @@
                         <div class="flex">
                             <div x-data="{dropdownOpen: false}" class="relative my-32">
                                 <button @click="dropdownOpen = !dropdownOpen"
-                                    class="flex items-stretch relative z-10 rounded-md bg-blue-300 p-2 focus:outline-none hover:bg-blue-500"
+                                    class="flex items-stretch relative z-10 rounded-md bg-green-600 p-2 focus:outline-none hover:bg-green-500"
                                     onClick="bgFunction(1)" id="usersnav">
                                     <p class="text-white">Usuarios</p>
                                     <svg class="h-5 w-5 items-center text-white" xmlns="http://www.w3.org/2000/svg"
@@ -36,17 +36,17 @@
                                 </div>
 
                                 <div x-show="dropdownOpen"
-                                    class="absolute mt-2 py-2 bg-blue-100 rounded-md shadow-xl z-20">
+                                    class="absolute mt-2 py-2 bg-green-400 rounded-md shadow-xl z-20">
                                     <a href="{{ route('pacientes') }}"
-                                        class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                        class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
                                         Pacientes
                                     </a>
                                     <a href="{{ route('psicologos') }}"
-                                        class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                        class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
                                         Psicológos
                                     </a>
                                     <a href="{{ route('roles') }}"
-                                        class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                        class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
                                         Roles
                                     </a>
                                 </div>
@@ -73,7 +73,7 @@
                         <div class="flex">
                             <div x-data="{dropdownOpen: false}" class="relative my-32">
                                 <button @click="dropdownOpen = !dropdownOpen"
-                                    class="flex items-stretch relative z-10 rounded-md bg-blue-300 p-2 focus:outline-none hover:bg-blue-500"
+                                    class="flex items-stretch relative z-10 rounded-md bg-green-600 p-2 focus:outline-none hover:bg-green-500"
                                     onClick="bgFunction2(1)" id="reportsnav">
                                     <p class="text-white">Reportes</p>
                                     <svg class="h-5 w-5 items-center text-white" xmlns="http://www.w3.org/2000/svg"
@@ -88,17 +88,17 @@
                                 </div>
 
                                 <div x-show="dropdownOpen"
-                                    class="absolute mt-2 py-2 bg-blue-100 rounded-md shadow-xl z-20">
+                                    class="absolute mt-2 py-2 bg-green-400 rounded-md shadow-xl z-20">
                                     <a href="{{ route('reportePagos') }}"
-                                        class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                        class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
                                         Reporte Pagos
                                     </a>
                                     <a href="{{ route('reporteReservas') }}"
-                                        class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                        class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
                                         Reporte Reservas
                                     </a>
                                     <a href="{{ route('reportePacientes') }}"
-                                        class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">
+                                        class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
                                         Reporte Pacientes
                                     </a>
                                 </div>
@@ -373,23 +373,23 @@
                     count = count + 1;
                 }
                 if (count == 1) {
-                    document.getElementById("usersnav").style.backgroundColor = "rgb(30, 58, 138)";
+                    document.getElementById("usersnav").style.backgroundColor = "rgb(5, 150, 105)";
                 } else if (count == 2) {
-                    document.getElementById("usersnav").style.backgroundColor = "rgb(147, 197, 253)";
+                    document.getElementById("usersnav").style.backgroundColor = "rgb(6, 78, 59)";
                     count = 0;
                 }
             }
 
             if (window.location.href == "{{ route('pacientes') }}" || window.location.href ==
                 "{{ route('psicologos') }}") {
-                document.getElementById("usersnav").style.backgroundColor = "rgb(30, 58, 138)";
+                document.getElementById("usersnav").style.backgroundColor = "rgb(5, 150, 105)";
             }
 
             const closeclick = document.querySelector("#usersnav");
 
             document.addEventListener("click", function(event) {
                 if (!event.target.closest("#usersnav")) {
-                    document.getElementById("usersnav").style.backgroundColor = "rgb(147, 197, 253)";
+                    document.getElementById("usersnav").style.backgroundColor = "rgb(6, 78, 59)";
                     count = 0;
                 }
             });
@@ -404,22 +404,22 @@
                     count2 = count2 + 1;
                 }
                 if (count2 == 1) {
-                    document.getElementById("reportsnav").style.backgroundColor = "rgb(30, 58, 138)";
+                    document.getElementById("reportsnav").style.backgroundColor = "rgb(5, 150, 105)";
                 } else if (count == 2) {
-                    document.getElementById("reportsnav").style.backgroundColor = "rgb(147, 197, 253)";
+                    document.getElementById("reportsnav").style.backgroundColor = "rgb(6, 78, 59)";
                     count2 = 0;
                 }
             }
             if (window.location.href == "{{ route('reportePagos') }}" || window.location.href ==
                 "{{ route('reportePacientes') }}" || window.location.href == "{{ route('reporteReservas') }}") {
-                document.getElementById("reportsnav").style.backgroundColor = "rgb(30, 58, 138)";
+                document.getElementById("reportsnav").style.backgroundColor = "rgb(5, 150, 105)";
             }
 
             const closeclick2 = document.querySelector("#reportsnav");
 
             document.addEventListener("click", function(event) {
                 if (!event.target.closest("#reportsnav")) {
-                    document.getElementById("reportsnav").style.backgroundColor = "rgb(147, 197, 253)";
+                    document.getElementById("reportsnav").style.backgroundColor = "rgb(6, 78, 59)";
                     count = 0;
                 }
             });

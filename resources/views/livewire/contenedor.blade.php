@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 md:grid-cols 2 lg:grid-cols-3 gap-3">
         <div></div>
         <div class="object-center">
-            <img class="object-center" src="{{ asset('images/LogoEspacioCrecersinfondo.svg') }}" style="margin: -4%;">
+            <img class="object-center" src="{{ asset('images/LogoEspacioCrecersinfondo.png') }}" style="margin: -4%;">
         </div>
         <div></div>
         <div></div>
