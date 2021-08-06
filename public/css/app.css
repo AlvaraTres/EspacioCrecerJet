@@ -1247,6 +1247,9 @@ select {
 .mt-20 {
 	margin-top: 5rem;
 }
+.ml-5 {
+	margin-left: 1.25rem;
+}
 .block {
 	display: block;
 }
@@ -2165,6 +2168,10 @@ select {
 .hover\:bg-green-500:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+}
+.hover\:bg-green-400:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
 }
 .hover\:font-bold:hover {
 	font-weight: 700;

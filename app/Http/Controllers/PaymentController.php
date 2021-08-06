@@ -13,9 +13,9 @@ use DB;
 class PaymentController extends Controller
 {
 
-    public $full_date, $anio_reserva, $mes_reserva, $dia_reserva, $startTime_reserva, $description_reserva;
+    public $full_date, $paci,$anio_reserva, $mes_reserva, $dia_reserva, $startTime_reserva, $description_reserva;
 
-    public function payWithPayPal($date1,$date2, $date3, $startTime, $description, $pid)
+    public function payWithPayPal($date1,$date2, $date3, $startTime, $description, $pid, $paci)
     {
         //dd($date1, $date2, $date3, $startTime, $description);
         $this->anio_reserva = $date1;
@@ -23,6 +23,7 @@ class PaymentController extends Controller
         $this->dia_reserva = $date3;
         $this->startTime_reserva = $startTime;
         $this->description_reserva = $description;
+        $this->paci = $paci;
 
         $fecha = Carbon::createFromFormat('Y-m-d',$date1 . '-' . $date2 . '-' . $date3)->format('Y-m-d');
         //dd($fecha);
@@ -50,10 +51,9 @@ class PaymentController extends Controller
 
         $reserva_paypal = json_decode(json_encode($reserva_paypal), true);
 
-
         $data['invoice_id'] = 1;
         $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
-        $data['return_url'] = route('payment.success', ['fecha' => $this->full_date ,'description' => $this->description_reserva, 'pid' => $pid]);
+        $data['return_url'] = route('payment.success', ['fecha' => $this->full_date ,'description' => $this->description_reserva, 'pid' => $pid, 'paci' => $this->paci]);
         $data['cancel_url'] = route('payment.cancel');
         $data['total'] = 20000;
 
@@ -72,7 +72,7 @@ class PaymentController extends Controller
         dd('Aqui se cancela la operación');
     }
 
-    public function paymentSuccess(Request $request, $fecha, $motivo, $pid)
+    public function paymentSuccess(Request $request, $fecha, $motivo, $pid, $paci)
     {
         $provider = new ExpressCheckout;
         $response = $provider->getExpressCheckoutDetails($request->token);
@@ -110,7 +110,7 @@ class PaymentController extends Controller
             }else{
                 Reserva::create([
                     'id_usuario' => $pid,
-                    'id_paciente' => Auth::user()->id,
+                    'id_paciente' => $paci,
                     'fecha_reserva' => $solo_fecha,
                     'hora_reserva' => $fecha,
                     'fecha_hora_reserva' => $fecha,
@@ -121,22 +121,19 @@ class PaymentController extends Controller
 
                 Pago::create([
                     'id_reserva' => $reserva->id,
-                    'id_paciente' => $paciente->id,
+                    'id_paciente' => $paci,
                     'fecha_pago' => Carbon::now('America/Santiago'),
                     'monto_pago' => 20000,
                 ]);
             }
-            
 
-            
-
-            return redirect()->route('reservas.success', ['reserva' => $reserva]);
+            return redirect()->route('reservas.success', ['reserva' => $reserva, 'paci' => $paci]);
         }
 
         return redirect()->route('reservas.error');
     }
 
-    public function successReserva(Request $request, $reserva)
+    public function successReserva(Request $request, $reserva, $paci)
     {
         if(\Auth::user()->id_users_rol == 3){
             $paciente = DB::table('pacientes')
@@ -151,6 +148,18 @@ class PaymentController extends Controller
                 ->select('reservas.*', 'pacientes.email as correo','pacientes.*', 'users.*')
                 ->where('reservas.id', '=', $reserva)
                 ->get();
+        }else{
+            $paciente = DB::table('pacientes')
+                          ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
+                          ->select('pacientes.*')
+                          ->where('pacientes.id', '=', $paci)
+                          ->first();
+            $datos = DB::table('reservas')
+                          ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                          ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                          ->select('reservas.*', 'pacientes.email as correo','pacientes.*', 'users.*')
+                          ->where('reservas.id', '=', $reserva)
+                          ->get();
         }
         
         

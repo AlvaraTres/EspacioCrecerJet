@@ -1,5 +1,5 @@
 <div>
-    @if(\Auth::user()->id_users_rol == 3)
+    @if (\Auth::user()->id_users_rol == 3)
         @if (!$datos)
             <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
                 <p class="text-justify ">Hola
@@ -20,30 +20,37 @@
             <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
                 <p class="text-justify ">Hola
                     {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }},
-                    para reservar otra hora con tu psicológo {{$datos->nombre_usuario}}&nbsp;{{$datos->apellido_pat_usuario}}, selecciona una fecha y horario disponible en el siguiente calendario.</p>
-                
+                    para reservar otra hora con tu psicológo
+                    {{ $datos->nombre_usuario }}&nbsp;{{ $datos->apellido_pat_usuario }}, selecciona una fecha y
+                    horario
+                    disponible en el siguiente calendario.</p>
+
             </div>
         @endif
     @else
-        @if(\Auth::user()->id_users_rol == 1)
-        <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
-            <select
-                class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                name="psico" id="psico" wire:model="selectedPsico">
-                <option value="#">Seleccionar psicológo</option>
-                @foreach ($filtPsico as $item)
-                    <option value="{{ $item->id }}">{{ $item->psicologo }}</option>
-                @endforeach
-            </select>
-            <select
-                class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                name="paciente" id="paciente" wire:model="selectedPaciente">
-                <option value="#">Seleccionar paciente</option>
-                @foreach ($filtPaciente as $item)
-                    <option value="{{ $item->id }}">{{ $item->paciente }}</option>
-                @endforeach
-            </select>
-        </div>
+        @if (\Auth::user()->id_users_rol == 1)
+            <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
+                <select
+                    class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    name="psico" id="psico" wire:model="selectedPsico">
+                    <option value="#">Seleccionar psicológo</option>
+                    @foreach ($filtPsico as $item)
+                        <option value="{{ $item->id }}">{{ $item->psicologo }}</option>
+                    @endforeach
+                </select>
+                <select
+                    class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mr-3"
+                    name="paciente" id="paciente" wire:model="selectedPaciente">
+                    <option value="#">Seleccionar paciente</option>
+                    @foreach ($filtPaciente as $item)
+                        <option value="{{ $item->id }}">{{ $item->paciente }}</option>
+                    @endforeach
+                </select>
+                <x-jet-danger-button wire:click="resetFilt()"
+                    class="inline-flex items-center justify-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
+                    Resetear Filtros
+                </x-jet-danger-button>
+            </div>
         @endif
     @endif
 
@@ -51,12 +58,44 @@
     <!-- MODAL DE CREAR RESERVAS -->
     <x-jet-dialog-modal wire:model="open" id="reg_res">
         <x-slot name="title">
-            Reservar Hora
+            @if (\Auth::user()->id_users_rol == 1)
+                @if ($selectedPsico != null && $selectedPaciente != null)
+                    <p class="text-center font-bold">Reservar Hora</p> <br>
+                    <p class="text-justify">{{ $datos->nombre_paciente }}&nbsp;{{ $datos->ap_pat_paciente }} se
+                        atiende con psicológo
+                        {{ $datos->nombre_usuario }}&nbsp;{{ $datos->apellido_pat_usuario }}.
+                    </p>
+                @endif
+                @if ($selectedPaciente == null && $selectedPsico != null)
+                    <p class="text-center font-bold">Reservar Hora</p> <br>
+                    <p>Psicológo Seleccionado:
+                        {{ $datos->nombre_usuario }}&nbsp;{{ $datos->apellido_pat_usuario }}
+                    </p>
+                @endif
+            @else
+                Reservar Hora
+            @endif
         </x-slot>
 
         <x-slot name="content">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token">
-            <input type="hidden" name="pid" id="pid" wire:model.defer="selectedPsico">
+            @if ($selectedPsico != null)
+                <input type="hidden" name="pid" id="pid" wire:model.defer="selectedPsico">
+            @else
+                <input type="hidden" name="pid" id="pid" value="0">
+            @endif
+
+            @if ($selectedPaciente == null && $selectedPsico != null)
+                <x-jet-label value="Seleccione un paciente:" />
+                <select
+                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mr-3"
+                    name="paci" id="paci">
+                    <option value="">Seleccionar paciente</option>
+                    @foreach ($filtPaciente as $item)
+                        <option value="{{ $item->id }}">{{ $item->paciente }}</option>
+                    @endforeach
+                </select>
+            @endif
 
             <x-jet-label value="Hora Reserva:" />
             <input type="text" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepicker5"
@@ -152,6 +191,12 @@
 
                     dateClick: function(info, start) {
                         var pid = document.getElementById("pid").value;
+
+                        console.log("rol usuario");
+                        var usuario = {{ \Auth::user()->id_users_rol }};
+                        console.log(usuario);
+
+
                         console.log(moment(info));
                         var selectDate = info.dateStr;
                         var startDate = moment(selectDate);
@@ -171,58 +216,63 @@
                                     'error'
                                 )
                             } else {
-                                @this.set('open', true);
-                                var fecha = new Date(info.dateStr + 'T00:00:00');
-                                console.log(fecha);
+                                if (usuario == 1 && pid == 0) {
+                                    Swal.fire(
+                                        'Ooops!',
+                                        'Debes seleccionar uno de los dos filtros antes de realizar una reserva.',
+                                        'error'
+                                    )
+                                } else {
+                                    @this.set('open', true);
+                                    var fecha = new Date(info.dateStr + 'T00:00:00');
+                                    console.log(fecha);
 
-                                var date1 = fecha.getFullYear();
-                                var date2 = fecha.getMonth();
-                                var date3 = fecha.getDate();
-                                date2 = date2 + 1;
-                                console.log(date2);
-
-                                document.getElementById("btn_reserva").addEventListener("click",
-                                    function() {
-                                        var startTime = document.getElementById(
-                                                'datetimepicker5')
-                                            .value;
-
-                                        if (@this.checkDate(startTime)) {
-                                            var description = document.getElementById(
-                                                    'motivo_reserva')
-                                                .value;
-                                            console.log(startTime);
-
-
-
-                                            /*calendar.addEvent({
-                                                title: "Nuevo Evento",
-                                                start: date,
-                                                description: description
-                                            });*/
-
-                                            var token = document.getElementById("_token").value;
-
-                                            console.log(token);
-                                            var direccion =
-                                                "{{ route('payment', ['date1' => 'date1', 'date2' => 'date2', 'date3' => 'date3', 'startTime' => 'startTime', 'description' => 'description', 'pid' => 'pid']) }}"
-                                            direccion = direccion.replace('date1', date1);
-                                            direccion = direccion.replace('date2', date2);
-                                            direccion = direccion.replace('date3', date3);
-                                            direccion = direccion.replace('startTime',
-                                                startTime);
-                                            direccion = direccion.replace('description',
-                                                description);
-                                            direccion = direccion.replace('pid', pid);
-                                            window.location.href = direccion;
-
-                                            calendar.refetchEvents();
+                                    if (usuario == 1) {
+                                        if (@this.selectedPaciente != null) {
+                                            var pac = @this.selectedPaciente;
                                         } else {
-                                            console.log(@this.checkDate(startTime));
+                                            var pac = document.getElementById("paci").value;
                                         }
-
                                     }
-                                );
+                                    console.log(pac);
+
+                                    var date1 = fecha.getFullYear();
+                                    var date2 = fecha.getMonth();
+                                    var date3 = fecha.getDate();
+                                    date2 = date2 + 1;
+                                    console.log(date2);
+
+                                    document.getElementById("btn_reserva")
+                                        .addEventListener("click",
+                                            function() {
+                                                var startTime = document.getElementById(
+                                                        'datetimepicker5')
+                                                    .value;
+                                                console.log(startTime);
+                                                var description = document.getElementById(
+                                                        'motivo_reserva')
+                                                    .value;
+                                                console.log(startTime);
+
+
+
+                                                /*calendar.addEvent({
+                                                    title: "Nuevo Evento",
+                                                    start: date,
+                                                    description: description
+                                                });*/
+
+                                                var token = document.getElementById("_token")
+                                                    .value;
+
+                                                console.log(token);
+
+                                                @this.checkDate(fecha, startTime, pid, date1, date2,
+                                                    date3, description, pac);
+                                            }
+                                        );
+                                }
+
                             }
                         }
                     },
@@ -313,6 +363,9 @@
                                     var fecha = new Date(info.dateStr + 'T00:00:00');
                                     console.log(fecha);
 
+                                    console.log("rol usuario");
+                                    var usuario = {{ \Auth::user()->id_users_rol }};
+
                                     var date1 = fecha.getFullYear();
                                     var date2 = fecha.getMonth();
                                     var date3 = fecha.getDate();
@@ -331,6 +384,18 @@
                                                     .value;
                                                 console.log(startTime);
 
+                                                if (usuario == 1) {
+                                                    if (@this.selectedPaciente != null) {
+                                                        var pac = @this.selectedPaciente;
+                                                    } else {
+                                                        var select = document.getElementById(
+                                                        'paci');
+                                                        var pac = select.options[select
+                                                            .selectedIndex].value;
+                                                    }
+                                                }
+                                                console.log(pac);
+
 
 
                                                 /*calendar.addEvent({
@@ -345,7 +410,7 @@
                                                 console.log(token);
 
                                                 @this.checkDate(fecha, startTime, pid, date1, date2,
-                                                    date3, description);
+                                                    date3, description, pac);
                                             }
                                         );
                                 }
