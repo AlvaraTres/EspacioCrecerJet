@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
         $user->nombre_usuario = 'Diego';
         $user->apellido_pat_usuario = 'Alvarado';
         $user->apellido_mat_usuario = 'Salas';
+        $user->sexo = 'Masculino';
         $user->telefono = '993085203';
         $user->email = 'diego@gmail.com';
         $user->password = bcrypt('redhot1991');

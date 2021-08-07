@@ -31,6 +31,7 @@ class User extends Authenticatable
         'nombre_usuario',
         'apellido_pat_usuario',
         'apellido_mat_usuario',
+        'sexo',
         'telefono',
         'email',
         'fecha_nacimiento',

@@ -14,6 +14,7 @@ class Paciente extends Model
         'nombre_paciente',
         'ap_pat_paciente',
         'ap_mat_paciente',
+        'sexo',
         'profesion',
         'telefono_paciente',
         'email',

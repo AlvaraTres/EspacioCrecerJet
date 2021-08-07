@@ -13,6 +13,7 @@ class Fichapaciente extends Model
         'id_usuario',
         'id_paciente',
         'fecha_atencion_ficha',
+        'archivo',
         'resumen_atencion',
     ];
 

@@ -22,6 +22,7 @@ class PacientesSeeder extends Seeder
         $user->nombre_usuario = 'Alfredo';
         $user->apellido_pat_usuario = 'Lorenzini';
         $user->apellido_mat_usuario = 'Git';
+        $user->sexo = 'Masculino';
         $user->telefono = '993085203';
         $user->email = 'paciente@gmail.com';
         $user->password = bcrypt('redhot1991');
@@ -35,6 +36,7 @@ class PacientesSeeder extends Seeder
         $user->nombre_usuario = 'Ninoska';
         $user->apellido_pat_usuario = 'Zamudio';
         $user->apellido_mat_usuario = 'Hub';
+        $user->sexo = 'Femenino';
         $user->telefono = '945085265';
         $user->email = 'paciente2@gmail.com';
         $user->password = bcrypt('redhot1991');
@@ -47,6 +49,7 @@ class PacientesSeeder extends Seeder
         $paciente->nombre_paciente = 'Alfredo';
         $paciente->ap_pat_paciente = 'Lorenzini';
         $paciente->ap_mat_paciente = 'Git';
+        $paciente->sexo_paciente = 'Masculino';
         $paciente->profesion = 'Ingeniero';
         $paciente->telefono_paciente = '993085203';
         $paciente->email = 'paciente@gmail.com';
@@ -60,6 +63,7 @@ class PacientesSeeder extends Seeder
         $paciente->nombre_paciente = 'Ninoska';
         $paciente->ap_pat_paciente = 'Zamudio';
         $paciente->ap_mat_paciente = 'Hub';
+        $paciente->sexo_paciente = 'Femenino';
         $paciente->profesion = 'Estudiante';
         $paciente->telefono_paciente = '945085265';
         $paciente->email = 'paciente2@gmail.com';
