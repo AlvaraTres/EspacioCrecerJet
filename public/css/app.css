@@ -1149,6 +1149,9 @@ select {
 .float-right {
 	float: right;
 }
+.float-left {
+	float: left;
+}
 .mx-auto {
 	margin-left: auto;
 	margin-right: auto;
@@ -1713,6 +1716,22 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(167, 243, 208, var(--tw-bg-opacity));
 }
+.bg-blue-700 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
+}
+.bg-indigo-700 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(67, 56, 202, var(--tw-bg-opacity));
+}
+.bg-yellow-400 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(251, 191, 36, var(--tw-bg-opacity));
+}
+.bg-yellow-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(245, 158, 11, var(--tw-bg-opacity));
+}
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
 }
@@ -2153,6 +2172,10 @@ select {
 .hover\:bg-green-400:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
+}
+.hover\:bg-yellow-400:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(251, 191, 36, var(--tw-bg-opacity));
 }
 .hover\:font-bold:hover {
 	font-weight: 700;
