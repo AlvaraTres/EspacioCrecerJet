@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use DB;
 use PDF;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class EnlistarFichasModal extends Component
 {
@@ -116,5 +117,32 @@ class EnlistarFichasModal extends Component
             'openVerFichasModal',
             'openUploadFileModal'
         ]);
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'El archivo se ha cargado satisfactoriamente!',
+            'icon' => 'success'
+        ]);
+    }
+
+    public function downloadFileFichaPaciente($ficha_id)
+    {
+        $ficha = Fichapaciente::where('id', '=', $ficha_id)->first();
+        $paciente = DB::table('fichas_pacientes')
+                    ->join('pacientes', 'pacientes.id', '=', 'fichas_pacientes.id_paciente')
+                    ->select('pacientes.*')
+                    ->where('fichas_pacientes.id_paciente', '=', $ficha->id_paciente)
+                    ->first();
+
+        if(Storage::disk('local')->exists("subfolder/$paciente->nombre_paciente/$ficha->archivo")){
+            $path = Storage::disk('local')->path("subfolder/$paciente->nombre_paciente/$ficha->archivo");
+            return response()->download($path);
+        }else{
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'Error!', 
+                'text' => 'Ha ocurrido un error!, El archivo solicitado no existe o está dañado.',
+                'icon' => 'error'
+            ]);
+            return redirect('/404');
+        }
     }
 }

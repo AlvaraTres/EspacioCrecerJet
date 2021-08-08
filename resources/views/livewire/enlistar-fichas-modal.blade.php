@@ -21,9 +21,15 @@
                                 <h1 class="font-semibold items-center mr-4">Fecha de atención:
                                     {{ $ficha->fecha_atencion_ficha }}</h1>
                                 &nbsp;
+                                @if ($ficha->archivo == null)
                                 <a href="{{ url('/fichaPdf', ['ficha_id' => $ficha->id]) }}"
                                     class="flex inline-flix mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition>Descargar">Descargar
                                     Ficha</a>
+                                @else
+                                <a href="{{ url('/downloadFile', ['ficha_id' => $ficha->id]) }}"
+                                    class="flex inline-flix mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition>Descargar">Archivo Externo</a>
+                                @endif
+                                
                             </div>
                         @endforeach
                     </div>

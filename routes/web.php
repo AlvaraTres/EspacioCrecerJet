@@ -47,6 +47,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('reservas', function(){
 
 
 Route::get('/fichaPdf/{ficha_id}', [EnlistarFichasModal::class, 'fichaPacientePdf']);
+Route::get('/downloadFile/{ficha_id}', [EnlistarFichasModal::class, 'downloadFileFichaPaciente']);
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('horarios', function(){
     return view('horario.horario');
