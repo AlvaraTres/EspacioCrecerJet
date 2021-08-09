@@ -11,13 +11,8 @@ class VerPacienteInfoModal extends Component
     public $paciente;
     public $open = false;
 
-    public function mount($paciente){
-        $this->paciente = $paciente;
-    }
-
     public function render()
     {
-        
         $ver_paciente = Paciente::find($this->paciente->id);
 
         //calcular Edad

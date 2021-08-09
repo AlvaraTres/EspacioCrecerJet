@@ -72,4 +72,8 @@ class User extends Authenticatable
     public function roluser(){
         return $this->belongsTo('App\Model\Roleuser');
     }
+
+    public function horario(){
+        return $this->hasOne('App\Model\Horario');
+    }
 }

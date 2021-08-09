@@ -19,9 +19,19 @@ class ShowHorarios extends Component
 
     public function render()
     {
-        $events = DB::table('horarios')
-                    ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
-                    ->get();
+        if(\Auth::user()->id_users_rol == 1){
+            $events = DB::table('horarios')
+            ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
+            ->get();
+        }else{
+            if(\Auth::user()->id_users_rol == 2){
+                $events = DB::table('horarios')
+                            ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
+                            ->where('horarios.id_user', '=', \Auth::user()->id)
+                            ->get();   
+            }
+        }
+        
 
         //dd($events);
         $this->events = json_encode($events);
@@ -44,6 +54,7 @@ class ShowHorarios extends Component
         //dd($fech_hor_ini, $fech_hor_fin);
 
         Horario::create([
+            'id_user' => \Auth::user()->id,
             'fecha_inicio' => $fecha_only,
             'fecha_fin' => $fecha_only,
             'hora_inicio' => $fech_hor_ini,

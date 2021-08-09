@@ -10,6 +10,7 @@ class Horario extends Model
     protected $table = 'horarios';
 
     protected $fillable = [
+        'id_user',
         'fecha_inicio',
         'fecha_fin',
         'hora_inicio',
@@ -20,5 +21,9 @@ class Horario extends Model
 
     public function reservas(){
         return $this->hasOne('App\Model\Reserva');
+    }
+
+    public function users(){
+        return $this->belongsTo('App\Model\User');
     }
 }
