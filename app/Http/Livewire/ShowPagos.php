@@ -31,24 +31,41 @@ class ShowPagos extends Component
         }
 
         //dd($filter_from);
+        if(\Auth::user()->id_users_rol == 1){
+            $pagos = DB::table('pagos')
+            ->join('pacientes', 'pacientes.id', '=', 'pagos.id_paciente')
+            ->join('reservas', 'reservas.id', '=' , 'pagos.id_reserva')
+            ->join('users', 'users.id', '=', 'reservas.id_usuario')
+            ->select(DB::raw('CONCAT(users.nombre_usuario, \' \', users.apellido_pat_usuario, \' \', users.apellido_mat_usuario) AS psicologo'), DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente, \' \', pacientes.ap_mat_paciente) AS paciente'), 'pagos.*')
+            ->whereBetween('pagos.fecha_pago', [$filter_from, $filter_to])
+            ->where(function($query){
+                $query->where('users.nombre_usuario', 'like', '%'. $this->psicologo .'%')
+                      ->orWhere('users.apellido_pat_usuario', 'like', '%'. $this->psicologo .'%')
+                      ->orWhere('users.apellido_mat_usuario', 'like', '%'. $this->psicologo .'%');
+            })
+            ->where(function($query){
+                $query->where('pacientes.nombre_paciente', 'like', '%'. $this->paciente .'%')
+                      ->orWhere('pacientes.ap_pat_paciente', 'like', '%'. $this->paciente .'%')
+                      ->orWhere('pacientes.ap_mat_paciente', 'like', '%'. $this->paciente .'%');
+            })
+            ->get();
+        }else{
+            $pagos = DB::table('pagos')
+                    ->join('pacientes', 'pacientes.id', '=', 'pagos.id_paciente')
+                    ->join('reservas', 'reservas.id', '=' , 'pagos.id_reserva')
+                    ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                    ->select(DB::raw('CONCAT(users.nombre_usuario, \' \', users.apellido_pat_usuario, \' \', users.apellido_mat_usuario) AS psicologo'), DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente, \' \', pacientes.ap_mat_paciente) AS paciente'), 'pagos.*')
+                    ->where('reservas.id_usuario', '=', \Auth::user()->id)
+                    ->whereBetween('pagos.fecha_pago', [$filter_from, $filter_to])
+                    ->where(function($query){
+                        $query->where('pacientes.nombre_paciente', 'like', '%'. $this->paciente .'%')
+                            ->orWhere('pacientes.ap_pat_paciente', 'like', '%'. $this->paciente .'%')
+                            ->orWhere('pacientes.ap_mat_paciente', 'like', '%'. $this->paciente .'%');
+                    })
+                    ->get();
+        }
         
-        $pagos = DB::table('pagos')
-                ->join('pacientes', 'pacientes.id', '=', 'pagos.id_paciente')
-                ->join('reservas', 'reservas.id', '=' , 'pagos.id_reserva')
-                ->join('users', 'users.id', '=', 'reservas.id_usuario')
-                ->select(DB::raw('CONCAT(users.nombre_usuario, \' \', users.apellido_pat_usuario, \' \', users.apellido_mat_usuario) AS psicologo'), DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente, \' \', pacientes.ap_mat_paciente) AS paciente'), 'pagos.*')
-                ->whereBetween('pagos.fecha_pago', [$filter_from, $filter_to])
-                ->where(function($query){
-                    $query->where('users.nombre_usuario', 'like', '%'. $this->psicologo .'%')
-                          ->orWhere('users.apellido_pat_usuario', 'like', '%'. $this->psicologo .'%')
-                          ->orWhere('users.apellido_mat_usuario', 'like', '%'. $this->psicologo .'%');
-                })
-                ->where(function($query){
-                    $query->where('pacientes.nombre_paciente', 'like', '%'. $this->paciente .'%')
-                          ->orWhere('pacientes.ap_pat_paciente', 'like', '%'. $this->paciente .'%')
-                          ->orWhere('pacientes.ap_mat_paciente', 'like', '%'. $this->paciente .'%');
-                })
-                ->get();
+        
         
         if($this->to != null && $this->from != null){
             $cont = $pagos->count();
@@ -61,5 +78,15 @@ class ShowPagos extends Component
         
 
         return view('livewire.show-pagos', compact('pagos'));
+    }
+
+    public function resetFilt(){
+        $this->reset([
+            'paciente',
+            'psicologo',
+            'from',
+            'to',
+            'totalPagos'
+        ]);
     }
 }
