@@ -52,6 +52,22 @@
                 </x-jet-danger-button>
             </div>
         @endif
+
+        @if (\Auth::user()->id_users_rol == 2)
+            <div>
+                <p>Hola {{ \Auth::user()->nombre_usuario }}&nbsp;{{ \Auth::user()->ap_paterno_usuario }}</p>
+            </div>
+            <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
+                <select
+                    class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mr-3"
+                    name="paciente" id="paciente" wire:model="selectedPaciente">
+                    <option value="#">Seleccionar paciente</option>
+                    @foreach ($filtPaciente as $item)
+                        <option value="{{ $item->id }}">{{ $item->paciente }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
     @endif
 
 
@@ -73,7 +89,14 @@
                     </p>
                 @endif
             @else
-                Reservar Hora
+                @if (\Auth::user()->id_users_rol == 2)
+                    @if ($selectedPaciente != null)
+                        Reservar hora para paciente
+                        {{ $datos->nombre_paciente }}&nbsp;{{ $datos->ap_pat_paciente }}
+                    @endif
+                @else
+                    Reservar Hora
+                @endif
             @endif
         </x-slot>
 
@@ -223,54 +246,67 @@
                                         'error'
                                     )
                                 } else {
-                                    @this.set('open', true);
-                                    var fecha = new Date(info.dateStr + 'T00:00:00');
-                                    console.log(fecha);
+                                    if (usuario == 2 && @this.selectedPaciente == null) {
+                                        Swal.fire(
+                                            'Ooops!',
+                                            'Selecciona uno de tus pacientes antes de poder reservar una hora',
+                                            'error'
+                                        )
+                                    } else {
+                                        @this.set('open', true);
+                                        var fecha = new Date(info.dateStr + 'T00:00:00');
+                                        console.log(fecha);
 
-                                    if (usuario == 1) {
-                                        if (@this.selectedPaciente != null) {
-                                            var pac = @this.selectedPaciente;
-                                        } else {
-                                            var pac = document.getElementById("paci").value;
-                                        }
-                                    }
-                                    console.log(pac);
-
-                                    var date1 = fecha.getFullYear();
-                                    var date2 = fecha.getMonth();
-                                    var date3 = fecha.getDate();
-                                    date2 = date2 + 1;
-                                    console.log(date2);
-
-                                    document.getElementById("btn_reserva")
-                                        .addEventListener("click",
-                                            function() {
-                                                var startTime = document.getElementById(
-                                                        'datetimepicker5')
-                                                    .value;
-                                                console.log(startTime);
-                                                var description = document.getElementById(
-                                                        'motivo_reserva')
-                                                    .value;
-                                                console.log(startTime);
-
-
-
-                                                /*calendar.addEvent({
-                                                    title: "Nuevo Evento",
-                                                    start: date,
-                                                    description: description
-                                                });*/
-
-                                                var token = document.getElementById("_token")
-                                                    .value;
-
-                                                console.log(token);
-
-                                                @this.checkDate(fecha, startTime, pid, date1, date2,
-                                                    date3, description, pac);
+                                        if (usuario == 1) {
+                                            if (@this.selectedPaciente != null) {
+                                                var pac = @this.selectedPaciente;
+                                            } else {
+                                                var pac = document.getElementById("paci").value;
                                             }
-                                        );
+                                        } else {
+                                            if (usuario == 2) {
+                                                var pac = @this.selectedPaciente;
+                                            }
+                                        }
+                                        console.log(pac);
+
+                                        var date1 = fecha.getFullYear();
+                                        var date2 = fecha.getMonth();
+                                        var date3 = fecha.getDate();
+                                        date2 = date2 + 1;
+                                        console.log(date2);
+
+                                        document.getElementById("btn_reserva")
+                                            .addEventListener("click",
+                                                function() {
+                                                    var startTime = document.getElementById(
+                                                            'datetimepicker5')
+                                                        .value;
+                                                    console.log(startTime);
+                                                    var description = document.getElementById(
+                                                            'motivo_reserva')
+                                                        .value;
+                                                    console.log(startTime);
+
+
+
+                                                    /*calendar.addEvent({
+                                                        title: "Nuevo Evento",
+                                                        start: date,
+                                                        description: description
+                                                    });*/
+
+                                                    var token = document.getElementById("_token")
+                                                        .value;
+
+                                                    console.log(token);
+
+                                                    @this.checkDate(fecha, startTime, pid, date1, date2,
+                                                        date3, description, pac);
+                                                }
+                                            );
+                                    }
+
                                 }
 
                             }
@@ -355,64 +391,78 @@
                                         'error'
                                     )
                                 } else {
-                                    @this.set('open', true);
-                                    var pid = document.getElementById('pid').value;
-                                    pid = parseInt(pid);
-                                    console.log("pid");
-                                    console.log(pid);
-                                    var fecha = new Date(info.dateStr + 'T00:00:00');
-                                    console.log(fecha);
+                                    if (usuario == 2 && @this.selectedPaciente == null) {
+                                        Swal.fire(
+                                            'Ooops!',
+                                            'Selecciona uno de tus pacientes antes de poder realizar una reserva de atención.',
+                                            'error'
+                                        )
+                                    } else {
+                                        @this.set('open', true);
+                                        var pid = document.getElementById('pid').value;
+                                        pid = parseInt(pid);
+                                        console.log("pid");
+                                        console.log(pid);
+                                        var fecha = new Date(info.dateStr + 'T00:00:00');
+                                        console.log(fecha);
 
-                                    console.log("rol usuario");
-                                    var usuario = {{ \Auth::user()->id_users_rol }};
+                                        console.log("rol usuario");
+                                        var usuario = {{ \Auth::user()->id_users_rol }};
 
-                                    var date1 = fecha.getFullYear();
-                                    var date2 = fecha.getMonth();
-                                    var date3 = fecha.getDate();
-                                    date2 = date2 + 1;
-                                    console.log(date2);
+                                        var date1 = fecha.getFullYear();
+                                        var date2 = fecha.getMonth();
+                                        var date3 = fecha.getDate();
+                                        date2 = date2 + 1;
+                                        console.log(date2);
 
-                                    document.getElementById("btn_reserva")
-                                        .addEventListener("click",
-                                            function() {
-                                                var startTime = document.getElementById(
-                                                        'datetimepicker5')
-                                                    .value;
-                                                console.log(startTime);
-                                                var description = document.getElementById(
-                                                        'motivo_reserva')
-                                                    .value;
-                                                console.log(startTime);
+                                        document.getElementById("btn_reserva")
+                                            .addEventListener("click",
+                                                function() {
+                                                    var startTime = document.getElementById(
+                                                            'datetimepicker5')
+                                                        .value;
+                                                    console.log(startTime);
+                                                    var description = document.getElementById(
+                                                            'motivo_reserva')
+                                                        .value;
+                                                    console.log(startTime);
 
-                                                if (usuario == 1) {
-                                                    if (@this.selectedPaciente != null) {
-                                                        var pac = @this.selectedPaciente;
-                                                    } else {
-                                                        var select = document.getElementById(
-                                                        'paci');
-                                                        var pac = select.options[select
-                                                            .selectedIndex].value;
+                                                    if (usuario == 1) {
+                                                        if (@this.selectedPaciente != null) {
+                                                            var pac = @this.selectedPaciente;
+                                                        } else {
+                                                            var select = document.getElementById(
+                                                                'paci');
+                                                            var pac = select.options[select
+                                                                .selectedIndex].value;
+                                                        }
+                                                    }else{
+                                                        if(usuario == 2){
+                                                            var pac = @this.selectedPaciente;
+                                                        }
                                                     }
+                                                    console.log(pac);
+
+
+
+                                                    /*calendar.addEvent({
+                                                        title: "Nuevo Evento",
+                                                        start: date,
+                                                        description: description
+                                                    });*/
+
+                                                    var token = document.getElementById("_token")
+                                                        .value;
+
+                                                    console.log(token);
+
+                                                    @this.checkDate(fecha, startTime, pid, date1,
+                                                        date2,
+                                                        date3, description, pac);
                                                 }
-                                                console.log(pac);
+                                            );
+                                    }
 
-
-
-                                                /*calendar.addEvent({
-                                                    title: "Nuevo Evento",
-                                                    start: date,
-                                                    description: description
-                                                });*/
-
-                                                var token = document.getElementById("_token")
-                                                    .value;
-
-                                                console.log(token);
-
-                                                @this.checkDate(fecha, startTime, pid, date1, date2,
-                                                    date3, description, pac);
-                                            }
-                                        );
                                 }
                             }
                         },

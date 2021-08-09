@@ -47,6 +47,7 @@ class ShowPacientes extends Component
     public $openVerPacienteModal = false;
     public $openVerFichasModal = false;
 
+
     protected $rules = [
         'rut_paciente' => 'required',
         'nombre_paciente' => 'required',
@@ -63,9 +64,36 @@ class ShowPacientes extends Component
 
     public function render()
     {
-        $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'DESC')->paginate(10);
+        if(\Auth::user()->id_users_rol == 1){
+            $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'DESC')->paginate(10);
+            $pacientesList = [];
+        }else{
+            if(\Auth::user()->id_users_rol == 2){
+                $pacientesList = DB::table('reservas')
+                            ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                            ->select('pacientes.id as id')
+                            ->where('reservas.id_usuario', '=', \Auth::user()->id)
+                            ->distinct()
+                            ->get();
+                $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'DESC')->paginate(10);
+                $v = 0;
+                for($i=0;$i<count($pacientesList);$i++){
+                    for($j=0;$j<count($pacientes);$j++){
+                        $comp = (int)$pacientesList[$i]->id;
+                        $comp2 = (int)$pacientes[$j]->id;
+                        if($comp == $comp2){
+                            $v=$v+1;
+                        }
+                        
+                    }
+                    
+                }
+                //dd($v, $comp, $pacientesList, $comp2);
+            }
+        }
         
-        return view('livewire.show-pacientes', compact('pacientes'));
+        
+        return view('livewire.show-pacientes', compact('pacientes', 'pacientesList'));
     }
 
     public function order($sort){

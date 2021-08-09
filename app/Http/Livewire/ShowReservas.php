@@ -112,7 +112,6 @@ class ShowReservas extends Component
                             ->select('users.id as id_user' ,'users.*', 'pacientes.*')
                             ->where('pacientes.id', '=', $this->selectedPaciente)
                             ->first();
-
                     }
                     
                 }
@@ -159,12 +158,45 @@ class ShowReservas extends Component
                 
                 $paciente = Paciente::first();
             }else{
+                //querys de rol = 2 Psicologo para el perfil de cada psicologo
                 $events = DB::table('reservas')
                         ->join('users', 'users.id', '=', 'reservas.id_usuario')
                         ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
-                        ->where('reservas.id_paciente', '=', Auth::user()->id)
+                        ->where('reservas.id_usuario', '=', Auth::user()->id)
                         ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
                         ->get();
+
+                $filtPsico = User::where('id', '=', \Auth::user()->id)->first();
+
+                $filtPaciente = DB::table('reservas')
+                                ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                                ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS paciente'), 'pacientes.id')
+                                ->where('reservas.id_usuario', '=', \Auth::user()->id)
+                                ->distinct()
+                                ->get();
+
+                $paciente = Paciente::first();
+
+                $datos = DB::table('reservas')
+                            ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                            ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                            ->select('users.id as id_user' ,'users.*', 'pacientes.*')
+                            ->where('pacientes.id', '=', 1)
+                            ->first();
+                if($this->selectedPaciente != null){
+                    $datos = DB::table('reservas')
+                                ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                                ->select('pacientes.*')
+                                ->where('pacientes.id', '=', $this->selectedPaciente)
+                                ->first();
+                    $events = DB::table('reservas')
+                                ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                                ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                                ->where('reservas.id_usuario', '=', Auth::user()->id)
+                                ->where('reservas.id_paciente', '=', $this->selectedPaciente)
+                                ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
+                                ->get();
+                }
             }
                 
             
@@ -350,6 +382,9 @@ class ShowReservas extends Component
                         ->select('pacientes.*')
                         ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
                         ->first();
+                $paci = $paciente->id;
+            }else{
+                $paciente = Paciente::where('id', '=', $pac)->first();
                 $paci = $paciente->id;
             }
         }

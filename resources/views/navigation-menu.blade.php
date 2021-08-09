@@ -107,14 +107,28 @@
                         </div>
                     @else
                         @if (\Auth::user()->id_users_rol == 2)
-                            <p>Nav de psicologo</p>
+                            <a href="{{ route('pacientes') }}"
+                                class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                Mis Pacientes
+                            </a>
+                            <x-jet-nav-link href="{{ route('reservas') }}" :active="request()->routeIs('reservas')">
+                                Mi Calendario de Reservas
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('horarios') }}"
+                                :active="request()->routeIs('calendariohorarios')">
+                                Mi Calendario Horarios
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('pagos') }}" :active="request()->routeIs('pagos')">
+                                Mis Pagos
+                            </x-jet-nav-link>
                         @else
                             @if (\Auth::user()->id_users_rol == 3)
                                 <x-jet-nav-link href="{{ route('reservas') }}"
                                     :active="request()->routeIs('reservas')">
                                     Calendario Reservas
                                 </x-jet-nav-link>
-                                <x-jet-nav-link href="{{ route('misPagos') }}" :active="request()->routeIs('misPagos')">
+                                <x-jet-nav-link href="{{ route('misPagos') }}"
+                                    :active="request()->routeIs('misPagos')">
                                     Mis Pagos
                                 </x-jet-nav-link>
                             @endif
