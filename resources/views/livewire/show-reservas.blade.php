@@ -54,18 +54,22 @@
         @endif
 
         @if (\Auth::user()->id_users_rol == 2)
-            <div>
-                <p>Hola {{ \Auth::user()->nombre_usuario }}&nbsp;{{ \Auth::user()->ap_paterno_usuario }}</p>
+            <div class="flex justify-center max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 bg-white">
+                <p>Hola</p>&nbsp;<p class="font-bold">{{ \Auth::user()->nombre_usuario }}&nbsp;{{ \Auth::user()->ap_paterno_usuario }},</p>&nbsp;<p>a continuación puedes revisar tu calendario de reservas!</p>
             </div>
-            <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
+            <div class="flex items-stretch justify-center max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
                 <select
-                    class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mr-3"
+                    class=" border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mr-3"
                     name="paciente" id="paciente" wire:model="selectedPaciente">
                     <option value="#">Seleccionar paciente</option>
                     @foreach ($filtPaciente as $item)
                         <option value="{{ $item->id }}">{{ $item->paciente }}</option>
                     @endforeach
                 </select>
+                <x-jet-danger-button wire:click="resetFiltPsico()"
+                    class="inline-flex items-center justify-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
+                    Resetear Filtros
+                </x-jet-danger-button>
             </div>
         @endif
     @endif

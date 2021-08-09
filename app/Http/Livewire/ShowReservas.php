@@ -389,11 +389,19 @@ class ShowReservas extends Component
             }
         }
 
-        $comparador = DB::table('reservas')
+        if(\Auth::user()->id_users_rol == 2){
+            $comparador = DB::table('reservas')
                         ->select('reservas.*')
                         ->where('reservas.fecha_hora_reserva', '=', $fecha_hora->format('Y-m-d H:i:s'))
-                        ->where('reservas.id_usuario', '=', $pid)
+                        ->where('reservas.id_usuario', '=', \Auth::user()->id)
                         ->first();
+        }else{
+            $comparador = DB::table('reservas')
+                            ->select('reservas.*')
+                            ->where('reservas.fecha_hora_reserva', '=', $fecha_hora->format('Y-m-d H:i:s'))
+                            ->where('reservas.id_usuario', '=', $pid)
+                            ->first();
+        }
         
         if(empty($comparador)){
             return redirect()->route('payment', ['date1' => $date1, 'date2' => $date2, 'date3' => $date3, 'startTime' => $startTime, 'description' => $description, 'pid' => $pid, 'paci' => $paci]);
@@ -407,10 +415,17 @@ class ShowReservas extends Component
     }
 
     public function resetFilt()
-        {
-            $this->reset([
-                'selectedPsico',
-                'selectedPaciente'
-            ]);
-        }
+    {
+        $this->reset([
+            'selectedPsico',
+            'selectedPaciente'
+        ]);
+    }
+
+    public function resetFiltPsico()
+    {
+        $this->reset([
+            'selectedPaciente'
+        ]);
+    }
 }
