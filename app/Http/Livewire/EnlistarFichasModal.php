@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Paciente;
 use App\Models\Fichapaciente;
+use App\Models\Tagtrastornomental;
+use App\Models\Incluye;
 use Carbon\Carbon;
 use DB;
 use PDF;
@@ -17,7 +19,13 @@ class EnlistarFichasModal extends Component
 
     public $openVerFichasModal = false;
     public $openUploadFileModal = false;
+    public $openCreateFichaModal = false;
     public $showInfoFichasModal = true;
+
+    public $tags_select;
+    public $selectedTags = [];
+    public $fecha_atencion_create;
+
     public $paciente;
     public $paciente_rut;
     public $count_fichas=1;
@@ -144,5 +152,50 @@ class EnlistarFichasModal extends Component
             ]);
             return redirect('/404');
         }
+    }
+
+    public function showCreateFichaModal()
+    {
+        $this->showInfoFichasModal = false;
+        $this->openCreateFichaModal = true;
+
+        $this->tags_select = Tagtrastornomental::select('id', 'nombre_tag')->get();
+
+        
+    }
+
+    public function saveFichaModal($sel, $paciente, $texto, $dataFecha)
+    {
+        $fecha = Carbon::parse($dataFecha)->format('Y-m-d');
+
+        Fichapaciente::create([
+            'id_usuario' => \Auth::user()->id,
+            'id_paciente' => $paciente,
+            'fecha_atencion_ficha' => $fecha,
+            'resumen_atencion' => $texto,
+            'archivo' => null
+        ]);
+
+        $ficha = Fichapaciente::latest()->first();
+
+        for($i=0; $i<count($sel); $i++){
+            Incluye::create([
+                'id_tag_trastorno' => $sel[$i]+1,
+                'id_ficha_paciente' => $ficha->id
+            ]);
+        }
+
+        $this->reset([
+            'openVerFichasModal',
+            'showInfoFichasModal',
+            'openCreateFichaModal',
+            'tags_select'
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'La ficha del paciente se ha creado con éxito!.',
+            'icon' => 'success'
+        ]);
     }
 }
