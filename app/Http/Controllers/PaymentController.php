@@ -8,7 +8,12 @@ use Srmklive\PayPal\Services\ExpressCheckout;
 use Carbon\Carbon;
 use App\Models\Reserva;
 use App\Models\Pago;
+use App\Models\Paciente;
+use App\Models\User;
 use DB;
+
+use App\Mail\ContactoMailable;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -126,6 +131,13 @@ class PaymentController extends Controller
                     'monto_pago' => 20000,
                 ]);
             }
+
+            $pacienteData = Paciente::where('id', '=' , $paci)->first();
+            $reservaData = Reserva::latest()->first();
+            $psicologoData = User::where('id', '=', $reservaData->id_usuario)->latest()->first();
+            $correo = new ContactoMailable($pacienteData, $reservaData, $psicologoData);
+
+            Mail::to($pacienteData->email)->send($correo);
 
             return redirect()->route('reservas.success', ['reserva' => $reserva, 'paci' => $paci]);
         }

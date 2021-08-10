@@ -5,6 +5,13 @@ use App\Http\LiveWire\EnlistarFichasModal;
 use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\PaymentController;
 
+use App\Models\Paciente;
+use App\Models\Reserva;
+use App\Models\User;
+use App\Mail\ContactoMailable;
+use Illuminate\Support\Facades\Mail;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,3 +88,17 @@ Route::get('/payment/cancel', [PaymentController::class, 'paymentCancel'])->name
 Route::get('/payment/success/{fecha}/{description}/{pid}/{paci}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('/payment/reserva_success/{reserva}/{paci}', [PaymentController::class, 'successReserva'])->name('reservas.success');
 Route::get('/payment/reserva_error', [PaymentController::class, 'errorReserva'])->name('reservas.error');
+
+//Ruta prueba de correo
+Route::get('/pruebaCorreo', function(){
+    $paciente = Paciente::first();
+    $reserva = Reserva::latest()->first();
+    $psicologo = User::where('id_users_rol', '=', 2)->latest()->first();
+
+    $correo = new ContactoMailable($paciente, $reserva, $psicologo);
+
+    Mail::to($paciente->email)->send($correo);
+
+    return "correo enviado";
+});
+

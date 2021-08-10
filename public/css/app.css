@@ -1167,6 +1167,14 @@ select {
 	margin-top: 8rem;
 	margin-bottom: 8rem;
 }
+.my-2 {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+.mx-2 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
 .-mx-5 {
 	margin-left: -1.25rem;
 	margin-right: -1.25rem;
@@ -1174,14 +1182,6 @@ select {
 .-my-2 {
 	margin-top: -0.5rem;
 	margin-bottom: -0.5rem;
-}
-.mx-2 {
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
-}
-.my-2 {
-	margin-top: 0.5rem;
-	margin-bottom: 0.5rem;
 }
 .ml-3 {
 	margin-left: 0.75rem;
@@ -1369,9 +1369,6 @@ select {
 .w-64 {
 	width: 16rem;
 }
-.w-24 {
-	width: 6rem;
-}
 .min-w-0 {
 	min-width: 0px;
 }
@@ -1475,9 +1472,6 @@ select {
 }
 .place-items-center {
 	place-items: center;
-}
-.content-center {
-	align-content: center;
 }
 .items-center {
 	align-items: center;
@@ -1753,6 +1747,9 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
 }
+.bg-transparent {
+	background-color: transparent;
+}
 .bg-green-900 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(6, 78, 59, var(--tw-bg-opacity));
@@ -1768,9 +1765,6 @@ select {
 .bg-green-200 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(167, 243, 208, var(--tw-bg-opacity));
-}
-.bg-transparent {
-	background-color: transparent;
 }
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
@@ -1796,11 +1790,11 @@ select {
 .p-6 {
 	padding: 1.5rem;
 }
-.p-4 {
-	padding: 1rem;
-}
 .p-1 {
 	padding: 0.25rem;
+}
+.p-4 {
+	padding: 1rem;
 }
 .px-4 {
 	padding-left: 1rem;
@@ -1909,14 +1903,14 @@ select {
 .pb-20 {
 	padding-bottom: 5rem;
 }
-.pb-12 {
-	padding-bottom: 3rem;
-}
 .pl-2 {
 	padding-left: 0.5rem;
 }
 .pr-1 {
 	padding-right: 0.25rem;
+}
+.pb-12 {
+	padding-bottom: 3rem;
 }
 .text-left {
 	text-align: left;
@@ -2004,11 +1998,11 @@ select {
 .leading-normal {
 	line-height: 1.5;
 }
-.leading-6 {
-	line-height: 1.5rem;
-}
 .leading-none {
 	line-height: 1;
+}
+.leading-6 {
+	line-height: 1.5rem;
 }
 .tracking-widest {
 	letter-spacing: 0.1em;
@@ -2219,6 +2213,10 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
 }
+.hover\:bg-green-500:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
+}
 .hover\:bg-yellow-500:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(245, 158, 11, var(--tw-bg-opacity));
@@ -2226,10 +2224,6 @@ select {
 .hover\:bg-blue-700:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
-}
-.hover\:bg-green-500:hover {
-	--tw-bg-opacity: 1;
-	background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
 }
 .hover\:bg-green-400:hover {
 	--tw-bg-opacity: 1;
@@ -2305,13 +2299,13 @@ select {
 	--tw-border-opacity: 1;
 	border-color: rgba(29, 78, 216, var(--tw-border-opacity));
 }
-.focus\:border-yellow-700:focus {
-	--tw-border-opacity: 1;
-	border-color: rgba(180, 83, 9, var(--tw-border-opacity));
-}
 .focus\:border-green-700:focus {
 	--tw-border-opacity: 1;
 	border-color: rgba(4, 120, 87, var(--tw-border-opacity));
+}
+.focus\:border-yellow-700:focus {
+	--tw-border-opacity: 1;
+	border-color: rgba(180, 83, 9, var(--tw-border-opacity));
 }
 .focus\:bg-indigo-600:focus {
 	--tw-bg-opacity: 1;
@@ -2390,13 +2384,13 @@ select {
 	--tw-ring-opacity: 1;
 	--tw-ring-color: rgba(255, 255, 255, var(--tw-ring-opacity));
 }
-.focus\:ring-yellow-200:focus {
-	--tw-ring-opacity: 1;
-	--tw-ring-color: rgba(253, 230, 138, var(--tw-ring-opacity));
-}
 .focus\:ring-green-200:focus {
 	--tw-ring-opacity: 1;
 	--tw-ring-color: rgba(167, 243, 208, var(--tw-ring-opacity));
+}
+.focus\:ring-yellow-200:focus {
+	--tw-ring-opacity: 1;
+	--tw-ring-color: rgba(253, 230, 138, var(--tw-ring-opacity));
 }
 .focus\:ring-opacity-50:focus {
 	--tw-ring-opacity: 0.5;
@@ -2421,13 +2415,13 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(37, 99, 235, var(--tw-bg-opacity));
 }
-.active\:bg-yellow-600:active {
-	--tw-bg-opacity: 1;
-	background-color: rgba(217, 119, 6, var(--tw-bg-opacity));
-}
 .active\:bg-green-600:active {
 	--tw-bg-opacity: 1;
 	background-color: rgba(5, 150, 105, var(--tw-bg-opacity));
+}
+.active\:bg-yellow-600:active {
+	--tw-bg-opacity: 1;
+	background-color: rgba(217, 119, 6, var(--tw-bg-opacity));
 }
 .active\:text-gray-700:active {
 	--tw-text-opacity: 1;
