@@ -15,17 +15,19 @@ class ContactoMailable extends Mailable
     public $paciente;
     public $reserva;
     public $psicologo;
+    public $direccionURL;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($pacienteData, $reservaData, $psicologoData)
+    public function __construct($pacienteData, $reservaData, $psicologoData, $direccionURL)
     {
         $this->paciente = $pacienteData;
         $this->reserva = $reservaData;
         $this->psicologo = $psicologoData;
+        $this->direccionURL = $direccionURL;
     }
 
     /**
@@ -35,6 +37,10 @@ class ContactoMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.confirmacion_reserva');
+        if(\Auth::user()->id_users_rol == 2){
+            return $this->view('emails.confirmacion_reserva');
+        }else{
+            return $this->view('emails.maillink_reserva');
+        }
     }
 }

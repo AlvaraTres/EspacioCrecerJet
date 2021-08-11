@@ -70,6 +70,18 @@ class PaymentController extends Controller
 
         $response = $provider->setExpressCheckout($data, true);
 
+        if(\Auth::user()->id_users_rol == 1 || \Auth::user()->id_users_rol == 2){
+            $pacienteData = Paciente::where('id', '=' , $paci)->first();
+            $reservaData = Reserva::latest()->first();
+            $psicologoData = User::where('id', '=', $reservaData->id_usuario)->latest()->first();
+            $direccionURL = $response['paypal_link'];
+            $correo = new ContactoMailable($pacienteData, $reservaData, $psicologoData, $direccionURL);
+
+            Mail::to($pacienteData->email)->send($correo);
+            
+            return "correo enviado";
+        } 
+
         return redirect($response['paypal_link']);
     }
 
@@ -135,7 +147,8 @@ class PaymentController extends Controller
             $pacienteData = Paciente::where('id', '=' , $paci)->first();
             $reservaData = Reserva::latest()->first();
             $psicologoData = User::where('id', '=', $reservaData->id_usuario)->latest()->first();
-            $correo = new ContactoMailable($pacienteData, $reservaData, $psicologoData);
+            $direccionURL = 'sinMensaje';
+            $correo = new ContactoMailable($pacienteData, $reservaData, $psicologoData, $direccionURL);
 
             Mail::to($pacienteData->email)->send($correo);
 
