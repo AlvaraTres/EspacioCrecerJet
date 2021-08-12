@@ -1,9 +1,9 @@
 <div>
-    <div class="mx-auto bg-white-200 w-full">
+    <div class="mx-auto bg-white-200 w-full ml-3 mr-3">
         <p class="px-4 py-2">Filtros de búsqueda</p>
-        <div class="flex items-stretch bg-white-300 w-full px-4 py-2">
+        <div class="flex items-stretch flex-wrap bg-white-300 w-full px-4 py-2">
             <select
-                class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                class="ml-3 mb-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 id="searchPaciente" name="searchPsico" wire:model="searchPsico">
                 <option value="0">Seleccionar psicológo</option>
                 @foreach ($filterPsico as $fps)
@@ -21,13 +21,13 @@
             </select>
 
             <x-jet-danger-button wire:click="resetFilt()"
-                class="ml-3 inline-flex items-center justify-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
+                class="ml-3 sm:mt-3 md:mt-3 lg:mt-3 inline-flex items-center justify-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
                 Resetear Filtros
             </x-jet-danger-button>
         </div>
     </div>
 
-    <div id="reservasChart"></div>
+    <div id="reservasChart" class="ml-3 mr-3"></div>
 
     @push('js')
         <script type="text/javascript">
