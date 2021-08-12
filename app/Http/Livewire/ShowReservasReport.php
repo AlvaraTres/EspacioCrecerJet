@@ -100,6 +100,8 @@ class ShowReservasReport extends Component
                                 ->get();
         }
 
+        //dd($totalReservasMes);
+
         for($i=0;$i<count($totalReservasMes);$i++){
             $explo = (explode(' ' , $totalReservasMes[$i]->meses));
             if($explo[0] == 'January'){

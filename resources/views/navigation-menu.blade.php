@@ -101,6 +101,10 @@
                                         class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
                                         Reporte Pacientes
                                     </a>
+                                    <a href="{{ route('reporteCategorias') }}"
+                                        class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                        Reporte Categorías
+                                    </a>
                                 </div>
 
                             </div>
