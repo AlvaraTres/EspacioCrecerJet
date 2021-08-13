@@ -11,5 +11,10 @@
                 </div>
 
             </div>
+            <div class="mx-auto sm:px-6 lg:px-8 py-5">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    @livewire('show-horas-reservas-report')
+                </div>
+            </div>
         </div>
 </x-app-layout>
