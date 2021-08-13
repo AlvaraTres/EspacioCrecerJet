@@ -216,7 +216,7 @@
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
-                                        {{ Auth::user()->nombre_usuario }}
+                                        {{ Auth::user()->nombre_usuario }}&nbsp;{{ Auth::user()->apellido_pat_usuario }}
 
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20" fill="currentColor">
@@ -280,29 +280,112 @@
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                Inicio
-            </x-jet-responsive-nav-link>
+            @if (\Auth::user()->id_users_rol == 1)
+                <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex flex-row items-center w-full rounded-md bg-green-600 p-2 focus:outline-none hover:bg-green-500">
+                        <span class="text-white">Usuarios</span>
+                        <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
+                            class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-95"
+                        class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                        <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+                            <a class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white"
+                                href="{{ route('pacientes') }}">Pacientes</a>
+                            <a class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white"
+                                href="{{ route('psicologos') }}">Psicológos</a>
+                            <a class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white"
+                                href="{{ route('roles') }}">Roles</a>
+                        </div>
+                    </div>
+                </div>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
+                    Calendario Reservas
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('horarios') }}"
+                    :active="request()->routeIs('calendariohorarios')">
+                    Calendario Horarios
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')">
+                    Tags
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pagos')">
+                    Pagos
+                </x-jet-responsive-nav-link>
+                <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex flex-row items-center w-full rounded-md bg-green-600 p-2 focus:outline-none hover:bg-green-500">
+                        <span class="text-white">Reportes</span>
+                        <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
+                            class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-95"
+                        class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                        <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+                            <a href="{{ route('reportePagos') }}"
+                                class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                Reporte Pagos
+                            </a>
+                            <a href="{{ route('reporteReservas') }}"
+                                class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                Reporte Reservas
+                            </a>
+                            <a href="{{ route('reportePacientes') }}"
+                                class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                Reporte Pacientes
+                            </a>
+                            <a href="{{ route('reporteCategorias') }}"
+                                class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                Reporte Categorías
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    Inicio
+                </x-jet-responsive-nav-link>
 
-            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('psicologos')">
-                Psicólogos
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pacientes')">
-                Pacientes
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pagos')">
-                Pagos
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
-                Calendario Reservas
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('horarios') }}"
-                :active="request()->routeIs('calendariohorarios')">
-                Calendario Horarios
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')">
-                Tags
-            </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('psicologos')">
+                    Psicólogos
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pacientes')">
+                    Pacientes
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pagos')">
+                    Pagos
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
+                    Calendario Reservas
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('horarios') }}"
+                    :active="request()->routeIs('calendariohorarios')">
+                    Calendario Horarios
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')">
+                    Tags
+                </x-jet-responsive-nav-link>
+            @endif
+
         </div>
 
         <!-- Responsive Settings Options -->
@@ -316,8 +399,8 @@
                 @endif
 
                 <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->nombre_usuario }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-gray-400">{{ Auth::user()->nombre_usuario }}</div>
+                    <div class="font-medium text-sm text-gray-300">{{ Auth::user()->email }}</div>
                 </div>
             </div>
 
