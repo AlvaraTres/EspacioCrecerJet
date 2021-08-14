@@ -31,6 +31,7 @@ class ShowReservas extends Component
     public $start;
     public $end;
     public $dateClick;
+    public $paciPsico;
 
     protected $rules = [
         'id_usuario' => 'required',
@@ -224,14 +225,27 @@ class ShowReservas extends Component
 
     public function validarFechaHorario($fechaClick){
         $this->dateClick = $fechaClick;
-            $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->selectedPsico)->get();
+            if(\Auth::user()->id_users_rol == 1){
+                $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->selectedPsico)->first();
+            }else{
+                if(\Auth::user()->id_users_rol == 2){
+                    $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', \Auth::user()->id)->first();
+                    //dd($this->dateClick);
+                }else{
+                    $id_psi = (int)$this->paciPsico;
+                    $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $id_psi)->first();
+                    //dd($this->dateClick);
+                }
+            }
             
-            if(count($this->dateClick) > 0){
-                $this->start = Horario::select('hora_inicio')->where('id_user', '=', $this->selectedPsico)->get();
-                $this->start = Carbon::parse($this->start[0]->hora_inicio)->format('H:i:s');
+            
+            if($this->dateClick != null){
+                $this->start = $this->dateClick->hora_inicio;
+                $this->start = Carbon::parse($this->start)->format('H:i:s');
 
-                $this->end = Horario::select('hora_fin')->where('id_user', '=', $this->selectedPsico)->get();
-                $this->end = Carbon::parse($this->end[0]->hora_fin)->format('H:i:s');
+                $this->end = $this->dateClick->hora_fin;
+                $this->end = Carbon::parse($this->end)->format('H:i:s');
+                //dd($this->dateClick, $this->start, $this->end);
 
                 $this->open = true;
             }else{

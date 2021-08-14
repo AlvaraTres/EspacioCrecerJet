@@ -114,17 +114,20 @@
                 <input type="hidden" name="pid" id="pid" value="0">
             @endif
 
-            @if ($selectedPaciente == null && $selectedPsico != null)
-                <x-jet-label value="Seleccione un paciente:" />
-                <select
-                    class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mr-3"
-                    name="paci" id="paci">
-                    <option value="">Seleccionar paciente</option>
-                    @foreach ($filtPaciente as $item)
-                        <option value="{{ $item->id }}">{{ $item->paciente }}</option>
-                    @endforeach
-                </select>
+            @if (\Auth::user()->id_users_rol == 1)
+                @if ($selectedPaciente == null && $selectedPsico != null)
+                    <x-jet-label value="Seleccione un paciente:" />
+                    <select
+                        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mr-3"
+                        name="paci" id="paci">
+                        <option value="">Seleccionar paciente</option>
+                        @foreach ($filtPaciente as $item)
+                            <option value="{{ $item->id }}">{{ $item->paciente }}</option>
+                        @endforeach
+                    </select>
+                @endif
             @endif
+
 
             <x-jet-label value="Hora Reserva:" />
             <input type="text" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepicker5"
@@ -221,6 +224,7 @@
                     dateClick: function(info, start) {
                         var pid = document.getElementById("pid").value;
 
+                        console.log(pid);
                         console.log("rol usuario");
                         var usuario = {{ \Auth::user()->id_users_rol }};
                         console.log(usuario);
@@ -260,7 +264,8 @@
                                             'error'
                                         )
                                     } else {
-                                        @this.set('open', true);
+                                        @this.set('paciPsico', pid);
+                                        @this.validarFechaHorario(selectDate);
                                         var fecha = new Date(info.dateStr + 'T00:00:00');
                                         console.log(fecha);
 
