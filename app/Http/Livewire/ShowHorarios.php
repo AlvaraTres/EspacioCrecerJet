@@ -27,6 +27,7 @@ class ShowHorarios extends Component
                             ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
                             ->where('horarios.id_user', '=', $this->psicoSelected)
                             ->get();
+                $psicologo = Psicologo::first();
             }else{
                 $events = [];
             } 
@@ -35,7 +36,22 @@ class ShowHorarios extends Component
                 $events = DB::table('horarios')
                             ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
                             ->where('horarios.id_user', '=', \Auth::user()->id)
-                            ->get();   
+                            ->get(); 
+                $psicologo = Psicologo::first();  
+            }else{
+                if(\Auth::user()->id_users_rol == 3){
+                    $psicologo = DB::table('reservas')
+                                    ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                                    ->select('users.*')
+                                    ->where('reservas.id_paciente', '=', \Auth::user()->id)
+                                    ->latest()
+                                    ->first();
+                    //dd($psicologo);
+                    $events = DB::table('horarios')
+                                ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
+                                ->where('horarios.id_user', '=', $psicologo->id)
+                                ->get();
+                }
             }
         }
         
@@ -45,7 +61,7 @@ class ShowHorarios extends Component
         //dd($events);
         $this->events = json_encode($events);
 
-        return view('livewire.show-horarios', compact('filtPsico'));
+        return view('livewire.show-horarios', compact('filtPsico', 'psicologo'));
     }
 
     public function storeHorario($date, $startTime, $endTime){

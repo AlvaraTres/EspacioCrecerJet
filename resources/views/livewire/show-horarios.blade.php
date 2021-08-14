@@ -11,6 +11,13 @@
         </div>
     @endif
 
+    @if (\Auth::user()->id_users_rol == 3)
+    <div class="mx-auto bg-white-200 w-full">
+        <p class="text-center text-2xl px-4 py-2"><strong>Horario de atención de tu psicológo {{$psicologo->nombre_usuario}}&nbsp;{{$psicologo->apellido_pat_usuario}}</strong></p>
+    </div>
+        
+    @endif
+
     <!-- MODAL CREACION DE HORARIO -->
     <x-jet-dialog-modal wire:model="open" id="reg_hor">
         <x-slot name="title">

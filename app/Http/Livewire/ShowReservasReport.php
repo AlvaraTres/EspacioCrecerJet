@@ -34,6 +34,9 @@ class ShowReservasReport extends Component
         if($this->searchPsico == 0){
             $this->reset(['searchPsico']);
         }
+        if(\Auth::user()->id_users_rol == 2){
+            $this->searchPsico = \Auth::user()->id;
+        }
         if($this->searchPsico != null){
 
             $filterPaciente = DB::table('reservas')

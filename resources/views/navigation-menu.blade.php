@@ -64,7 +64,7 @@
                         </x-jet-nav-link>
 
                         <x-jet-nav-link href="{{ route('tags_trastornos') }}" :active="request()->routeIs('tags')">
-                            Categorías Fichas 
+                            Categorías Fichas
                         </x-jet-nav-link>
 
                         <x-jet-nav-link href="{{ route('pagos') }}" :active="request()->routeIs('pagos')">
@@ -125,11 +125,46 @@
                             <x-jet-nav-link href="{{ route('pagos') }}" :active="request()->routeIs('pagos')">
                                 Mis Pagos
                             </x-jet-nav-link>
+                            <div class="flex">
+                                <div x-data="{dropdownOpen: false}" class="relative my-32">
+                                    <button @click="dropdownOpen = !dropdownOpen"
+                                        class="flex items-stretch relative z-10 rounded-md bg-green-600 p-2 focus:outline-none hover:bg-green-500"
+                                        onClick="bgFunction2(1)" id="reportsnav">
+                                        <p class="text-white">Reportes</p>
+                                        <svg class="h-5 w-5 items-center text-white" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+
+                                    <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10">
+                                    </div>
+
+                                    <div x-show="dropdownOpen"
+                                        class="absolute mt-2 py-2 bg-green-400 rounded-md shadow-xl z-20">
+                                        <a href="{{ route('reporteReservas') }}"
+                                            class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                            Reporte Reservas
+                                        </a>
+                                        <a href="{{ route('reporteCategorias') }}"
+                                            class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                            Reporte Categorías
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
                         @else
                             @if (\Auth::user()->id_users_rol == 3)
                                 <x-jet-nav-link href="{{ route('reservas') }}"
                                     :active="request()->routeIs('reservas')">
                                     Calendario Reservas
+                                </x-jet-nav-link>
+                                <x-jet-nav-link href="{{ route('horarios') }}"
+                                    :active="request()->routeIs('calendariohorarios')">
+                                    Horarios de Atención
                                 </x-jet-nav-link>
                                 <x-jet-nav-link href="{{ route('misPagos') }}"
                                     :active="request()->routeIs('misPagos')">
@@ -309,7 +344,8 @@
                         </div>
                     </div>
                 </div>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')" class="hover:bg-green-500">
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')"
+                    class="hover:bg-green-500">
                     Calendario Reservas
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('horarios') }}"
@@ -361,29 +397,69 @@
                     </div>
                 </div>
             @else
-                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                    Inicio
-                </x-jet-responsive-nav-link>
+                @if (\Auth::user()->id_users_rol == 2)
+                    <x-jet-responsive-nav-link href="{{ route('pacientes') }}"
+                        :active="request()->routeIs('pacientes')" class="hover:bg-green-500">
+                        Mis Pacientes
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('reservas') }}"
+                        :active="request()->routeIs('reservas')" class="hover:bg-green-500">
+                        Mi Calendario de Reservas
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('horarios') }}"
+                        :active="request()->routeIs('horarios')" class="hover:bg-green-500">
+                        Mi Calendario Horarios
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('pagos') }}" :active="request()->routeIs('pagos')"
+                        class="hover:bg-green-500">
+                        Mis Pagos
+                    </x-jet-responsive-nav-link>
+                    <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                        <button @click="open = !open"
+                            class="flex flex-row items-center w-full rounded-md bg-green-600 p-2 focus:outline-none hover:bg-green-500">
+                            <span class="text-white">Reportes</span>
+                            <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
+                                class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="transform opacity-0 scale-95"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="transform opacity-100 scale-100"
+                            x-transition:leave-end="transform opacity-0 scale-95"
+                            class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                            <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+                                <a href="{{ route('reporteReservas') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                    Reporte Reservas
+                                </a>
+                                <a href="{{ route('reporteCategorias') }}"
+                                    class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                                    Reporte Categorías
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @else
 
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('psicologos')">
-                    Psicólogos
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pacientes')">
-                    Pacientes
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pagos')">
-                    Pagos
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
-                    Calendario Reservas
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('horarios') }}"
-                    :active="request()->routeIs('calendariohorarios')">
-                    Calendario Horarios
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')">
-                    Tags
-                </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')"
+                        class="hover:bg-green-500">
+                        Calendario Reservas
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('horarios') }}"
+                        :active="request()->routeIs('calendariohorarios')" class="hover:bg-green-500">
+                        Calendario Horarios
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('misPagos') }}" class="hover:bg-green-500"
+                        :active="request()->routeIs('misPagos')" class="hover:bg-green-500">
+                        Mis Pagos
+                    </x-jet-responsive-nav-link>
+                @endif
+
             @endif
 
         </div>
