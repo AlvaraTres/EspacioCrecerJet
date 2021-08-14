@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @livewire('show-horarios')
 
-                <div id="calendar">
+                <div id="calendar" class="p-4">
 
                 </div>
             </div>

@@ -55,7 +55,9 @@
 
         @if (\Auth::user()->id_users_rol == 2)
             <div class="flex justify-center max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 bg-white">
-                <p>Hola</p>&nbsp;<p class="font-bold">{{ \Auth::user()->nombre_usuario }}&nbsp;{{ \Auth::user()->ap_paterno_usuario }},</p>&nbsp;<p>a continuación puedes revisar tu calendario de reservas!</p>
+                <p>Hola</p>&nbsp;<p class="font-bold">
+                    {{ \Auth::user()->nombre_usuario }}&nbsp;{{ \Auth::user()->ap_paterno_usuario }},</p>&nbsp;<p>
+                    a continuación puedes revisar tu calendario de reservas!</p>
             </div>
             <div class="flex items-stretch justify-center max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
                 <select
@@ -228,6 +230,7 @@
                         var selectDate = info.dateStr;
                         var startDate = moment(selectDate);
                         //alert('Click: '+info.timeStr);
+
                         if (moment(startDate).isBefore(moment())) {
                             Swal.fire(
                                 'Ooops!',
@@ -402,7 +405,7 @@
                                             'error'
                                         )
                                     } else {
-                                        @this.set('open', true);
+                                        @this.validarFechaHorario(selectDate);
                                         var pid = document.getElementById('pid').value;
                                         pid = parseInt(pid);
                                         console.log("pid");
@@ -440,8 +443,8 @@
                                                             var pac = select.options[select
                                                                 .selectedIndex].value;
                                                         }
-                                                    }else{
-                                                        if(usuario == 2){
+                                                    } else {
+                                                        if (usuario == 2) {
                                                             var pac = @this.selectedPaciente;
                                                         }
                                                     }
@@ -515,28 +518,44 @@
         </script>
 
         <script type="text/javascript">
-            jQuery.datetimepicker.setLocale('es');
-            jQuery('#datetimepicker5').datetimepicker({
-                i18n: {
-                    de: {
-                        months: [
-                            'Enero', 'Febrero', 'Marzo', 'Abril',
-                            'Mayo', 'Junio', 'Julio', 'Agosto',
-                            'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
-                        ],
-                        dayOfWeek: [
-                            "So.", "Mo", "Di", "Mi",
-                            "Do", "Fr", "Sa.",
-                        ]
+            document.addEventListener("DOMContentLoaded", () => {
+                Livewire.hook('element.updated', (el, component) => {
+                    var inicio = @this.start;
+                    var fin = @this.end;
+                    console.log(inicio);
+                    console.log(fin);
+                    if (inicio == 'NAN') {
+                        Swal.fire(
+                            'Ooops!',
+                            'El psicológo seleccionado no cuenta con ningún horario  para el día seleccionado, por favor intenta seleccionando otra fecha.',
+                            'error'
+                        )
+                    } else {
+                        jQuery.datetimepicker.setLocale('es');
+                        jQuery('#datetimepicker5').datetimepicker({
+                            i18n: {
+                                de: {
+                                    months: [
+                                        'Enero', 'Febrero', 'Marzo', 'Abril',
+                                        'Mayo', 'Junio', 'Julio', 'Agosto',
+                                        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+                                    ],
+                                    dayOfWeek: [
+                                        "So.", "Mo", "Di", "Mi",
+                                        "Do", "Fr", "Sa.",
+                                    ]
+                                }
+                            },
+                            container: '#datetimepicker5',
+                            orientation: "auto-top",
+                            datepicker: false,
+                            timepicker: true,
+                            minTime: inicio,
+                            maxTime: fin,
+                            format: 'H:i'
+                        });
                     }
-                },
-                container: '#datetimepicker5',
-                orientation: "auto-top",
-                datepicker: false,
-                timepicker: true,
-                minTime: '10:00:00',
-                maxTime: '20:00:00',
-                format: 'H:i'
+                });
             });
         </script>
         <!-- Time picker edición -->

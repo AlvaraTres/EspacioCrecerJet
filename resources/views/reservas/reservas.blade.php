@@ -5,7 +5,7 @@
 
                 @livewire('show-reservas')
 
-                <div id="calendar">
+                <div id="calendar" class="p-4">
                 </div>
                 
             </div>

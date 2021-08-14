@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Horario;
 use DB;
+use App\Models\User;
 use Carbon\Carbon;
 
 class ShowHorarios extends Component
@@ -12,6 +13,7 @@ class ShowHorarios extends Component
     public $open = false;
     public $openEditModal = false;
     public $openDelModal = false;
+    public $psicoSelected;
 
     public $events = '';
 
@@ -20,9 +22,14 @@ class ShowHorarios extends Component
     public function render()
     {
         if(\Auth::user()->id_users_rol == 1){
-            $events = DB::table('horarios')
-            ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
-            ->get();
+            if($this->psicoSelected != null){
+                $events = DB::table('horarios')
+                            ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
+                            ->where('horarios.id_user', '=', $this->psicoSelected)
+                            ->get();
+            }else{
+                $events = [];
+            } 
         }else{
             if(\Auth::user()->id_users_rol == 2){
                 $events = DB::table('horarios')
@@ -32,11 +39,13 @@ class ShowHorarios extends Component
             }
         }
         
+        $filtPsico = User::select('id', 'nombre_usuario')->where('id_users_rol', '=', 2)->get();
+        //dd($filtPsico);
 
         //dd($events);
         $this->events = json_encode($events);
 
-        return view('livewire.show-horarios');
+        return view('livewire.show-horarios', compact('filtPsico'));
     }
 
     public function storeHorario($date, $startTime, $endTime){

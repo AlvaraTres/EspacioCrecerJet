@@ -1,4 +1,16 @@
 <div>
+    @if (\Auth::user()->id_users_rol == 1)
+        <div class="mx-auto bg-white-200 w-full">
+            <p class="px-4 py-2">Filtros de búsqueda</p>
+            <select class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="filtPsico" id="filtPsico" wire:model="psicoSelected">
+                <option value="0">Seleccionar Psicológo</option>
+                @foreach ($filtPsico as $item)
+                    <option value="{{ $item->id }}">{{ $item->nombre_usuario }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
+
     <!-- MODAL CREACION DE HORARIO -->
     <x-jet-dialog-modal wire:model="open" id="reg_hor">
         <x-slot name="title">
@@ -171,6 +183,111 @@
                     calendar.refetchEvents()
                 });
                 calendar.render();
+            });
+
+            document.addEventListener("DOMContentLoaded", () => {
+                Livewire.hook('element.updated', (el, component) => {
+                    var Calendar = FullCalendar.Calendar;
+                    var Draggable = FullCalendar.Draggable;
+                    var CalendarEl = document.getElementById('calendar');
+                    var data = @this.events;
+                    console.log(data);
+
+                    var calendar = new FullCalendar.Calendar(CalendarEl, {
+                        events: JSON.parse(data),
+                        initialView: 'dayGridMonth',
+                        locale: "es",
+                        selectable: true,
+                        eventDisplay: 'block',
+                        headerToolbar: {
+                            left: 'prev, next, today',
+                            center: 'title',
+                            right: 'dayGridMonth, timeGridWeek, listWeek',
+                        },
+                        weekends: true,
+
+                        dateClick: function(info) {
+                            console.log(info.dateStr);
+
+                            var selectDate = info.dateStr;
+                            var startDate = moment(selectDate);
+                            console.log(startDate);
+                            if (moment(startDate).isBefore(moment())) {
+                                Swal.fire(
+                                    'Ooops!',
+                                    'No puedes asignar un horario a un dia que ya transcurrió.',
+                                    'error'
+                                )
+                            } else {
+                                if (startDate.isoWeekday() == 6 || startDate.isoWeekday() == 7) {
+                                    Swal.fire(
+                                        'Ooops!',
+                                        'No puedes asignar un horario a un fin de semana.',
+                                        'error'
+                                    )
+                                } else {
+                                    @this.set('open', true);
+                                    var date = new Date(info.dateStr + 'T00:00:00');
+                                    document.getElementById('btn_regis').addEventListener("click",
+                                        function() {
+                                            var startTime = document.getElementById(
+                                                'hora_inicio').value;
+                                            var endTime = document.getElementById('hora_fin')
+                                                .value;
+                                            //console.log(endTime);
+                                            @this.storeHorario(date, startTime, endTime);
+                                            calendar.refetchEvents();
+                                        });
+                                }
+
+                            }
+
+
+                        },
+
+                        eventClick: function(info) {
+                            var horario = info.event;
+                            console.log(info.event.start);
+                            var startevent = moment(info.event.start);
+                            console.log(startevent);
+                            if (moment(startevent).isBefore(moment())) {
+                                Swal.fire(
+                                    'Ooops!',
+                                    'No puedes editar un horario de un día que ya transcurrió.',
+                                    'error'
+                                )
+                            } else {
+                                @this.editHorario(horario);
+                                @this.set('openEditModal', true);
+                                document.getElementById('btn_edit').addEventListener("click",
+                                    function() {
+                                        var editHoraIni = document.getElementById(
+                                            'hora_inicioEdit').value;
+                                        var editHoraFin = document.getElementById(
+                                            'hora_finEdit').value;
+                                        @this.updateHorario(editHoraIni, editHoraFin);
+                                        calendar.refetchEvents();
+                                    });
+                                document.getElementById('btn_del').addEventListener("click",
+                                    function() {
+                                        @this.set('openEditModal', false);
+                                        @this.set('openDelModal', true);
+                                        document.getElementById("btn_destroy_horario")
+                                            .addEventListener(
+                                                "click",
+                                                function() {
+                                                    @this.destroyHorario();
+                                                });
+                                    });
+                            }
+
+                        }
+                    });
+                    @this.on('refreshCalendar', () => {
+                        calendar.refetchEvents()
+                    });
+                    calendar.render();
+                });
             });
         </script>
         <script type="text/javascript">

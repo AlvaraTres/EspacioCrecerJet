@@ -64,7 +64,7 @@
                         </x-jet-nav-link>
 
                         <x-jet-nav-link href="{{ route('tags_trastornos') }}" :active="request()->routeIs('tags')">
-                            Tags
+                            Categorías Fichas 
                         </x-jet-nav-link>
 
                         <x-jet-nav-link href="{{ route('pagos') }}" :active="request()->routeIs('pagos')">
@@ -309,17 +309,17 @@
                         </div>
                     </div>
                 </div>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')">
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('calendarioreservas')" class="hover:bg-green-500">
                     Calendario Reservas
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('horarios') }}"
-                    :active="request()->routeIs('calendariohorarios')">
+                    :active="request()->routeIs('calendariohorarios')" class="hover:bg-green-500">
                     Calendario Horarios
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')">
-                    Tags
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('tags')" class="hover:bg-green-500">
+                    Categorías
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pagos')">
+                <x-jet-responsive-nav-link href="#" :active="request()->routeIs('pagos')" class="hover:bg-green-500">
                     Pagos
                 </x-jet-responsive-nav-link>
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
@@ -406,9 +406,9 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
+                <x-jet-responsive-nav-link class="hover:bg-green-500" href="{{ route('profile.show') }}"
                     :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
+                    {{ __('Perfil') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -422,9 +422,9 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <x-jet-responsive-nav-link class="hover:bg-green-500" href="{{ route('logout') }}" onclick="event.preventDefault();
                                     this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Salir') }}
                     </x-jet-responsive-nav-link>
                 </form>
 

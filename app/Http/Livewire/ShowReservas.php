@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Reserva;
 use App\Models\User;
 use App\Models\Paciente;
+use App\Models\Horario;
 use DB;
 use Carbon\Carbon;
 
@@ -27,6 +28,9 @@ class ShowReservas extends Component
     public $selectedPsico;
     public $comparador = false;
     public $selectedPaciente;
+    public $start;
+    public $end;
+    public $dateClick;
 
     protected $rules = [
         'id_usuario' => 'required',
@@ -76,6 +80,7 @@ class ShowReservas extends Component
                             ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
                             ->get();
                 $this->selectedPsico = $datos->id_user;
+
             }else{
                 if($this->selectedPsico != null){
                     $events = DB::table('reservas')
@@ -106,6 +111,7 @@ class ShowReservas extends Component
                         ]);
                     }else{
                         $this->selectedPsico = $psicolog->id_usuario;
+
                         $datos = DB::table('reservas')
                             ->join('users', 'users.id', '=', 'reservas.id_usuario')
                             ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
@@ -117,13 +123,15 @@ class ShowReservas extends Component
                 }
                 if($this->selectedPsico != null && $this->selectedPaciente == null){
                     $this->reset(['selectedPaciente']);
+                    
                     $events = DB::table('reservas')
                         ->join('users', 'users.id', '=', 'reservas.id_usuario')
                         ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
                         ->where('reservas.id_usuario', '=', $this->selectedPsico)
                         ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
                         ->get();
-                    //dd($reservas);
+                    
+
                     if($events->count() > 0){
                         $datos = DB::table('reservas')
                             ->join('users', 'users.id', '=', 'reservas.id_usuario')
@@ -212,6 +220,27 @@ class ShowReservas extends Component
         $this->events = json_encode($events);
 
         return view('livewire.show-reservas', compact('datos', 'filtPsico', 'filtPaciente','paciente'));
+    }
+
+    public function validarFechaHorario($fechaClick){
+        $this->dateClick = $fechaClick;
+            $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->selectedPsico)->get();
+            
+            if(count($this->dateClick) > 0){
+                $this->start = Horario::select('hora_inicio')->where('id_user', '=', $this->selectedPsico)->get();
+                $this->start = Carbon::parse($this->start[0]->hora_inicio)->format('H:i:s');
+
+                $this->end = Horario::select('hora_fin')->where('id_user', '=', $this->selectedPsico)->get();
+                $this->end = Carbon::parse($this->end[0]->hora_fin)->format('H:i:s');
+
+                $this->open = true;
+            }else{
+                $this->dispatchBrowserEvent('swal', [
+                    'title' => 'Ooops!', 
+                    'text' => 'Lo sentimos, pero el psicológo seleccionado no tiene horario asignado para la fecha seleccionada, por favor escoge otra fecha.',
+                    'icon' => 'error'
+                ]);
+            }
     }
 
     public function storeReserva($eventAdd, $startTime){
