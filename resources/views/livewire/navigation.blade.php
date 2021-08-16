@@ -56,14 +56,14 @@
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ url('/dashboard') }}"
-                            class="text-white hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+                            class="text-white hover:bg-green-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
                     @else
                         <a href="{{ route('login') }}"
-                            class="text-white hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Iniciar
+                            class="text-white hover:bg-green-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Iniciar
                             Sesión</a>
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                                class="text-white hover:bg-blue-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrarse</a>
+                                class="text-white hover:bg-green-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrarse</a>
                         @endif
                     @endauth
                 @endif
