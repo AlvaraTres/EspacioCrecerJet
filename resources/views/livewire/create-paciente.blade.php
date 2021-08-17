@@ -5,7 +5,9 @@
 
     <x-jet-dialog-modal wire:model="open">
         <x-slot name="title">
-            Nuevo Psicólogo
+            <div class="items-center mx-auto">
+                Agregar Paciente
+            </div>
         </x-slot>
 
         <x-slot name="content">
@@ -41,10 +43,26 @@
             </div>
             <div class="mb-4">
                 <x-jet-label value="Profesión:"/>
-                <x-jet-input type="text" class="w-full" wire:model.defer="profesion"/>
+                <select class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="profesion" id="profesion" wire:model="profesion">
+                    <option value="0">Selecciona tu profesión</option>
+                    <option value="Abogado">Abogado(a)</option>
+                    <option value="ingeniero">Ingeniero(a)</option>
+                    <option value="profesor">Profesor(a)</option>
+                    <option value="tecnico">Técnico</option>
+                    <option value="medico">Médico</option>
+                    <option value="arquitecto">Arquitecto</option>
+                    <option value="estudiante">Estudiante</option>
+                    <option value="otro">Otro</option>
+                </select>
                 
                 <x-jet-input-error for="profesion"/>
             </div>
+            @if ($inputCert == 1)
+                <div class="mb-4">
+                    <x-jet-label value="Subir Certificado Alumno Regular:"/>
+                    <input type="file" name="cert" id="cert" wire:model="certificado" accept=".pdf">
+                </div>
+            @endif
             <div class="mb-4">
                 <x-jet-label value="Alergia:"/>
                 <x-jet-input type="text" class="w-full" wire:model.defer="alergia"/>
@@ -66,7 +84,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="save" wire:loading.attr="disabled" wire:target="save" class="disabled:opacity-25">Crear Psicólogo</x-jet-secondary-button>
+            <x-jet-secondary-button wire:click="save" wire:loading.attr="disabled" wire:target="save" class="disabled:opacity-25">Crear Paciente</x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('open', false)" wire:loading.attr="disabled" wire:target="save" class="disabled:opacity-25">Cancelar</x-jet-secondary-button>
         </x-slot>
     </x-jet-dialog-modal>

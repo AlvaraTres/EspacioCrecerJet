@@ -2,7 +2,7 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex relative justify-between h-16">
-            <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+            <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start ">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
@@ -13,9 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-4 sm-block sm:-my-px sm:ml-10 sm:flex items-center">
 
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-jet-nav-link>
+                   
 
                     @if (\Auth::user()->id_users_rol == 1)
                         <div class="flex">

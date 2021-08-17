@@ -8,13 +8,20 @@ use Freshwork\ChileanBundle\Rut;
 use App\Models\User;
 use App\Models\Paciente;
 use Carbon\Carbon;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class CreatePaciente extends Component
 {
+    use WithFileUploads;
+
     public $open = false;
 
     //variables de paciente
-    public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente, $profesion, $telefono_paciente, $email, $fecha_nacimiento_paciente, $alergia;
+    public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente,  $telefono_paciente, $email, $fecha_nacimiento_paciente, $alergia;
+    public $profesion;
+    public $certificado;
+    public $inputCert = 0;
 
     protected $rules = [
         'rut_paciente' => 'required',
@@ -32,7 +39,7 @@ class CreatePaciente extends Component
         //dd($this);
         $this->validate();
 
-        Paciente::create([
+        $paci = Paciente::create([
             'rut_paciente' => $this->rut_paciente,
             'nombre_paciente' => $this->nombre_paciente,
             'ap_pat_paciente' => $this->ap_pat_paciente,
@@ -44,6 +51,16 @@ class CreatePaciente extends Component
             'alergia' => $this->alergia,
             'password' => bcrypt('123456'),
         ]);
+
+        $nombre = $paci->nombre_paciente .' '.$paci->ap_pat_paciente;
+
+
+        if($this->certificado != null){
+            $file = $this->certificado->getClientOriginalName();
+            //dd($file);
+            $this->certificado->storeAs('certificado/' . $nombre, $file);
+            $paci->update(['certificado' => $file]);
+        }
 
         User::create([
             'id_users_rol' => 3,
@@ -77,6 +94,14 @@ class CreatePaciente extends Component
             'text' => 'El paciente fue registrado con éxito!',
             'icon' => 'success'
         ]);
+    }
+
+    public function updatedProfesion($value){
+        if($value == 'estudiante'){
+            $this->inputCert = 1;
+        }else{
+            $this->inputCert = 0;
+        }
     }
 
     public function render()

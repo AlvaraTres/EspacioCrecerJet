@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -24,6 +25,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        //dd($input['certificado']);
         Validator::make($input, [
             'rut_paciente' => ['required'],
             'nombre_paciente' => ['required', 'string', 'max:255'],
@@ -38,11 +40,12 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
         
-        Paciente::create([
+        $paciente = Paciente::create([
             'rut_paciente' => $input['rut_paciente'],
             'nombre_paciente' => $input['nombre_paciente'],
             'ap_pat_paciente' => $input['apellido_pat_paciente'],
             'ap_mat_paciente' => $input['apellido_mat_paciente'],
+            'sexo_paciente' => $input['sexo_paciente'],
             'profesion' => $input['profesion'],
             'telefono_paciente' => $input['telefono_paciente'],
             'email' => $input['email'],
@@ -50,6 +53,17 @@ class CreateNewUser implements CreatesNewUsers
             'alergia' => $input['alergia'],
             'password' => Hash::make($input['password']),
         ]);
+
+        $nombre = $paciente->nombre_paciente .' '.$paciente->ap_pat_paciente;
+
+
+        if($input['certificado'] != null){
+            $file = $input['certificado']->getClientOriginalName();
+            //dd($file);
+            $input['certificado']->storeAs('certificado/' . $nombre, $file);
+            $paciente->update(['certificado' => $file]);
+        }
+
         /*
         User::create([
             'id_users_rol' => 3,
@@ -73,6 +87,7 @@ class CreateNewUser implements CreatesNewUsers
                 'nombre_usuario' => $input['nombre_paciente'],
                 'apellido_pat_usuario' => $input['apellido_pat_paciente'],
                 'apellido_mat_usuario' => $input['apellido_mat_paciente'],
+                'sexo' => $input['sexo_paciente'],
                 'telefono' => $input['telefono_paciente'],
                 'email' => $input['email'],
                 'especialidad' => 'ninguna',

@@ -6,7 +6,7 @@
 
         <x-jet-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
             @csrf
 
             <div>
@@ -30,13 +30,39 @@
             </div>
 
             <div class="mt-4">
+                <x-jet-label for="sexo_paciente" value="{{ __('Sexo') }}" />
+                <select name="sexo_paciente" id="sexo_paciente" :value="old(sexo_paciente)" class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" required autofocus>
+                    <option value="0" selected disabled>Selecciona una opción</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
                 <x-jet-label for="fecha_nacimiento_paciente" value="{{ __('Fecha Nacimiento') }}" />
                 <x-jet-input id="fecha_nacimiento_paciente" class="block mt-1 w-full" type="text" name="fecha_nacimiento_paciente" :value="old('fecha_nacimiento_paciente')" required autofocus autocomplete="fecha_nacimiento_paciente" />
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="profesion" value="{{ __('Profesión') }}" />
-                <x-jet-input id="profesion" class="block mt-1 w-full" type="text" name="profesion" :value="old('profesion')" required autofocus autocomplete="profesion" />
+                <x-jet-label value="Profesión:"/>
+                <select class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="profesion" id="profesion" wire:model="profesion">
+                    <option value="0">Selecciona tu profesión</option>
+                    <option value="Abogado">Abogado(a)</option>
+                    <option value="ingeniero">Ingeniero(a)</option>
+                    <option value="profesor">Profesor(a)</option>
+                    <option value="tecnico">Técnico</option>
+                    <option value="medico">Médico</option>
+                    <option value="arquitecto">Arquitecto</option>
+                    <option value="estudiante">Estudiante</option>
+                    <option value="otro">Otro</option>
+                </select>
+                
+                <x-jet-input-error for="profesion"/>
+            </div>
+            <div class="mt-4" id="divFile">
+                    <x-jet-label value="Subir Certificado Alumno Regular:"/>
+                <input type="file" name="certificado" id="certificado" accept=".pdf">
             </div>
 
             <div class="mt-4">
@@ -98,6 +124,18 @@
 
     @push('js')
         <script type="text/javascript">
+        
+            $(function(){
+                $('#divFile').hide();
+                $('#profesion').change(function(){
+                    var opt = $(this).val();
+                    if(opt == 'estudiante'){
+                        $('#divFile').show();
+                    }else{
+                        $('#divFile').hide();
+                    }
+                });
+            });
             jQuery.datetimepicker.setLocale('es');
             jQuery('#fecha_nacimiento_paciente').datetimepicker({
                 i18n: {

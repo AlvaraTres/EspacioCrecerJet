@@ -19,6 +19,7 @@ class PaymentController extends Controller
 {
 
     public $full_date, $paci,$anio_reserva, $mes_reserva, $dia_reserva, $startTime_reserva, $description_reserva;
+    public $valor = 0;
 
     public function payWithPayPal($date1,$date2, $date3, $startTime, $description, $pid, $paci)
     {
@@ -37,17 +38,29 @@ class PaymentController extends Controller
         $this->full_date = Carbon::createFromFormat('Y-m-d H:i:s',$fecha . ' ' . $hora);
         //dd($this->full_date);
 
+        $pac_sea = Paciente::where('id', '=', $paci)->first();
+        //dd($pac_sea->certificado);
+        if($pac_sea->certificado == null){
+            $this->valor = 20000;
+        }else{
+            $this->valor = 15000;
+        }
+        //dd($this->valor);
+        $precio = $this->valor;
+        //dd($precio);
+
         $show_fecha = $this->full_date->format('d-m-Y');
         $show_hora = $this->full_date->format('H:i');
         $data = [];
         $data['items'] = [
             [
                 'name' => 'Reserva de Hora Espacio Crecer',
-                'price' => 20000,
+                'price' => $precio,
                 'desc' => 'Fecha de atencion '. $show_fecha ." a las " . $show_hora . " horas.",
                 'qty' => 1
             ]
         ];
+        //dd($data);
 
         $reserva_paypal = (object) array(
             'motivo' => $this->description_reserva, 
@@ -55,14 +68,11 @@ class PaymentController extends Controller
         );
 
         $reserva_paypal = json_decode(json_encode($reserva_paypal), true);
-
         $data['invoice_id'] = 1;
         $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
         $data['return_url'] = route('payment.success', ['fecha' => $this->full_date ,'description' => $this->description_reserva, 'pid' => $pid, 'paci' => $this->paci]);
         $data['cancel_url'] = route('payment.cancel');
-        $data['total'] = 20000;
-
-        
+        $data['total'] = $precio;
 
         $provider = new ExpressCheckout;
 

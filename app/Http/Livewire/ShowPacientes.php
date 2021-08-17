@@ -65,7 +65,7 @@ class ShowPacientes extends Component
     public function render()
     {
         if(\Auth::user()->id_users_rol == 1){
-            $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'DESC')->paginate(10);
+            $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'asc')->paginate(10);
             $pacientesList = [];
         }else{
             if(\Auth::user()->id_users_rol == 2){
@@ -75,7 +75,7 @@ class ShowPacientes extends Component
                             ->where('reservas.id_usuario', '=', \Auth::user()->id)
                             ->distinct()
                             ->get();
-                $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'DESC')->paginate(10);
+                $pacientes = Paciente::where('nombre_paciente', 'like', '%'. $this->search .'%')->orderBy('id', 'ASC')->paginate(10);
                 $v = 0;
                 for($i=0;$i<count($pacientesList);$i++){
                     for($j=0;$j<count($pacientes);$j++){

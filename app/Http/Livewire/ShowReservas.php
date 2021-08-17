@@ -32,6 +32,7 @@ class ShowReservas extends Component
     public $end;
     public $dateClick;
     public $paciPsico;
+    public $id_psi;
 
     protected $rules = [
         'id_usuario' => 'required',
@@ -232,9 +233,20 @@ class ShowReservas extends Component
                     $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', \Auth::user()->id)->first();
                     //dd($this->dateClick);
                 }else{
-                    $id_psi = (int)$this->paciPsico;
-                    $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $id_psi)->first();
-                    //dd($this->dateClick);
+                    $paciente_ = Paciente::where('rut_paciente', '=', \Auth::user()->rut_usuario)->first();
+                    $cont = Reserva::where('id_paciente', '=', $paciente_->id)->get();
+                    if(count($cont)>0){
+                        $this->id_psi = (int)$this->paciPsico;
+                        $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->id_psi)->first();
+                        //dd($this->dateClick);
+                    }else{
+                        $this->id_psi = (int)$this->selectedPsico;
+                        //dd($this->id_psi);
+                        $hora = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->id_psi)->first();
+                        //dd($hora);
+                        $this->dateClick = $hora;
+                        //dd($this->dateClick);
+                    }
                 }
             }
             
@@ -438,6 +450,7 @@ class ShowReservas extends Component
                         ->where('reservas.fecha_hora_reserva', '=', $fecha_hora->format('Y-m-d H:i:s'))
                         ->where('reservas.id_usuario', '=', \Auth::user()->id)
                         ->first();
+            $paci = $pac;
         }else{
             $comparador = DB::table('reservas')
                             ->select('reservas.*')
