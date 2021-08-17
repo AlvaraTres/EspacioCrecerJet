@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\LiveWire\EnlistarFichasModal;
 use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Livewire\VerPacienteInfoModal;
 
 use App\Models\Paciente;
 use App\Models\Reserva;
@@ -55,6 +56,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('reservas', function(){
 
 Route::get('/fichaPdf/{ficha_id}', [EnlistarFichasModal::class, 'fichaPacientePdf']);
 Route::get('/downloadFile/{ficha_id}', [EnlistarFichasModal::class, 'downloadFileFichaPaciente']);
+Route::get('downloadCert/{paciente_id}', [VerPacienteInfoModal::class, 'downloadCertificado']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('horarios', function(){

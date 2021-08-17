@@ -24,6 +24,9 @@
                 <h1 class="font-semibold">Edad: </h1>&nbsp;<h1>{{ $edad_calculada }}</h1>&nbsp;<h1>años</h1>
             </div>
             <div class="flex items-stretch mb-4 mt-4">
+                <h1 class="font-semibold">Sexo: </h1>&nbsp;<h1>{{ $ver_paciente->sexo_paciente }}</h1>
+            </div>
+            <div class="flex items-stretch mb-4 mt-4">
                 <h1 class="font-semibold">Correo: </h1>&nbsp;<h1>{{ $ver_paciente->email }}</h1>
             </div>
             <div class="flex items-stretch mb-4 mt-4">
@@ -32,6 +35,12 @@
             <div class="flex items-stretch mb-4 mt-4">
                 <h1 class="font-semibold">Profesión: </h1>&nbsp;<h1>{{ $ver_paciente->profesion }}</h1>
             </div>
+            @if ($ver_paciente->certificado != null)
+                <div class="flex items-center mb-4 mt-4">
+                    <h1 class="font-semibold items-center">Certificado Alumno Regular: </h1>&nbsp;<h1><a href="{{ url('/downloadCert', ['paciente_id' => $ver_paciente->id]) }}"
+                        class="flex inline-flix mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition>Descargar">Descargar</a></h1>
+                </div>
+            @endif
             <div class="flex items-stretch mb-4 mt-4">
                 <h1 class="font-semibold">Alergias: </h1>&nbsp;<h1>{{ $ver_paciente->alergia }}</h1>
             </div>
