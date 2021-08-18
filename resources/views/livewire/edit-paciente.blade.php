@@ -11,55 +11,55 @@
         </x-slot>
 
         <x-slot name="content">
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Rut:" />
                 <x-jet-input type="text" class="w-full" wire:model="paciente.rut_paciente" />
 
                 <x-jet-input-error for="rut_paciente" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Nombre:" />
                 <x-jet-input type="text" class="w-full" wire:model.defer="paciente.nombre_paciente" />
 
                 <x-jet-input-error for="nombre_paciente" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Apellido Paterno:" />
                 <x-jet-input type="text" class="w-full" wire:model.defer="paciente.ap_pat_paciente" />
 
                 <x-jet-input-error for="ap_pat_paciente" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Apellido Materno:" />
                 <x-jet-input type="text" class="w-full" wire:model.defer="paciente.ap_mat_paciente" />
 
                 <x-jet-input-error for="ap_mat_paciente" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Fecha Nacimiento:" />
                 <x-jet-input type="date" class="w-full" wire:model.defer="paciente.fecha_nacimiento_paciente" />
 
                 <x-jet-input-error for="fecha_nacimiento_paciente" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Profesión:" />
                 <x-jet-input type="text" class="w-full" wire:model.defer="paciente.profesion" />
 
                 <x-jet-input-error for="profesion" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Alergia:" />
                 <x-jet-input type="text" class="w-full" wire:model.defer="paciente.alergia" />
 
                 <x-jet-input-error for="alergia" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Teléfono:" />
                 <x-jet-input type="text" class="w-full" wire:model.defer="paciente.telefono_paciente" />
 
                 <x-jet-input-error for="telefono_paciente" />
             </div>
-            <div class="mb-4">
+            <div class="mb-4 text-left">
                 <x-jet-label value="Email:" />
                 <x-jet-input type="email" class="w-full" wire:model.defer="paciente.email" />
 

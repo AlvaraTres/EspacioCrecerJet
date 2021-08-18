@@ -41,7 +41,7 @@ class EnlistarFichasModal extends Component
         $ficha_paciente = DB::table('fichas_pacientes')
                     ->join('users', 'users.id', '=', 'fichas_pacientes.id_usuario')
                     ->join('pacientes', 'pacientes.id', '=', 'fichas_pacientes.id_paciente')
-                    ->where('users.id', '=', 1) //cambiar a psicologo que este en el sistema
+                    ->where('users.id', '=', \Auth::user()->id) //cambiar a psicologo que este en el sistema
                     ->where('pacientes.id', '=', $this->paciente->id)
                     ->select('fichas_pacientes.*')
                     ->get();
@@ -97,8 +97,9 @@ class EnlistarFichasModal extends Component
 
     public function saveFileFichaPaciente()
     {
+
         $this->validate([
-            'archivo' => 'max:1024',
+            'archivo' => 'required|max:1024',
             'fecha_atencion_ficha' => 'required'
         ]);
 
@@ -113,9 +114,12 @@ class EnlistarFichasModal extends Component
                     'resumen_atencion' => 'sin especificar'
                 ]);
         
+        $nombre = $this->paciente->nombre_paciente .' '. $this->paciente->ap_pat_paciente;
+
+        
         if($this->archivo != null){
             $file = $this->archivo->getClientOriginalName();
-            $this->archivo->storeAs('subfolder/' . $this->paciente->nombre_paciente, $file);
+            $this->archivo->storeAs('fichas/' . $nombre, $file);
             $ficha->update(['archivo' => $file]);
         }
 
@@ -140,7 +144,7 @@ class EnlistarFichasModal extends Component
                     ->select('pacientes.*')
                     ->where('fichas_pacientes.id_paciente', '=', $ficha->id_paciente)
                     ->first();
-
+        
         if(Storage::disk('local')->exists("subfolder/$paciente->nombre_paciente/$ficha->archivo")){
             $path = Storage::disk('local')->path("subfolder/$paciente->nombre_paciente/$ficha->archivo");
             return response()->download($path);

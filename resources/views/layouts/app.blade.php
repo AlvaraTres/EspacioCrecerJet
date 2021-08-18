@@ -44,6 +44,13 @@
             stroke-width: 1;
         }
 
+        .fc-today{
+            background: #A5A4F3 !important; 
+            border: none !important; 
+            border-top: 1px solid #ddd !important;
+            font-weight:bold;
+        }
+
     </style>
 
     @livewireStyles

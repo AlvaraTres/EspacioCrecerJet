@@ -213,6 +213,8 @@
                     initialView: 'dayGridMonth',
                     locale: "es",
                     selectable: true,
+                    eventColor: '#228795',
+                    eventDisplay: 'block',
 
                     headerToolbar: {
                         left: 'prev, next, today',

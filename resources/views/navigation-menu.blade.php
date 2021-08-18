@@ -109,10 +109,9 @@
                         </div>
                     @else
                         @if (\Auth::user()->id_users_rol == 2)
-                            <a href="{{ route('pacientes') }}"
-                                class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
+                            <x-jet-nav-link href="{{ route('pacientes') }}" :active="request()->routeIs('pacientes')">
                                 Mis Pacientes
-                            </a>
+                            </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('reservas') }}" :active="request()->routeIs('reservas')">
                                 Mi Calendario de Reservas
                             </x-jet-nav-link>
@@ -161,7 +160,7 @@
                                     Calendario Reservas
                                 </x-jet-nav-link>
                                 <x-jet-nav-link href="{{ route('horarios') }}"
-                                    :active="request()->routeIs('calendariohorarios')">
+                                    :active="request()->routeIs('horarios')">
                                     Horarios de Atención
                                 </x-jet-nav-link>
                                 <x-jet-nav-link href="{{ route('misPagos') }}"

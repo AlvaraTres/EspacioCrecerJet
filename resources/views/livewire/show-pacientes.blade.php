@@ -238,9 +238,9 @@
 
             </tbody>
         </table>
-
-        {{ $pacientes->links() }}
-
+        @if(\Auth::user()->id_users_rol == 1)
+            {{ $pacientes->links() }}
+        @endif
     @else
         <div class="px-6 py-4 text-center">
             No existe ningún registro coincidente.

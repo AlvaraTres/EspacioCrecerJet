@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Horario;
 use DB;
 use App\Models\User;
+use App\Models\Paciente;
 use Carbon\Carbon;
 
 class ShowHorarios extends Component
@@ -27,9 +28,10 @@ class ShowHorarios extends Component
                             ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
                             ->where('horarios.id_user', '=', $this->psicoSelected)
                             ->get();
-                $psicologo = Psicologo::first();
+                $psicologo = User::first();
             }else{
                 $events = [];
+                $psicologo = User::first();
             } 
         }else{
             if(\Auth::user()->id_users_rol == 2){
@@ -37,19 +39,22 @@ class ShowHorarios extends Component
                             ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
                             ->where('horarios.id_user', '=', \Auth::user()->id)
                             ->get(); 
-                $psicologo = Psicologo::first();  
+                $psicologo = User::first();  
             }else{
                 if(\Auth::user()->id_users_rol == 3){
+                    $paciente = Paciente::where('rut_paciente', '=', \Auth::user()->rut_usuario)->first();
+                    //dd($paciente);
+
                     $psicologo = DB::table('reservas')
-                                    ->join('users', 'users.id', '=', 'reservas.id_usuario')
-                                    ->select('users.*')
-                                    ->where('reservas.id_paciente', '=', \Auth::user()->id)
-                                    ->latest()
-                                    ->first();
-                    //dd($psicologo);
+                                ->join('users', 'users.id', '=', 'reservas.id_usuario')
+                                ->join('pacientes', 'pacientes.id', '=', 'reservas.id_paciente')
+                                ->select('users.id as id_user' ,'users.*', 'pacientes.*')
+                                ->where('pacientes.id', '=', $paciente->id)
+                                ->first();
+                    //dd($psicologo->id_user);
                     $events = DB::table('horarios')
                                 ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
-                                ->where('horarios.id_user', '=', $psicologo->id)
+                                ->where('horarios.id_user', '=', $psicologo->id_user)
                                 ->get();
                 }
             }

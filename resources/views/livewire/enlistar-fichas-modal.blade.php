@@ -48,10 +48,10 @@
                     <x-jet-label value="Fecha de atención:" />
                 @endif
 
-                <input @if ($openUploadFileModal == true) type="text" @else type="hidden" @endif
+                <input @if($openUploadFileModal == true) type="text" @else type="hidden" @endif
                     class="datetimepicker-input border rounded-md border-gray-300"
-                    id="fechaAtencion" data-toggle="datetimepicker"
-                    data-target="#fechaAtencion" autocomplete="off" />
+                    id="fechaAtencion{{$paciente->id}}" data-toggle="datetimepicker"
+                    data-target="#fechaAtencion{{$paciente->id}}" autocomplete="off"/>
                 @if ($openUploadFileModal == true)
                     <x-jet-label class="mt-4" value="Subir archivo:" />
                     <input type="file" name="archivo" id="archivo" wire:model="archivo" accept=".pdf , .doc , .docx">
@@ -99,7 +99,7 @@
                                     </div>
                                   </template>
                                   <div x-show="selected.length == 0" class="flex-1">
-                                    <input placeholder="Select a option" class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800" x-bind:value="selectedValues()">
+                                    <input placeholder="Seleccionar categorías" class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800" x-bind:value="selectedValues()">
                                   </div>
                                 </div>
                                 <div class="text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200 svelte-1l8159u">
@@ -154,7 +154,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            @if ($showInfoFichasModal == true)
+            @if($showInfoFichasModal == true)
                 <x-jet-danger-button wire:click="showUploadFileModal"
                     class="px-8 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition">
                     Subir Ficha</x-jet-danger-button>
