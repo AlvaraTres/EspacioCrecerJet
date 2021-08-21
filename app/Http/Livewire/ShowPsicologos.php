@@ -21,7 +21,7 @@ class ShowPsicologos extends Component
 
     public $psicologo;
     public $psicologo_id;
-    public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $fecha_nacimiento, $telefono, $email, $especialidad;
+    public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $fecha_nacimiento, $telefono, $email, $formacion;
 
     public $openEditPsicologoModal = false;
     public $openDeletePsicologoModal = false;
@@ -34,7 +34,7 @@ class ShowPsicologos extends Component
         'apellido_mat_usuario' => 'required',
         'telefono' => 'required',
         'email' => 'required|email',
-        'especialidad' => 'required',
+        'formacion' => 'required',
         'fecha_nacimiento' => 'required',
     ];
 
@@ -75,7 +75,7 @@ class ShowPsicologos extends Component
         $this->apellido_mat_usuario = $psicologo->apellido_mat_usuario; 
         $this->telefono = $psicologo->telefono; 
         $this->email = $psicologo->email; 
-        $this->especialidad = $psicologo->especialidad;
+        $this->formacion = $psicologo->formacion;
         $this->fecha_nacimiento = $psicologo->fecha_nacimiento;
         
         $this->openEditPsicologoModal = true;
@@ -93,7 +93,7 @@ class ShowPsicologos extends Component
             'apellido_mat_usuario' => $this->apellido_mat_usuario,
             'telefono' => $this->telefono,
             'email' => $this->email,
-            'especialidad' => $this->especialidad,
+            'formacion' => $this->formacion,
             'fecha_nacimiento' => Carbon::parse($this->fecha_nacimiento),
         ]);
 
@@ -104,7 +104,7 @@ class ShowPsicologos extends Component
             'apellido_mat_usuario',
             'telefono',
             'email',
-            'especialidad',
+            'formacion',
             'fecha_nacimiento',
             'psicologo',
             'openEditPsicologoModal'
@@ -148,7 +148,7 @@ class ShowPsicologos extends Component
         $this->apellido_mat_usuario = $psicologo->apellido_mat_usuario; 
         $this->telefono = $psicologo->telefono; 
         $this->email = $psicologo->email; 
-        $this->especialidad = $psicologo->especialidad;
+        $this->formacion = $psicologo->formacion;
         $this->fecha_nacimiento = $psicologo->fecha_nacimiento;
 
         $this->openVerPsicologoModal = true;

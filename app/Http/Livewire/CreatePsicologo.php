@@ -12,7 +12,7 @@ class CreatePsicologo extends Component
 {
     public $open = false;
 
-    public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $fecha_nacimiento, $telefono, $email, $especialidad, $password;
+    public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $fecha_nacimiento, $telefono, $email, $formacion, $password;
 
     public $fecha;
     protected $rules = [
@@ -22,7 +22,7 @@ class CreatePsicologo extends Component
         'apellido_mat_usuario' => 'required',
         'telefono' => 'required',
         'email' => 'required|email',
-        'especialidad' => 'required',
+        'formacion' => 'required',
         'fecha_nacimiento' => 'required',
         'password' => 'required'
     ];
@@ -46,7 +46,7 @@ class CreatePsicologo extends Component
             'apellido_mat_usuario' => $this->apellido_mat_usuario,
             'telefono' => $this->telefono,
             'email' => $this->email,
-            'especialidad' => $this->especialidad,
+            'formacion' => $this->formacion,
             'fecha_nacimiento' => Carbon::parse($this->fecha_nacimiento),
             'password' => bcrypt($this->password),
         ]);
@@ -59,7 +59,7 @@ class CreatePsicologo extends Component
             'apellido_mat_usuario',
             'telefono',
             'email',
-            'especialidad',
+            'formacion',
             'fecha_nacimiento',
             'password',
         ]);

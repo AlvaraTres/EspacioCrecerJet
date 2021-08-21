@@ -120,7 +120,7 @@ class CreateNewUser implements CreatesNewUsers
                 'sexo' => $input['sexo_paciente'],
                 'telefono' => $input['telefono_paciente'],
                 'email' => $input['email'],
-                'especialidad' => 'ninguna',
+                'formacion' => 'ninguna',
                 'fecha_nacimiento' => Carbon::parse($input['fecha_nacimiento_paciente'])->format('Y-m-d'),
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {

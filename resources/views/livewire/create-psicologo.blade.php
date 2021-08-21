@@ -40,8 +40,8 @@
                 <x-jet-input-error for="fecha_nacimiento"/>
             </div>
             <div class="mb-4">
-                <x-jet-label value="Especialidad:"/>
-                <x-jet-input type="text" class="w-full" wire:model.defer="especialidad"/>
+                <x-jet-label value="Formación:"/>
+                <x-jet-input type="text" class="w-full" wire:model.defer="formacion"/>
                 
                 <x-jet-input-error for="especialidad"/>
             </div>

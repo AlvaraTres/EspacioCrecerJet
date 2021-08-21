@@ -78,8 +78,8 @@
                         @endif
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" wire:click="order('especialidad')">
-                        Especialidad
-                        @if ($sort == 'especialidad')
+                        Formación
+                        @if ($sort == 'formacion')
                             @if ($direction == 'asc')
                                 <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
                             @else
@@ -125,7 +125,7 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                {{ $psicologo->especialidad }}
+                                {{ $psicologo->formacion }}
                             </div>
                         </td>
                         <td class="px-6 py-4 text-right text-sm font-medium flex items-stretch">
@@ -203,8 +203,8 @@
                 <x-jet-input-error for="fecha_nacimiento"/>
             </div>
             <div class="mb-4">
-                <x-jet-label value="Especialidad:"/>
-                <x-jet-input type="text" class="w-full" wire:model.defer="especialidad"/>
+                <x-jet-label value="Formación:"/>
+                <x-jet-input type="text" class="w-full" wire:model.defer="formacion"/>
                 
                 <x-jet-input-error for="especialidad"/>
             </div>
@@ -249,7 +249,7 @@
                 <h1 class="font-semibold">Teléfono: </h1>&nbsp;<h1>{{$telefono}}</h1>
             </div>
             <div class="flex items-stretch mb-4 mt-4">
-                <h1 class="font-semibold">Especialidad: </h1>&nbsp;<h1>{{$especialidad}}</h1>
+                <h1 class="font-semibold">Formación: </h1>&nbsp;<h1>{{$formacion}}</h1>
             </div>
         </x-slot>
 

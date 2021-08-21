@@ -70,7 +70,7 @@ class CreatePaciente extends Component
             'apellido_mat_usuario' => $this->ap_mat_paciente,
             'telefono' => $this->telefono_paciente,
             'email' => $this->email,
-            'especialidad' => 'Sin especialidad',
+            'formacion' => 'sin especificar',
             'fecha_nacimiento' => $this->fecha_nacimiento_paciente,
             'password' => bcrypt('123456'),
         ]);
