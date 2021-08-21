@@ -33,7 +33,7 @@ class ShowPacientes extends Component
     public $ficha_pdf;
 
     //variables de paciente
-    public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente, $profesion, $telefono_paciente, $email, $fecha_nacimiento_paciente, $alergia;
+    public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente, $profesion, $telefono_paciente, $email, $fecha_nacimiento_paciente, $patologias_previas;
 
     //variables de usuario
     //public $rut_usuario, $nombre_usuario, $apellido_pat_usuario, $apellido_mat_usuario, $fecha_nacimiento, $telefono, $especialidad;
@@ -120,7 +120,7 @@ class ShowPacientes extends Component
         $this->telefono_paciente = $paciente->telefono_paciente; 
         $this->email = $paciente->email; 
         $this->fecha_nacimiento_paciente = $paciente->fecha_nacimiento_paciente; 
-        $this->alergia = $paciente->alergia;
+        $this->patologias_previas = $paciente->patologias_previas;
 
         $this->openEditPacienteModal = true;
 
@@ -144,7 +144,7 @@ class ShowPacientes extends Component
             'telefono_paciente' => $this->telefono_paciente,
             'email' => $this->email,
             'fecha_nacimiento_paciente' => $this->fecha_nacimiento_paciente,
-            'alergia' => $this->alergia,
+            'patologias_previas' => $this->patologias_previas,
         ]);
         
         $user->update([
@@ -166,7 +166,7 @@ class ShowPacientes extends Component
             'telefono_paciente',
             'email',
             'fecha_nacimiento_paciente',
-            'alergia',
+            'patologias_previas',
             'paciente',
             'paciente_id',
             'user',
@@ -212,7 +212,7 @@ class ShowPacientes extends Component
         $this->telefono_paciente = $paciente->telefono_paciente; 
         $this->email = $paciente->email; 
         $this->fecha_nacimiento_paciente = $paciente->fecha_nacimiento_paciente; 
-        $this->alergia = $paciente->alergia;
+        $this->patologias_previas = $paciente->patologias_previas;
 
         //calcular Edad
         $this->fecha_actual = Carbon::now('America/Santiago');

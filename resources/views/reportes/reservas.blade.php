@@ -6,11 +6,9 @@
                 @livewire('show-reservas-report')
             </div>
 
-            @if (\Auth::user()->id_users_rol == 1)
-                <div class="bg-white flex-grow overflow-hidden shadow-xl sm:rounded-lg ml-3">
-                    @livewire('show-reservas-report-psicologos')
-                </div>
-            @endif
+            <div class="bg-white flex-grow overflow-hidden shadow-xl sm:rounded-lg ml-3">
+                @livewire('show-reservas-report-psicologos')
+            </div>
 
 
         </div>

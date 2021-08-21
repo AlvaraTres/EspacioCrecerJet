@@ -33,6 +33,7 @@ class ShowReservas extends Component
     public $dateClick;
     public $paciPsico;
     public $id_psi;
+    public $psicologoDesignado = ' ';
 
     protected $rules = [
         'id_usuario' => 'required',
@@ -55,8 +56,7 @@ class ShowReservas extends Component
                           ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
                           ->first();
                           
-            $filtPaciente = Paciente::select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS paciente'), 'pacientes.*')->orderBy('pacientes.id', 'ASC')->get();
-
+            $this->psicologoDesignado = User::find($paciente->id_psicologo);
 
             $events = DB::table('reservas')
                         ->join('users', 'users.id', '=', 'reservas.id_usuario')
@@ -65,6 +65,8 @@ class ShowReservas extends Component
                         ->select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS title'), 'reservas.fecha_hora_reserva as start','reservas.motivo_reserva as description', 'reservas.fecha_hora_reserva_fin as end')
                         ->get();
 
+            $filtPaciente = Paciente::select(DB::raw('CONCAT(pacientes.nombre_paciente, \' \', pacientes.ap_pat_paciente) AS paciente'), 'pacientes.*')->orderBy('pacientes.id', 'ASC')->first();
+            
             $filtPsico = User::select(DB::raw('CONCAT(users.nombre_usuario, \' \', users.apellido_pat_usuario) AS psicologo'), 'users.*')->where('users.id_users_rol', '=', 2)->orderBy('users.id', 'ASC')->get();
             
             $datos = DB::table('reservas')

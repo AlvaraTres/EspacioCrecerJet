@@ -85,10 +85,10 @@
                     <div class="col"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs borde-info"><dt>Alergias</dt></div>
+                    <div class="col-xs borde-info"><dt>Patologías previas</dt></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs borde-info-sin-arriba">{{$datos->alergia}}</div>
+                    <div class="col-xs borde-info-sin-arriba">{{$datos->patologias_previas}}</div>
                 </div>
                 <div class="row">
                     <div class="col"><br></div>

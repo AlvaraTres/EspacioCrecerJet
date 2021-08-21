@@ -25,7 +25,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
-        //dd($input['certificado']);
+
         Validator::make($input, [
             'rut_paciente' => ['required'],
             'nombre_paciente' => ['required', 'string', 'max:255'],
@@ -39,29 +39,57 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
         ])->validate();
-        
-        $paciente = Paciente::create([
-            'rut_paciente' => $input['rut_paciente'],
-            'nombre_paciente' => $input['nombre_paciente'],
-            'ap_pat_paciente' => $input['apellido_pat_paciente'],
-            'ap_mat_paciente' => $input['apellido_mat_paciente'],
-            'sexo_paciente' => $input['sexo_paciente'],
-            'profesion' => $input['profesion'],
-            'telefono_paciente' => $input['telefono_paciente'],
-            'email' => $input['email'],
-            'fecha_nacimiento_paciente' => Carbon::parse($input['fecha_nacimiento_paciente'])->format('Y-m-d'),
-            'alergia' => $input['alergia'],
-            'password' => Hash::make($input['password']),
-        ]);
 
-        $nombre = $paciente->nombre_paciente .' '.$paciente->ap_pat_paciente;
+        $psicolist = DB::table('users')
+                       ->leftjoin('pacientes', 'pacientes.id_psicologo', '=', 'users.id')
+                       ->select('users.id as usuario', DB::raw('COUNT(pacientes.id) as pacientes'))
+                       ->where('users.id_users_rol', '=', 2)
+                       ->groupBy('usuario')
+                       ->orderBy('pacientes', 'ASC')
+                       ->first();
+        //dd($psicolist);
 
-
-        if($input['certificado'] != null){
-            $file = $input['certificado']->getClientOriginalName();
-            //dd($file);
-            $input['certificado']->storeAs('certificado/' . $nombre, $file);
-            $paciente->update(['certificado' => $file]);
+        if(in_array('certificado', $input)){
+            $paciente = Paciente::create([
+                'id_psicologo' => $psicolist->usuario,
+                'rut_paciente' => $input['rut_paciente'],
+                'nombre_paciente' => $input['nombre_paciente'],
+                'ap_pat_paciente' => $input['apellido_pat_paciente'],
+                'ap_mat_paciente' => $input['apellido_mat_paciente'],
+                'sexo_paciente' => $input['sexo_paciente'],
+                'profesion' => $input['profesion'],
+                'telefono_paciente' => $input['telefono_paciente'],
+                'email' => $input['email'],
+                'certificado' => null,
+                'fecha_nacimiento_paciente' => Carbon::parse($input['fecha_nacimiento_paciente'])->format('Y-m-d'),
+                'alergia' => $input['alergia'],
+                'password' => Hash::make($input['password']),
+            ]);
+        }else{
+            $paciente = Paciente::create([
+                'id_psicologo' => $psicolist->usuario,
+                'rut_paciente' => $input['rut_paciente'],
+                'nombre_paciente' => $input['nombre_paciente'],
+                'ap_pat_paciente' => $input['apellido_pat_paciente'],
+                'ap_mat_paciente' => $input['apellido_mat_paciente'],
+                'sexo_paciente' => $input['sexo_paciente'],
+                'profesion' => $input['profesion'],
+                'telefono_paciente' => $input['telefono_paciente'],
+                'email' => $input['email'],
+                'fecha_nacimiento_paciente' => Carbon::parse($input['fecha_nacimiento_paciente'])->format('Y-m-d'),
+                'alergia' => $input['alergia'],
+                'password' => Hash::make($input['password']),
+            ]);
+    
+            $nombre = $paciente->nombre_paciente .' '.$paciente->ap_pat_paciente;
+    
+    
+            if(in_array('certificado', $input)){
+                $file = $input['certificado']->getClientOriginalName();
+                //dd($file);
+                $input['certificado']->storeAs('certificado/' . $nombre, $file);
+                $paciente->update(['certificado' => $file]);
+            }
         }
 
         /*
@@ -79,6 +107,8 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         return view('dashboard');*/
+
+        
         
         return DB::transaction(function () use ($input) {
             return tap(User::create([

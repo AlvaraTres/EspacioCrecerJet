@@ -64,10 +64,10 @@
                 </div>
             @endif
             <div class="mb-4">
-                <x-jet-label value="Alergia:"/>
-                <x-jet-input type="text" class="w-full" wire:model.defer="alergia"/>
+                <x-jet-label value="Patologías previas:"/>
+                <x-jet-input type="text" class="w-full" wire:model.defer="patologias_previas"/>
                 
-                <x-jet-input-error for="alergia"/>
+                <x-jet-input-error for="patologias_previas"/>
             </div>
             <div class="mb-4">
                 <x-jet-label value="Teléfono:"/>

@@ -3,18 +3,9 @@
         @if (!$datos)
             <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">
                 <p class="text-justify ">Hola
-                    {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }},
-                    para reservar tu primera hora con Espacio Crecer, por favor selecciona uno de nuestros
-                    psicológos a continuación, si quieres saber más de nuestros profesionales puedes visitar la
-                    sección de psicológos en la barra de navegación.</p>
-                <select
-                    class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                    name="psico" id="psico" wire:model="selectedPsico">
-                    <option value="#">Seleccionar psicológo</option>
-                    @foreach ($filtPsico as $item)
-                        <option value="{{ $item->id }}">{{ $item->psicologo }}</option>
-                    @endforeach
-                </select>
+                    {{ $paciente->nombre_paciente }}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }}, Bienvenid@ a Espacio Crecer, un espacio dónde te ayudaran los mejores profesionles de la psicologia.<br>
+                    Para tu atención, tu psicólogo designado ha sido {{$psicologoDesignado->nombre_usuario}}&nbsp;{{$psicologoDesignado->apellido_pat_usuario}}. Para conocer su horario de atención vista la pestaña Horarios de Atención de la barra de navegación y asi poder agendar una atención mediante el calendario de reservas.</p>
+                
             </div>
         @else
             <div class="flex items-stretchmax-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 bg-white">

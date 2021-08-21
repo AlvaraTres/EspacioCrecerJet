@@ -1819,10 +1819,6 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
 }
-.bg-yellow-700 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(180, 83, 9, var(--tw-bg-opacity));
-}
 .bg-green-400 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
@@ -1853,6 +1849,10 @@ select {
 .bg-green-200 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(167, 243, 208, var(--tw-bg-opacity));
+}
+.bg-yellow-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(245, 158, 11, var(--tw-bg-opacity));
 }
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
@@ -2661,6 +2661,10 @@ select {
 		--tw-scale-x: 1;
 		--tw-scale-y: 1;
 		transform: var(--tw-transform);
+	}
+
+	.sm\:grid-cols-1 {
+		grid-template-columns: repeat(1, minmax(0, 1fr));
 	}
 
 	.sm\:items-start {

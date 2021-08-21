@@ -18,7 +18,7 @@ class CreatePaciente extends Component
     public $open = false;
 
     //variables de paciente
-    public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente,  $telefono_paciente, $email, $fecha_nacimiento_paciente, $alergia;
+    public $rut_paciente, $nombre_paciente, $ap_pat_paciente, $ap_mat_paciente,  $telefono_paciente, $email, $fecha_nacimiento_paciente, $patologias_previas;
     public $profesion;
     public $certificado;
     public $inputCert = 0;
@@ -32,7 +32,7 @@ class CreatePaciente extends Component
         'telefono_paciente' => 'required',
         'email' => 'required',
         'fecha_nacimiento_paciente' => 'required',
-        'alergia' => 'required',
+        'patologias_previas' => 'required',
     ];
 
     public function save(){
@@ -48,7 +48,7 @@ class CreatePaciente extends Component
             'telefono_paciente' => $this->telefono_paciente,
             'email' => $this->email,
             'fecha_nacimiento_paciente' => $this->fecha_nacimiento_paciente,
-            'alergia' => $this->alergia,
+            'patologias_previas' => $this->patologias_previas,
             'password' => bcrypt('123456'),
         ]);
 
@@ -85,7 +85,7 @@ class CreatePaciente extends Component
             'telefono_paciente', 
             'email', 
             'fecha_nacimiento_paciente', 
-            'alergia',
+            'patologias_previas',
         ]);
 
         $this->emit('render');

@@ -20,7 +20,7 @@ class EditPaciente extends Component
         'paciente.telefono_paciente' => 'required',
         'paciente.email' => 'required',
         'paciente.fecha_nacimiento_paciente' => 'required',
-        'paciente.alergia' => 'required',
+        'paciente.patologias_previas' => 'required',
     ];
 
     public function mount(Paciente $paciente){

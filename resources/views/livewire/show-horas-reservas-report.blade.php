@@ -49,9 +49,9 @@
             @if ($tipoFiltro == 2)
                 <div class="flex items-stretch bg-white w-full px-4 py-2">
             @endif
-            <input placeholder="Desde" class="ml-3 datetimepicker-input rounded-md border-gray-300" id="dateDesde"
+            <input placeholder="Desde" class="ml-3 datetimepicker-input rounded-md border-gray-300" id="dateDesdeHora"
                 wire:model="from" readonly @if ($tipoFiltro != 2) type="hidden" @else type="text" @endif>
-            <input placeholder="Hasta" class="ml-3 datetimepicker-input rounded-md border-gray-300" id="dateHasta"
+            <input placeholder="Hasta" class="ml-3 datetimepicker-input rounded-md border-gray-300" id="dateHastaHora"
                 wire:model="to" readonly @if ($tipoFiltro != 2) type="hidden" @else type="text" @endif>
             @if ($tipoFiltro == 2)
                 <x-jet-danger-button wire:click="resetFilt()"
@@ -151,30 +151,30 @@
         <script type="text/javascript">
             jQuery(function() {
                 jQuery.datetimepicker.setLocale('es');
-                jQuery('#dateDesde').datetimepicker({
+                jQuery('#dateDesdeHora').datetimepicker({
                     format: 'Y-m-d',
                     onShow: function(ct) {
                         this.setOptions({
-                            maxDate: jQuery('#dateHasta').val() ? jQuery('#dateHasta').val() :
+                            maxDate: jQuery('#dateHastaHora').val() ? jQuery('#dateHastaHora').val() :
                                 false,
                         })
                     },
                     timepicker: false,
                 }).on('change', function(e) {
-                    console.log(jQuery('#dateDesde').val());
-                    @this.set('from', jQuery('#dateDesde').val());
+                    console.log(jQuery('#dateDesdeHora').val());
+                    @this.set('from', jQuery('#dateDesdeHora').val());
                 });
-                jQuery('#dateHasta').datetimepicker({
+                jQuery('#dateHastaHora').datetimepicker({
                     format: 'Y-m-d',
                     onShow: function(ct) {
                         this.setOptions({
-                            minDate: jQuery('#dateDesde').val() ? jQuery('#dateDesde').val() : false
+                            minDate: jQuery('#dateDesdeHora').val() ? jQuery('#dateDesdeHora').val() : false
                         })
                     },
                     timepicker: false,
                 });
             }).on('change', function(e) {
-                @this.set('to', jQuery('#dateHasta').val());
+                @this.set('to', jQuery('#dateHastaHora').val());
             });
         </script>
     @endpush

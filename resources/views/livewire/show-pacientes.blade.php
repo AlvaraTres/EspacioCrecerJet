@@ -165,7 +165,8 @@
                                     @livewire('edit-paciente', ['paciente' => $pacientes[$j]], key($pacientes[$j]->id))
                                 </div>
                                 <div class="">
-                                    @livewire('delete-paciente', ['paciente' => $pacientes[$j]], key($pacientes[$j]->id))
+                                    @livewire('delete-paciente', ['paciente' => $pacientes[$j]],
+                                    key($pacientes[$j]->id))
                                 </div>
                             </div>
                         </td>
@@ -209,7 +210,7 @@
                             </td>
                             <td class="px-6 py-4 text-center text-sm font-medium">
                                 <div class="container">
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-5">
                                         @if (\Auth::user()->id_users_rol == 1)
                                             @livewire('ver-paciente-info-modal', ['paciente' => $paciente],
                                             key($paciente->id))
@@ -220,10 +221,12 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="">
-                                        @livewire('enlistar-fichas-modal', ['paciente' => $paciente],
-                                        key($paciente->id))
-                                    </div>
+                                    @if (Auth::user()->id_users_rol == 2)
+                                        <div class="">
+                                            @livewire('enlistar-fichas-modal', ['paciente' => $paciente],
+                                            key($paciente->id))
+                                        </div>
+                                    @endif
                                     <div class="">
                                         @livewire('edit-paciente', ['paciente' => $paciente], key($paciente->id))
                                     </div>
@@ -238,7 +241,7 @@
 
             </tbody>
         </table>
-        @if(\Auth::user()->id_users_rol == 1)
+        @if (\Auth::user()->id_users_rol == 1)
             {{ $pacientes->links() }}
         @endif
     @else

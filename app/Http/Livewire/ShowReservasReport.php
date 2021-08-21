@@ -65,6 +65,7 @@ class ShowReservasReport extends Component
                                     ->get();
 
             if($this->searchPaciente){
+                dd($this->searchPaciente);
                 $totalReservasAnio = DB::table('reservas')
                                     ->select(DB::raw('YEAR(reservas.fecha_hora_reserva) as anio'), DB::raw('COUNT(*) as cont'))
                                     ->where('reservas.id_paciente', '=', $this->searchPaciente)
@@ -84,6 +85,26 @@ class ShowReservasReport extends Component
                                         ->get();
             }
             
+        }else{
+            if($this->searchPaciente){
+                $totalReservasAnio = DB::table('reservas')
+                                    ->select(DB::raw('YEAR(reservas.fecha_hora_reserva) as anio'), DB::raw('COUNT(*) as cont'))
+                                    ->where('reservas.id_paciente', '=', $this->searchPaciente)
+                                    ->groupBy(DB::raw('YEAR(reservas.fecha_hora_reserva)'))
+                                    ->get();
+
+                $totalReservasMes = DB::table('reservas')
+                                    ->select(DB::raw("DATE_FORMAT(reservas.fecha_hora_reserva, '%M %Y %m') as meses"), DB::raw('COUNT(*) as cont'))
+                                    ->where('reservas.id_paciente', '=', $this->searchPaciente)
+                                    ->groupBy('meses')
+                                    ->get();
+                
+                $totalReservasDia = DB::table('reservas')
+                                        ->select(DB::raw("DATE_FORMAT(reservas.fecha_hora_reserva, '%M %Y %d') as dias"), DB::raw('COUNT(*) as cont'))
+                                        ->where('reservas.id_paciente', '=', $this->searchPaciente)
+                                        ->groupBy('dias')
+                                        ->get();
+            }
         }
 
         if($this->searchPaciente == null && $this->searchPsico == null){

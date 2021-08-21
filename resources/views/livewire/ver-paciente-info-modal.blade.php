@@ -42,7 +42,7 @@
                 </div>
             @endif
             <div class="flex items-stretch mb-4 mt-4">
-                <h1 class="font-semibold">Alergias: </h1>&nbsp;<h1>{{ $ver_paciente->alergia }}</h1>
+                <h1 class="font-semibold">patologias_previas: </h1>&nbsp;<h1>{{ $ver_paciente->patologias_previas }}</h1>
             </div>
         </x-slot>
 

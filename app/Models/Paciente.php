@@ -10,6 +10,7 @@ class Paciente extends Model
     protected $table = 'pacientes';
 
     protected $fillable = [
+        'id_psicologo',
         'rut_paciente',
         'nombre_paciente',
         'ap_pat_paciente',
@@ -20,7 +21,7 @@ class Paciente extends Model
         'telefono_paciente',
         'email',
         'fecha_nacimiento_paciente',
-        'alergia',
+        'patologias_previas',
         'password',
     ];
 
