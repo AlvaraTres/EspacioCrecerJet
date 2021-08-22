@@ -119,6 +119,13 @@ class ShowHorarios extends Component
                     'fecha_hora_inicio' => $fech_hor_ini,
                     'fecha_hora_fin' => $fech_hor_fin,
                 ]);
+                
+                $this->dispatchBrowserEvent('swal', [
+                    'title' => 'Exito!', 
+                    'text' => 'Se ha registrado tu horario de atención con éxito!',
+                    'icon' => 'success'
+                ]);
+
                 $this->reset([
                     'fechaClick',
                     'id_user',

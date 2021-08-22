@@ -125,6 +125,7 @@
                         console.log(info.dateStr);
 
                         var selectDate = info.dateStr;
+                        @this.set('fechaClick', selectDate);
                         var startDate = moment(selectDate);
                         console.log(startDate);
                         if (moment(startDate).isBefore(moment())) {
@@ -142,14 +143,12 @@
                                 )
                             } else {
                                 @this.set('open', true);
-                                var date = new Date(info.dateStr + 'T00:00:00');
-                                document.getElementById('btn_regis').addEventListener("click", function() {
-                                    var startTime = document.getElementById('hora_inicio').value;
-                                    var endTime = document.getElementById('hora_fin').value;
+                                    var date = new Date(selectDate + 'T00:00:00');
+                                    console.log(date);
+
                                     //console.log(endTime);
-                                    @this.storeHorario(date, startTime, endTime);
+                                    
                                     calendar.refetchEvents();
-                                });
                             }
 
                         }
