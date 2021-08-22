@@ -17,18 +17,22 @@ class ShowHorarios extends Component
     public $psicoSelected;
 
     public $events = '';
+    public $fechaClick, $horaInicio, $horaFin;
 
-    public $horario_id, $fecha_inicio, $fecha_fin, $hora_inicio, $hora_fin, $fecha_hora_inicio, $fecha_hora_fin;
+    public $cont = 0;
+
+    public $id_user, $horario_id, $fecha_inicio, $fecha_fin, $hora_inicio, $hora_fin, $fecha_hora_inicio, $fecha_hora_fin;
 
     public function render()
     {
         if(\Auth::user()->id_users_rol == 1){
             if($this->psicoSelected != null){
                 $events = DB::table('horarios')
-                            ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
+                            ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end','horarios.id as horariosID')
                             ->where('horarios.id_user', '=', $this->psicoSelected)
                             ->get();
                 $psicologo = User::first();
+                //dd($events);
             }else{
                 $events = [];
                 $psicologo = User::first();
@@ -69,45 +73,102 @@ class ShowHorarios extends Component
         return view('livewire.show-horarios', compact('filtPsico', 'psicologo'));
     }
 
-    public function storeHorario($date, $startTime, $endTime){
-        $fecha_horario = Carbon::parse($date)->format('Y-m-d H:i:s');
-        $fecha_only = Carbon::parse($date)->format('Y-m-d');
-        //dd($fecha_horario);
-        $fech_horario_res = Carbon::createFromFormat('Y-m-d H:i:s', $fecha_horario)->format('Y-m-d');
-
-        $hora_ini = Carbon::parse($startTime)->addSeconds('00')->format('H:i:s');
-        $hora_end = Carbon::parse($endTime)->addSeconds('00')->format('H:i:s');
-        //dd($hora_ini, $hora_end);
-
-        $fech_hor_ini = Carbon::createFromFormat('Y-m-d H:i:s',$fech_horario_res . ' ' . $hora_ini);
-        $fech_hor_fin = Carbon::createFromFormat('Y-m-d H:i:s',$fech_horario_res . ' ' . $hora_end);
-        //dd($fech_hor_ini, $fech_hor_fin);
-
-        Horario::create([
-            'id_user' => \Auth::user()->id,
-            'fecha_inicio' => $fecha_only,
-            'fecha_fin' => $fecha_only,
-            'hora_inicio' => $fech_hor_ini,
-            'hora_fin' => $fech_hor_fin,
-            'fecha_hora_inicio' => $fech_hor_ini,
-            'fecha_hora_fin' => $fech_hor_fin,
-        ]);
-
-        $this->reset([
-            'fecha_inicio',
-            'fecha_fin',
-            'hora_inicio',
-            'hora_fin',
-            'fecha_hora_inicio',
-            'fecha_hora_fin',
-            'open'
-        ]);
-
-        return redirect()->to('/horarios');
+    public function updatedFechaClick($value){
+        //dd($value);
     }
 
-    public function editHorario($horario){
-        $horario_find = Horario::where('fecha_hora_inicio', '=', $horario['start'])->first();
+    public function updatedPsicoSelected($value){
+        //
+    }
+
+    public function changeData(){
+        $events = DB::table('horarios')
+                            ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end','horarios.id as horariosID')
+                            ->where('horarios.id_user', '=', $this->psicoSelected)
+                            ->get();
+
+        $this->events = json_encode($events);
+        return $this->events;
+    }
+
+    public function storeHorario(){
+        
+            
+            //dd($this->fechaClick, $this->horaInicio, $this->horaFin);
+            //dd($this->psicoSelected);
+            $fecha_horario = Carbon::parse($this->fechaClick)->format('Y-m-d H:i:s');
+            $fecha_only = Carbon::parse($this->fechaClick)->format('Y-m-d');
+            //dd($fecha_horario);
+            $fech_horario_res = Carbon::createFromFormat('Y-m-d H:i:s', $fecha_horario)->format('Y-m-d');
+    
+            $hora_ini = Carbon::parse($this->horaInicio)->addSeconds('00')->format('H:i:s');
+            $hora_end = Carbon::parse($this->horaFin)->addSeconds('00')->format('H:i:s');
+            //dd($hora_ini, $hora_end);
+    
+            $fech_hor_ini = Carbon::createFromFormat('Y-m-d H:i:s',$fech_horario_res . ' ' . $hora_ini);
+            $fech_hor_fin = Carbon::createFromFormat('Y-m-d H:i:s',$fech_horario_res . ' ' . $hora_end);
+            //dd($fech_hor_ini, $fech_hor_fin);
+    
+            if(\Auth::user()->id_users_rol == 2){
+                Horario::create([
+                    'id_user' => \Auth::user()->id,
+                    'fecha_inicio' => $fecha_only,
+                    'fecha_fin' => $fecha_only,
+                    'hora_inicio' => $fech_hor_ini,
+                    'hora_fin' => $fech_hor_fin,
+                    'fecha_hora_inicio' => $fech_hor_ini,
+                    'fecha_hora_fin' => $fech_hor_fin,
+                ]);
+                $this->reset([
+                    'fechaClick',
+                    'id_user',
+                    'fecha_inicio',
+                    'fecha_fin',
+                    'hora_inicio',
+                    'hora_fin',
+                    'fecha_hora_inicio',
+                    'fecha_hora_fin',
+                    'open'
+                ]);
+            }else{
+                if(\Auth::user()->id_users_rol == 1){
+                   $horario = Horario::create([
+                        'id_user' => $this->psicoSelected,
+                        'fecha_inicio' => $fecha_only,
+                        'fecha_fin' => $fecha_only,
+                        'hora_inicio' => $fech_hor_ini,
+                        'hora_fin' => $fech_hor_fin,
+                        'fecha_hora_inicio' => $fech_hor_ini,
+                        'fecha_hora_fin' => $fech_hor_fin,
+                    ]);
+                    
+                        
+                    
+                    $this->dispatchBrowserEvent('swal', [
+                        'title' => 'Exito!', 
+                        'text' => 'Se ha registrado tu horario de atención con éxito!',
+                        'icon' => 'success'
+                    ]);
+    
+                    $this->reset([
+                        'fechaClick',
+                        'id_user',
+                        'fecha_inicio',
+                        'fecha_fin',
+                        'hora_inicio',
+                        'hora_fin',
+                        'fecha_hora_inicio',
+                        'fecha_hora_fin',
+                        'open'
+                    ]);
+                }
+            }
+            
+    }
+
+    public function editHorario($horario, $id){
+        //dd($horario, $id);
+        $horario_find = Horario::find($id);
         //dd($horario_find);
         $this->horario_id = $horario_find->id;
         $this->hora_inicio = Carbon::parse($horario['start'])->format('H:i');
@@ -116,12 +177,12 @@ class ShowHorarios extends Component
 
     public function cancelarEdit(){
         $this->openEditModal = false;
-        return redirect()->to('/horarios');
     }
 
     public function updateHorario($editHoraIni, $editHoraFin){
         //dd($editHoraIni, $editHoraFin);
         $horario_update = Horario::find($this->horario_id);
+        //dd($this->horario_id , $horario_update);
 
         $hora_ini = Carbon::parse($editHoraIni)->addSeconds('00')->format('H:i:s');
         $hora_end = Carbon::parse($editHoraFin)->addSeconds('00')->format('H:i:s');
@@ -132,12 +193,16 @@ class ShowHorarios extends Component
         $fech_hor_ini = Carbon::createFromFormat('Y-m-d H:i:s',$fech_horario_res . ' ' . $hora_ini);
         $fech_hor_fin = Carbon::createFromFormat('Y-m-d H:i:s',$fech_horario_res . ' ' . $hora_end);
 
+        //dd($fech_hor_ini , $fech_hor_fin);
+
         $horario_update->update([
             'hora_inicio' => $fech_hor_ini,
             'hora_fin' => $fech_hor_fin,
             'fecha_hora_inicio' => $fech_hor_ini,
             'fecha_hora_fin' => $fech_hor_fin,
         ]);
+
+        //dd($horario_update);
 
         $this->reset([
             'fecha_inicio',
@@ -156,11 +221,11 @@ class ShowHorarios extends Component
             'icon' => 'success'
         ]);
 
-        return redirect()->to('/horarios');
     }
 
     public function destroyHorario(){
         $destroyHorario = Horario::find($this->horario_id);
+        //dd($destroyHorario);
         $destroyHorario->delete();
 
         $this->reset([
@@ -180,11 +245,9 @@ class ShowHorarios extends Component
             'icon' => 'success'
         ]);
 
-        return redirect()->to('/horarios');
     }
 
     public function cancelarDel(){
         $this->openDelModal = false;
-        return redirect()->to('/horarios');
     }
 }

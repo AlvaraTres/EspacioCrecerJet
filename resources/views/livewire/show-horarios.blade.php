@@ -2,7 +2,9 @@
     @if (\Auth::user()->id_users_rol == 1)
         <div class="mx-auto bg-white-200 w-full">
             <p class="px-4 py-2">Filtros de búsqueda</p>
-            <select class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="filtPsico" id="filtPsico" wire:model="psicoSelected">
+            <select
+                class="ml-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                name="filtPsico" id="filtPsico" wire:model="psicoSelected">
                 <option value="0">Seleccionar Psicológo</option>
                 @foreach ($filtPsico as $item)
                     <option value="{{ $item->id }}">{{ $item->nombre_usuario }}</option>
@@ -12,10 +14,11 @@
     @endif
 
     @if (\Auth::user()->id_users_rol == 3)
-    <div class="mx-auto bg-white-200 w-full">
-        <p class="text-center text-2xl px-4 py-2"><strong>Horario de atención de tu psicológo {{$psicologo->nombre_usuario}}&nbsp;{{$psicologo->apellido_pat_usuario}}</strong></p>
-    </div>
-        
+        <div class="mx-auto bg-white-200 w-full">
+            <p class="text-center text-2xl px-4 py-2"><strong>Horario de atención de tu psicológo
+                    {{ $psicologo->nombre_usuario }}&nbsp;{{ $psicologo->apellido_pat_usuario }}</strong></p>
+        </div>
+
     @endif
 
     <!-- MODAL CREACION DE HORARIO -->
@@ -37,7 +40,8 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_regis">Registrar
+            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25" id="btn_regis"
+                wire:click="storeHorario">Registrar
             </x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('open', false)" wire:loading.attr="disabled"
                 class="disabled:opacity-25">Cancelar</x-jet-secondary-button>
@@ -96,7 +100,7 @@
     </x-jet-dialog-modal>
 
     @push('js')
-        <script>
+        <script type="text/javascript">
             document.addEventListener('livewire:load', function() {
                 var Calendar = FullCalendar.Calendar;
                 var Draggable = FullCalendar.Draggable;
@@ -217,6 +221,7 @@
                             console.log(info.dateStr);
 
                             var selectDate = info.dateStr;
+                            @this.set('fechaClick', selectDate);
                             var startDate = moment(selectDate);
                             console.log(startDate);
                             if (moment(startDate).isBefore(moment())) {
@@ -234,17 +239,13 @@
                                     )
                                 } else {
                                     @this.set('open', true);
-                                    var date = new Date(info.dateStr + 'T00:00:00');
-                                    document.getElementById('btn_regis').addEventListener("click",
-                                        function() {
-                                            var startTime = document.getElementById(
-                                                'hora_inicio').value;
-                                            var endTime = document.getElementById('hora_fin')
-                                                .value;
-                                            //console.log(endTime);
-                                            @this.storeHorario(date, startTime, endTime);
-                                            calendar.refetchEvents();
-                                        });
+                                    var date = new Date(selectDate + 'T00:00:00');
+                                    console.log(date);
+
+                                    //console.log(endTime);
+                                    
+                                    calendar.refetchEvents();
+                                    
                                 }
 
                             }
@@ -254,6 +255,8 @@
 
                         eventClick: function(info) {
                             var horario = info.event;
+                            var id = info.event.extendedProps.horariosID;
+                            console.log(id);
                             console.log(info.event.start);
                             var startevent = moment(info.event.start);
                             console.log(startevent);
@@ -264,7 +267,7 @@
                                     'error'
                                 )
                             } else {
-                                @this.editHorario(horario);
+                                @this.editHorario(horario, id);
                                 @this.set('openEditModal', true);
                                 document.getElementById('btn_edit').addEventListener("click",
                                     function() {
@@ -310,6 +313,10 @@
                     })
                 },
                 datepicker: false,
+            }).on('change', function(e){
+                @this.set('horaInicio', jQuery('#hora_inicio').val());
+                var ini = @this.horaInicio;
+                console.log(ini);
             });
             jQuery('#hora_fin').datetimepicker({
                 format: 'H:i',
@@ -322,6 +329,10 @@
                     })
                 },
                 datepicker: false,
+            }).on('change', function(e){
+                @this.set('horaFin', jQuery('#hora_fin').val());
+                var fin = @this.horaFin;
+                console.log(fin);
             });
         </script>
         <script type="text/javascript">
