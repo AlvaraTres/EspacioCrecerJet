@@ -11,7 +11,7 @@
 
             <div>
                 <x-jet-label for="rut_paciente" value="{{ __('Rut') }}" />
-                <x-jet-input id="rut_paciente" class="block mt-1 w-full" type="text" name="rut_paciente" />
+                <x-jet-input id="rut_paciente" class="block mt-1 w-full" type="text" name="rut_paciente" :value="old('rut_paciente')" required autofocus autocomplete="off"/>
             </div>
 
             <div class="mt-4">
@@ -66,8 +66,8 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="alergia" value="{{ __('Alergia') }}" />
-                <x-jet-input id="alergia" class="block mt-1 w-full" type="text" name="alergia" :value="old('alergia')" required autofocus autocomplete="alergia" />
+                <x-jet-label for="alergia" value="{{ __('Patologias previas') }}" />
+                <x-jet-input id="patologias_previas" class="block mt-1 w-full" type="text" name="patologias_previas" :value="old('patologias_previas')" required autofocus autocomplete="patologias_previas" />
             </div>
 
             <div class="mt-4">

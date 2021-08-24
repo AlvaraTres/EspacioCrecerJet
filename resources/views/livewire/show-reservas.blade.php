@@ -124,10 +124,12 @@
             <input type="text" class="datetimepicker-input border rounded-md border-gray-300" id="datetimepicker5"
                 data-toggle="datetimepicker" data-target="#datetimepicker5" />
             <x-jet-input-error for="hora_reserva" />
+            <x-jet-input-error for="hora_reserva"/>
 
             <x-jet-label value="Motivo:" />
             <x-jet-input type="text" class="w-full" wire:model.defer="motivo_reserva" id="motivo_reserva" />
             <x-jet-input-error for="motivo_reserva" />
+            <x-jet-input-error for="motivo_reserva"/>
 
 
         </x-slot>

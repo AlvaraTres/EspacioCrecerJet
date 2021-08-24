@@ -16,13 +16,13 @@ class CreatePsicologo extends Component
 
     public $fecha;
     protected $rules = [
-        'rut_usuario' => 'required',
-        'nombre_usuario' => 'required',
-        'apellido_pat_usuario' => 'required',
-        'apellido_mat_usuario' => 'required',
-        'telefono' => 'required',
+        'rut_usuario' => 'required|cl_rut|unique:users',
+        'nombre_usuario' => 'required|max:255|min:2|regex:/^[a-zA-ZÑñ\s]+$/',
+        'apellido_pat_usuario' => 'required|max:255|min:2|regex:/^[a-zA-ZÑñ\s]+$/',
+        'apellido_mat_usuario' => 'required|max:255|min:2|regex:/^[a-zA-ZÑñ\s]+$/',
+        'telefono' => 'required|numeric|min:10000000|max:999999999',
         'email' => 'required|email',
-        'formacion' => 'required',
+        'formacion' => 'required|max:255|min:2|regex:/^[a-zA-ZÑñ\s]+$/',
         'fecha_nacimiento' => 'required',
         'password' => 'required'
     ];

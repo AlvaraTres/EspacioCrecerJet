@@ -55,7 +55,7 @@ class ShowReservas extends Component
                           ->select('pacientes.*')
                           ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
                           ->first();
-                          
+           // dd($paciente);
             $this->psicologoDesignado = User::find($paciente->id_psicologo);
 
             $events = DB::table('reservas')
@@ -462,6 +462,8 @@ class ShowReservas extends Component
         }
         
         if(empty($comparador)){
+            $this->validate();
+            
             return redirect()->route('payment', ['date1' => $date1, 'date2' => $date2, 'date3' => $date3, 'startTime' => $startTime, 'description' => $description, 'pid' => $pid, 'paci' => $paci]);
         }else{
             $this->dispatchBrowserEvent('swal', [

@@ -12,6 +12,7 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Freshwork\ChileanBundle\Rut;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -25,15 +26,16 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
+        //Rut::parse($input['rut_paciente'])->quiet()->validate();
 
         Validator::make($input, [
-            'rut_paciente' => ['required'],
-            'nombre_paciente' => ['required', 'string', 'max:255'],
-            'apellido_pat_paciente' => ['required', 'string', 'max:255'],
-            'apellido_mat_paciente' => ['required', 'string', 'max:255'],
+            'rut_paciente' => ['required', 'cl_rut', 'unique:users'],
+            'nombre_paciente' => ['required', 'max:255', 'min:2', 'regex:/^[a-zA-ZÑñ\s]+$/'],
+            'apellido_pat_paciente' => ['required', 'max:255', 'min:2', 'regex:/^[a-zA-ZÑñ\s]+$/'],
+            'apellido_mat_paciente' => ['required', 'max:255', 'min:2', 'regex:/^[a-zA-ZÑñ\s]+$/'],
             'fecha_nacimiento_paciente' => ['required'],
             'profesion' => ['required', 'string', 'max:255'],
-            'alergia' => ['required', 'string', 'max:255'],
+            'patologias_previas' => ['max:255', 'min:5', 'regex:/^[a-zA-ZÑñ\s]+$/'],
             'telefono_paciente' => ['required', 'numeric', 'min:10000000', 'max:999999999'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
@@ -62,7 +64,7 @@ class CreateNewUser implements CreatesNewUsers
                 'email' => $input['email'],
                 'certificado' => null,
                 'fecha_nacimiento_paciente' => Carbon::parse($input['fecha_nacimiento_paciente'])->format('Y-m-d'),
-                'alergia' => $input['alergia'],
+                'patologias_previas' => $input['patologias_previas'],
                 'password' => Hash::make($input['password']),
             ]);
         }else{
@@ -77,7 +79,7 @@ class CreateNewUser implements CreatesNewUsers
                 'telefono_paciente' => $input['telefono_paciente'],
                 'email' => $input['email'],
                 'fecha_nacimiento_paciente' => Carbon::parse($input['fecha_nacimiento_paciente'])->format('Y-m-d'),
-                'alergia' => $input['alergia'],
+                'patologias_previas' => $input['patologias_previas'],
                 'password' => Hash::make($input['password']),
             ]);
     
