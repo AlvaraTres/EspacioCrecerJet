@@ -6,6 +6,8 @@ use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Livewire\VerPacienteInfoModal;
 
+use App\Mail\ContactarPacienteMailable;
+
 use App\Models\Paciente;
 use App\Models\Reserva;
 use App\Models\User;
@@ -94,6 +96,14 @@ Route::get('/payment/cancel', [PaymentController::class, 'paymentCancel'])->name
 Route::get('/payment/success/{fecha}/{description}/{pid}/{paci}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('/payment/reserva_success/{reserva}/{paci}', [PaymentController::class, 'successReserva'])->name('reservas.success');
 Route::get('/payment/reserva_error', [PaymentController::class, 'errorReserva'])->name('reservas.error');
+
+
+Route::get('contactarPaciente', function(){
+    $correo = new ContactarPacienteMailable;
+    Mail::to('diego@gmail.com')->send($correo);
+
+    return "mensaje enviado";
+});
 
 //Ruta prueba de correo
 Route::get('/pruebaCorreo', function(){

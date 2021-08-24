@@ -148,7 +148,7 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                <?php echo $pacientes[$j]->email; ?>
+                                @livewire('contactar-paciente-correo', ['paciente' => $pacientes[$j]], key($pacientes[$j]->id))
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center text-sm font-medium">
@@ -205,7 +205,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">
-                                    {{ $paciente->email }}
+                                    <a href="#">{{ $paciente->email }}</a>
                                 </div>
                             </td>
                             <td class="px-6 py-4 text-center text-sm font-medium">
