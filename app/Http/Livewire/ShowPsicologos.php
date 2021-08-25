@@ -4,6 +4,9 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
+use App\Mail\CorreoPsicologoPacienteMailable;
+use Illuminate\Support\Facades\Mail;
+
 use Freshwork\ChileanBundle\Rut;
 use Livewire\WithPagination;
 use Carbon\Carbon;
@@ -26,6 +29,10 @@ class ShowPsicologos extends Component
     public $openEditPsicologoModal = false;
     public $openDeletePsicologoModal = false;
     public $openVerPsicologoModal = false;
+    public $openMail = false;
+
+    public $asunto;
+    public $cuerpo;
 
     protected $rules = [
         'rut_usuario' => 'required',
@@ -152,5 +159,42 @@ class ShowPsicologos extends Component
         $this->fecha_nacimiento = $psicologo->fecha_nacimiento;
 
         $this->openVerPsicologoModal = true;
+    }
+
+    public function modalMail($id)
+    {
+        $this->openMail = true;
+        $psicologo = User::find($id);
+        $this->psicologo_id = $psicologo->id;
+        $this->nombre_usuario =$psicologo->nombre_usuario;
+        $this->apellido_pat_usuario = $psicologo->apellido_pat_usuario;
+        $this->apellido_mat_usuario = $psicologo->apellido_mat_usuario;
+        $this->email = $psicologo->email;
+    }
+
+    public function enviarMail()
+    {
+        $psicologo = User::find($this->psicologo_id);
+
+        $correo = new CorreoPsicologoPacienteMailable($psicologo, $this->asunto, $this->cuerpo);
+
+        Mail::to($this->email)->send($correo);
+
+        $this->reset([
+            'psicologo_id',
+            'openMail',
+            'nombre_usuario',
+            'apellido_pat_usuario',
+            'apellido_mat_usuario',
+            'email',
+            'asunto',
+            'cuerpo'
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!',
+            'text' => 'El correo se ha enviado correctamente',
+            'icon' => 'success'
+        ]);
     }
 }
