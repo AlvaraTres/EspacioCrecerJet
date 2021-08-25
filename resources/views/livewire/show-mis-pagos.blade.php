@@ -47,7 +47,8 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                {{ $pagos->monto_pago }}
+                                <?php $valor = $pagos->monto_pago ?>
+                                $<?php echo $valor ?>
                             </div>
                         </td>
                     </tr>

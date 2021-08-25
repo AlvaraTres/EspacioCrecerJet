@@ -55,11 +55,21 @@ class ShowHorarios extends Component
                                 ->select('users.id as id_user' ,'users.*', 'pacientes.*')
                                 ->where('pacientes.id', '=', $paciente->id)
                                 ->first();
-                    //dd($psicologo->id_user);
-                    $events = DB::table('horarios')
+
+                    if($paciente->id_psicologo != null){
+                        $psicologo = User::find($paciente->id_psicologo);
+                        //dd($psicologo);
+                        $events = DB::table('horarios')
                                 ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
-                                ->where('horarios.id_user', '=', $psicologo->id_user)
+                                ->where('horarios.id_user', '=', $psicologo->id)
                                 ->get();
+                    }else{
+                        $events = DB::table('horarios')
+                                    ->select(DB::raw('CONCAT(DATE_FORMAT(horarios.fecha_hora_inicio, "%H:%i") , \' - \', DATE_FORMAT(horarios.fecha_hora_fin, "%H:%i")) as title'), 'horarios.fecha_hora_inicio as start', 'horarios.fecha_hora_fin as end')
+                                    ->where('horarios.id_user', '=', $psicologo->id_user)
+                                    ->get();
+                        //dd($psicologo->id_user);
+                    }
                 }
             }
         }

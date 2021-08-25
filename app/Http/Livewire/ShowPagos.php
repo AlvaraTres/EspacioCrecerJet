@@ -73,7 +73,7 @@ class ShowPagos extends Component
             for($i=0; $i<$cont; $i++){
                 $ttpp = $ttpp + $pagos[$i]->monto_pago;
             }
-            $this->totalPagos = $ttpp;
+            $this->totalPagos = number_format($ttpp, 0, ',', '.');
         }
         
 

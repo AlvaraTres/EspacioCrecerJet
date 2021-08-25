@@ -237,17 +237,27 @@ class ShowReservas extends Component
                 }else{
                     $paciente_ = Paciente::where('rut_paciente', '=', \Auth::user()->rut_usuario)->first();
                     $cont = Reserva::where('id_paciente', '=', $paciente_->id)->get();
+                    //dd($paciente_, $cont);
                     if(count($cont)>0){
                         $this->id_psi = (int)$this->paciPsico;
                         $this->dateClick = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->id_psi)->first();
                         //dd($this->dateClick);
                     }else{
-                        $this->id_psi = (int)$this->selectedPsico;
-                        //dd($this->id_psi);
-                        $hora = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->id_psi)->first();
-                        //dd($hora);
-                        $this->dateClick = $hora;
-                        //dd($this->dateClick);
+                        if($paciente_->id_psicologo != null){
+                            $this->id_psi = $paciente_->id_psicologo;
+                            $hora = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->id_psi)->first();
+                            //dd($this->dateClick);
+                            $this->dateClick = $hora;
+                            //dd($this->id_psi, $hora);
+                        }else{
+                            $this->id_psi = (int)$this->selectedPsico;
+                            //dd($this->id_psi);
+                            
+                            $hora = Horario::whereDate('fecha_inicio', '=', $this->dateClick)->where('id_user', '=', $this->id_psi)->first();
+                            //dd($hora);
+                            $this->dateClick = $hora;
+                            //dd($this->dateClick);
+                        } 
                     }
                 }
             }
@@ -418,6 +428,7 @@ class ShowReservas extends Component
 
     public function checkDate($fecha, $startTime, $pid, $date1, $date2, $date3, $description, $pac)
     {
+        //dd($pid, $pac);
         $paci;
         $fecha = Carbon::createFromFormat('Y-m-d',$date1 . '-' . $date2 . '-' . $date3)->format('Y-m-d');
         //dd($fecha);
@@ -462,7 +473,7 @@ class ShowReservas extends Component
         }
         
         if(empty($comparador)){
-            $this->validate();
+            //$this->validate();
             
             return redirect()->route('payment', ['date1' => $date1, 'date2' => $date2, 'date3' => $date3, 'startTime' => $startTime, 'description' => $description, 'pid' => $pid, 'paci' => $paci]);
         }else{

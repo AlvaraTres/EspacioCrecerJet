@@ -102,7 +102,11 @@
             @if ($selectedPsico != null)
                 <input type="hidden" name="pid" id="pid" wire:model.defer="selectedPsico">
             @else
-                <input type="hidden" name="pid" id="pid" value="0">
+                @if(\Auth::user()->id_users_rol == 3)
+                    <input type="hidden" name="pid" id="pid" value="{{$psicologoDesignado->id}}">
+                @else
+                    <input type="hidden" name="pid" id="pid" value="0">
+                @endif
             @endif
 
             @if (\Auth::user()->id_users_rol == 1)

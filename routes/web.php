@@ -94,7 +94,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/reporteCategorias', funct
 //RUTA DE PAGO CON PAYPAL
 Route::get( '/payment/{date1}/{date2}/{date3}/{startTime}/{description}/{pid}/{paci}', [PaymentController::class, 'payWithPayPal'])->name('payment');
 Route::get('/payment/cancel', [PaymentController::class, 'paymentCancel'])->name('payment.cancel');
-Route::get('/payment/success/{fecha}/{description}/{pid}/{paci}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/success/{fecha}/{description}/{pid}/{paci}/{precio}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('/payment/reserva_success/{reserva}/{paci}', [PaymentController::class, 'successReserva'])->name('reservas.success');
 Route::get('/payment/reserva_error', [PaymentController::class, 'errorReserva'])->name('reservas.error');
 

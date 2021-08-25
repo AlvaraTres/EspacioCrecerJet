@@ -81,7 +81,8 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                ${{ $pago->monto_pago }}
+                                <?php $valor = number_format($pago->monto_pago, 0, ',', '.'); ?>
+                                $<?php echo $valor ?>
                             </div>
                         </td>
                     </tr>
