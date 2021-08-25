@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\LiveWire\EnlistarFichasModal;
 use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReservasApiRestController;
 use App\Http\Livewire\VerPacienteInfoModal;
 
 use App\Mail\ContactarPacienteMailable;
@@ -117,4 +118,9 @@ Route::get('/pruebaCorreo', function(){
 
     return "correo enviado";
 });
+
+
+//RUTAS REST API
+Route::get('/reservaApiRest', [ReservasApiRestController::class, 'index'])->name('reserva.reservaApiRest');
+Route::get('/reservaApiRest/mostrar', [ReservasApiRestController::class, 'show']);
 
