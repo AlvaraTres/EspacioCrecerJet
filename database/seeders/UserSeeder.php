@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         $user->telefono = '993085203';
         $user->email = 'diego@gmail.com';
         $user->password = bcrypt('redhot1991');
-        $user->especialidad = 'Ninguna';
+        $user->formacion = 'Ninguna';
         $user->fecha_nacimiento = Carbon::create('1992', '08', '12');
         $user->save();
 

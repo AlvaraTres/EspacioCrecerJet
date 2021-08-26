@@ -24,7 +24,7 @@ class ReservaFactory extends Factory
         $date = $this->faker->dateTimeBetween('-2 years', '+4 months', 'America/Santiago');
         return [
             'id_usuario' => $this->faker->numberBetween(1,50),
-            'id_paciente' => $this->faker->numberBetween(1,26),
+            'id_paciente' => $this->faker->numberBetween(1,2),
             'fecha_reserva' => \Carbon\Carbon::parse($date)->format('Y-m-d'),
             'hora_reserva' => \Carbon\Carbon::parse($date)->format('Y-m-d  H:i:s'),
             'fecha_hora_reserva' => \Carbon\Carbon::parse($date)->format('Y-m-d  H:i:s'),

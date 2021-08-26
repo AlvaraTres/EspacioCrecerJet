@@ -123,3 +123,4 @@ Route::get('/pruebaCorreo', function(){
 //RUTAS REST API
 Route::get('/reservaApiRest', [ReservasApiRestController::class, 'index'])->name('reserva.reservaApiRest');
 Route::get('/reservaApiRest/mostrar', [ReservasApiRestController::class, 'show']);
+Route::post('/reservaApiRest/agregar' ,[ReservasApiRestController::class, 'store'])->name('reserva.reservaApiRestPost');

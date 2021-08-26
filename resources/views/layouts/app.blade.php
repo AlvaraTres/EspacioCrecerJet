@@ -24,6 +24,15 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <style type="text/css">
+        .modal{
+            transition: opacity 0.25s ease;
+        }
+
+        .body.modal-active{
+            overflow-x: hidden;
+            overflow-y: visible !important;
+        }
+
         [x-cloak] {
             display: none;
         }

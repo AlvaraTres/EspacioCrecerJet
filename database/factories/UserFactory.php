@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
+use Freshwork\ChileanBundle\Rut;
 
 class UserFactory extends Factory
 {
@@ -24,15 +25,17 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $random_number = rand(1000000, 25000000);
+        $rut = new Rut($random_number);
         return [
             'id_users_rol' => 2,
-            'rut_usuario' => '1.111.111-1',
+            'rut_usuario' => $rut->fix()->format(),
             'nombre_usuario' => $this->faker->name(),
             'apellido_pat_usuario' => $this->faker->lastname(),
             'apellido_mat_usuario' => $this->faker->lastname(),
             'telefono' => '+56993085203',
             'email' => $this->faker->email(),
-            'especialidad' => $this->faker->randomElement(['adicciones' , 'coach' , 'duelo' , 'Problemas de autoestima']),
+            'formacion' => $this->faker->randomElement(['adicciones' , 'coach' , 'duelo' , 'Problemas de autoestima']),
             'fecha_nacimiento' => $this->faker->dateTime(),
             'password' => bcrypt('123456'),
             /*'name' => $this->faker->name(),

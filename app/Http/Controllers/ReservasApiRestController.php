@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reserva;
 use App\Models\User;
-use App\Model\Paciente;
+use App\Models\Paciente;
 use DB;
+use Carbon\Carbon;
 
 class ReservasApiRestController extends Controller
 {
@@ -17,7 +18,9 @@ class ReservasApiRestController extends Controller
      */
     public function index(Request $request)
     {
-        return view('reservaApiRest.index');
+        $paciente = Paciente::where('rut_paciente', '=', \Auth::user()->rut_usuario)->first();
+        //dd($paciente->id_psicologo);
+        return view('reservaApiRest.index', compact('paciente'));
     }
 
     /**
@@ -38,7 +41,33 @@ class ReservasApiRestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paci = Paciente::where('rut_paciente', '=', \Auth::user()->rut_usuario)->first();
+        $pid = $request->data['pid'];
+        $startTime = $request->data['startTime'];
+        $description = $request->data['description'];
+        $anio = $request->data['anio'];
+        $mes = $request->data['mes'];
+        $dia = $request->data['dia'];
+
+        $fecha = Carbon::createFromFormat('Y-m-d',$anio. '-' . $mes . '-' . $dia)->format('Y-m-d');
+        //dd($fecha);
+        $hora = Carbon::parse($startTime)->addSeconds('00')->format('H:i:s');
+        //dd($hora);
+        $fecha_hora = Carbon::createFromFormat('Y-m-d H:i:s',$fecha . ' ' . $hora);
+
+        $comparador = DB::table('reservas')
+                        ->select('reservas.*')
+                        ->where('reservas.fecha_hora_reserva', '=', $fecha_hora->format('Y-m-d H:i:s'))
+                        ->where('reservas.id_usuario', '=', $paci->id)
+                        ->first();
+
+        if(empty($comparador))
+        {
+            return response()->json(['anio' => $anio , 'mes' => $mes , 'dia' => $dia, 'startTime' => $startTime, 'description' => $description, 'pid' => $pid, 'paci' => $paci->id]);
+        }else{
+            return response()->json(['error' => 'error en la reserva']);
+        }
+
     }
 
     /**

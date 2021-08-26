@@ -26,7 +26,7 @@ class PacientesSeeder extends Seeder
         $user->telefono = '993085203';
         $user->email = 'paciente@gmail.com';
         $user->password = bcrypt('redhot1991');
-        $user->especialidad = 'Ninguna';
+        $user->formacion = 'Ninguna';
         $user->fecha_nacimiento = Carbon::create('1992', '08', '12');
         $user->save();
 
@@ -40,11 +40,12 @@ class PacientesSeeder extends Seeder
         $user->telefono = '945085265';
         $user->email = 'paciente2@gmail.com';
         $user->password = bcrypt('redhot1991');
-        $user->especialidad = 'Ninguna';
+        $user->formacion = 'Ninguna';
         $user->fecha_nacimiento = Carbon::create('1999', '12', '01');
         $user->save();
 
         $paciente = new Paciente();
+        $paciente->id_psicologo = rand(1,50);
         $paciente->rut_paciente = '16.404.244-K';
         $paciente->nombre_paciente = 'Alfredo';
         $paciente->ap_pat_paciente = 'Lorenzini';
@@ -54,11 +55,12 @@ class PacientesSeeder extends Seeder
         $paciente->telefono_paciente = '993085203';
         $paciente->email = 'paciente@gmail.com';
         $paciente->fecha_nacimiento_paciente = Carbon::create('1992', '08', '12');
-        $paciente->alergia = 'paracetamol';
+        $paciente->patologias_previas = 'paracetamol';
         $paciente->password = bcrypt('redhot1991');
         $paciente->save();
 
         $paciente = new Paciente();
+        $paciente->id_psicologo = rand(1,50);
         $paciente->rut_paciente = '21.236.532-2';
         $paciente->nombre_paciente = 'Ninoska';
         $paciente->ap_pat_paciente = 'Zamudio';
@@ -68,7 +70,7 @@ class PacientesSeeder extends Seeder
         $paciente->telefono_paciente = '945085265';
         $paciente->email = 'paciente2@gmail.com';
         $paciente->fecha_nacimiento_paciente = Carbon::create('1999', '12', '01');
-        $paciente->alergia = 'Ninguna';
+        $paciente->patologias_previas = 'Ninguna';
         $paciente->password = bcrypt('redhot1991');
         $paciente->save();
     }
