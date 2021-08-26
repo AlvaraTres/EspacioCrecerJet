@@ -6,6 +6,7 @@ use App\Http\Controllers\ReservasController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservasApiRestController;
 use App\Http\Livewire\VerPacienteInfoModal;
+use App\Http\Controllers\SessionController;
 
 use App\Mail\ContactarPacienteMailable;
 
@@ -120,7 +121,12 @@ Route::get('/pruebaCorreo', function(){
 });
 
 
-//RUTAS REST API
+//RUTAS API REST RESERVAS
 Route::get('/reservaApiRest', [ReservasApiRestController::class, 'index'])->name('reserva.reservaApiRest');
 Route::get('/reservaApiRest/mostrar', [ReservasApiRestController::class, 'show']);
 Route::post('/reservaApiRest/agregar' ,[ReservasApiRestController::class, 'store'])->name('reserva.reservaApiRestPost');
+
+//RUTAS LOGIN API REST
+Route::get('loginApiRest', [SessionController::class, 'index'])->name('login.index');
+Route::post('loginApiRest', [SessionController::class, 'store'])->name('login.store');
+Route::get('logoutApiRest', [SessionController::class, 'destroy'])->name('login.destroy');
