@@ -50,7 +50,7 @@
 
     <div class="margened text-just">
         <p>Para cualquier información puedes contactarnos a contacto@espaciocrecer.cl</p>
-        <p>Siguenos en nuestro instagram <a href="https://www.instagram.com/espaciocrecer_/">@espaciocrecer</a> para
+        <p>Siguenos en nuestro instagram <a href="https://www.instagram.com/espaciocrecer_/" target="_blank">@espaciocrecer</a> para
             conocernos más</p>
         <p>Este mail fue enviado por Espacio Crecer</p>
         <a href="http://localhost:8000">www.espaciocrecer.cl</a>

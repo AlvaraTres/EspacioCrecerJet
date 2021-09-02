@@ -1,6 +1,7 @@
 <div class=" bg-white">
 
     <!-- presentación -->
+    <a href="#" name="acercaDeNosotros"></a>
     <div class="grid grid-cols-1 md:grid-cols 2 lg:grid-cols-3 gap-3">
         <div></div>
         <div class="mx-auto">
@@ -17,6 +18,7 @@
     </div>
 
     <!-- información de los servicios y links -->
+    <a href="#" name="tarifa"></a>
     <div class="container" style="margin-top: 4%;">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div class="bg-white p-4 text-center js-show-on-scroll-left"><strong class="text-teal-700">¿Cómo funcionamos?</strong><br><p class="text-center text-teal-600">Crea tu cuenta <a href="{{ route('register') }}" class="underline text-green-900">aquí</a>, e indica el motivo de tu consulta al momento de reservar hora, para asi mantener a nuestro equipo al tanto de tu situación antes de la primera sesión.</p></div>
@@ -31,7 +33,9 @@
             <div></div>
         </div>
     </div>
+    <a href="#" name="profesionales"></a>
     <div class="grid grid-cols-1 md:grid-cols 2 lg:grid-cols-4 gap-4" style="margin-top: 4%;">
+        
         <div></div>
         <div class="col-span-2">
             <h1 class="text-3xl text-center text-teal-400 col-span-2">NUESTROS PROFESIONALES.</h1>

@@ -108,6 +108,28 @@ class ReservasApiRestController extends Controller
         return response()->json($data);
     }
 
+    public function getUserReservas($id)
+    {
+        $user = User::find($id);
+        $paciente = Paciente::where('rut_paciente', '=', $user->rut_usuario)->first();
+        $reservas = Reserva::where('id_paciente', '=', $paciente->id)->orderBy('fecha_reserva', 'DESC')->get();
+
+        foreach($reservas as $reserva){
+            $reserva->fecha_reserva = Carbon::parse($reserva->fecha_reserva)->format('d-m-Y');
+            $reserva->hora_reserva = Carbon::parse($reserva->hora_reserva)->format('H:i');
+        }
+
+        return response()->json($reservas);
+    }
+
+    public function editReserva($id)
+    {
+        $reserva = Reserva::find($id);
+        $reserva->fecha_reserva = Carbon::parse($reserva->fecha_reserva)->format('d-m-Y');
+            $reserva->hora_reserva = Carbon::parse($reserva->hora_reserva)->format('H:i');
+        return response()->json($reserva);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -140,5 +162,12 @@ class ReservasApiRestController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ultimaReserva()
+    {
+        $reserva = Reserva::latest()->first();
+
+        return response()->json($reserva);
     }
 }

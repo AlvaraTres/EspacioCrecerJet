@@ -7,6 +7,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservasApiRestController;
 use App\Http\Livewire\VerPacienteInfoModal;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\UserApiRestController;
 
 use App\Mail\ContactarPacienteMailable;
 
@@ -31,6 +32,20 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/contactanos', function(){
+    return view('contactUs');
+});
+
+Route::get('/terminosYCondiciones', function(){
+    return view('termsAndConditions');
+});
+
+Route::get('/trabajaConNosotros', function(){
+    return view('workWithUs');
+});
+
+Route::post('/contactanos', [SessionController::class, 'contactar'])->name('contactanos');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -127,6 +142,15 @@ Route::get('/reservaApiRest/mostrar', [ReservasApiRestController::class, 'show']
 Route::post('/reservaApiRest/agregar' ,[ReservasApiRestController::class, 'store'])->name('reserva.reservaApiRestPost');
 
 //RUTAS LOGIN API REST
-Route::get('loginApiRest', [SessionController::class, 'index'])->name('login.index');
-Route::post('loginApiRest', [SessionController::class, 'store'])->name('login.store');
-Route::get('logoutApiRest', [SessionController::class, 'destroy'])->name('login.destroy');
+Route::post('api/login', [SessionController::class, 'store'])->name('login.store');
+Route::post('api/logout', [SessionController::class, 'destroy'])->name('login.destroy');
+
+Route::get('/api/ultimaReserva', [ReservasApiRestController::class, 'ultimaReserva']);
+Route::get('/api/getLogedUser/{id}', [UserApiRestController::class , 'getLogedUser']);
+
+Route::get('/api/userReservas/{id}', [ReservasApiRestController::class, 'getUserReservas']);
+Route::get('/api/editReserva/{id}', [ReservasApiRestController::class, 'editReserva']);
+
+Route::get('/api/getPsicologo/{id}', [UserApiRestController::class, 'getPsicologo']);
+
+Route::get('/api/mispagos/{id}', [UserApiRestController::class, 'getPagos']);

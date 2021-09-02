@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Mail\ContactusMailable;
+use Illuminate\Support\Facades\Mail;
 
 class SessionController extends Controller
 {
@@ -14,16 +16,22 @@ class SessionController extends Controller
     public function store()
     {
         if(auth()->attempt(request(['email', 'password'])) == false){
-            return back()->withErrors([
-                'message' => 'El correo o la contraseña son incorrectos, por favor intenta otra vez'
-            ]);
+            return response()->json(null);
         }
-        return redirect()->to('/reservaApiRest');
+        return response()->json(\Auth::user());
     }
 
     public function destroy(){
         auth()->logout();
 
-        return redirect()->to('/');
+        return response()->json("Logout Successfully");
+    }
+
+    public function contactar(Request $request){
+        $correo = new ContactusMailable($request);
+
+        Mail::to('espaciocrecer@gmail.com')->send($correo);
+            
+        return "correo enviado";
     }
 }

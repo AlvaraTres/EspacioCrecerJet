@@ -146,6 +146,26 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'rut_paciente' => 'RUT',
+        'nombre_paciente' => 'nombre',
+        'ap_pat_paciente' => 'apellido paterno',
+        'ap_mat_paciente' => 'apellido materno',
+        'fecha_nacimiento_paciente' => 'fecha de nacimiento',
+        'patologias_previas' => 'patologias previas',
+        'telefono_paciente' => 'telefono',
+        'rut_usuario' => 'RUT',
+        'nombre_usuario' => 'nombre',
+        'apellido_pat_usuario' => 'apellido paterno',
+        'apellido_mat_usuario' => 'apellido materno',
+        'fecha_nacimiento' => 'fecha de nacimiento',
+        'tipo_usuario' => 'tipo de usuario',
+        'nombre_tag' => 'nombre de categoría',
+        'descripcion' => 'descripción',
+        'hora_inicio' => 'hora de inicio',
+        'hora_fin' => 'hora de fin',
+        'hora_reserva' => 'hora de reserva',
+        'motivo_reserva' => 'hora de reserva'
+    ],
 
 ];
