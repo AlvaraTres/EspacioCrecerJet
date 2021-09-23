@@ -28,7 +28,7 @@ class AddPsicologoToPacientes extends Migration
     public function down()
     {
         Schema::table('pacientes', function (Blueprint $table) {
-            $table->dropColumn('id_psicologo');
+            $table->dropForeign(['id_psicologo']);
         });
     }
 }

@@ -26,7 +26,7 @@ class RenameAlergiaInPacientesTable extends Migration
     public function down()
     {
         Schema::table('pacientes', function (Blueprint $table) {
-            $table->renameColumn('alergia', 'patologias_previas');
+            $table->renameColumn('patologias_previas' , 'alergia');
         });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameFormacionInUsersTable extends Migration
+class CreateSuspendedAccountTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class RenameFormacionInUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('formación', 'formacion');
+        Schema::create('suspended_account', function (Blueprint $table) {
+            $table->id();
+            $table->string('email')->unique();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class RenameFormacionInUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('formacion', 'formación');
-        });
+        Schema::dropIfExists('suspended_account');
     }
 }

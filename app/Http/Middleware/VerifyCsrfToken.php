@@ -14,6 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/api/login',
         '/api/getLogedUser',
-        'api/logout'
+        'api/logout',
+        '/api/updateReserva/*'
     ];
 }

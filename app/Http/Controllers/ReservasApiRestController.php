@@ -130,6 +130,26 @@ class ReservasApiRestController extends Controller
         return response()->json($reserva);
     }
 
+    public function updateReserva(Request $request, $id)
+    {
+        $reserva = Reserva::find($id);
+
+        $fecha = Carbon::createFromFormat('Y-m-d',$request['anio'] . '-' . $request['mes'] . '-' . $request['dia'])->format('Y-m-d');
+        $hora = Carbon::createFromFormat('H:i:s', $request['hora'] . ':00:00')->format('H:i:s');
+
+        $fecha_hora = Carbon::createFromFormat('Y-m-d H:i:s',$fecha . ' ' . $hora)->format('Y-m-d H:i:s');
+        $fecha_hora_termino = Carbon::parse($fecha_hora)->addHour();
+
+        $reserva->update([
+            'fecha_reserva' => $fecha,
+            'hora_reserva' => $fecha_hora,
+            'fecha_hora_reserva' => $fecha_hora,
+            'fecha_hora_reserva_fin' => $fecha_hora_termino->format('Y-m-d H:i:s'),
+        ]);
+        
+        return response()->json("Reserva actualizada exitosamente!");
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

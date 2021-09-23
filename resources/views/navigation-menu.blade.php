@@ -41,7 +41,7 @@
                                     </a>
                                     <a href="{{ route('psicologos') }}"
                                         class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
-                                        Psicológos
+                                        Psicólogos
                                     </a>
                                     <a href="{{ route('roles') }}"
                                         class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white">
@@ -335,7 +335,7 @@
                             <a class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white"
                                 href="{{ route('pacientes') }}">Pacientes</a>
                             <a class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white"
-                                href="{{ route('psicologos') }}">Psicológos</a>
+                                href="{{ route('psicologos') }}">Psicólogos</a>
                             <a class="block px-4 py-2 text-sm capitalize text-gray-800 hover:bg-green-500 hover:text-white"
                                 href="{{ route('roles') }}">Roles</a>
                         </div>

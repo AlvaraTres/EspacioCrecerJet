@@ -150,6 +150,7 @@ Route::get('/api/getLogedUser/{id}', [UserApiRestController::class , 'getLogedUs
 
 Route::get('/api/userReservas/{id}', [ReservasApiRestController::class, 'getUserReservas']);
 Route::get('/api/editReserva/{id}', [ReservasApiRestController::class, 'editReserva']);
+Route::put('/api/updateReserva/{id}', [ReservasApiRestController::class , 'updateReserva']);
 
 Route::get('/api/getPsicologo/{id}', [UserApiRestController::class, 'getPsicologo']);
 

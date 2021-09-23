@@ -29,7 +29,7 @@ class AddIdUserToHorarios extends Migration
     public function down()
     {
         Schema::table('horarios', function (Blueprint $table) {
-            $table->dropColumn('id_user');
+            $table->dropForeign(['id_user']);
         });
     }
 }

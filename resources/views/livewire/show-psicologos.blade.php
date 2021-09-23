@@ -129,9 +129,9 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 text-right text-sm font-medium flex items-stretch">
-                            <a href="#" class="inline-flix mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition" wire:click="verPsicologo({{$psicologo->id}})">Ver</a>
+                            <a href="#" class="inline-flex mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition" wire:click="verPsicologo({{$psicologo->id}})">Ver</a>
                             <a href="#" class="inline-flex mr-2 items-center justify-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition'" wire:click="editPsicologo({{$psicologo->id}})">Editar</a>
-                            <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'" wire:click="deletePsicologo({{$psicologo->id}})">Eliminar</a>
+                            <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'" wire:click="deletePsicologo({{$psicologo->id}})"><p class="text-center">Suspender Cuenta</p></a>
                         </td>
                     </tr>
                 @endforeach
@@ -149,12 +149,12 @@
     <!-- MODAL DELETE PSICÓLOGO -->
     <x-jet-dialog-modal wire:model="openDeletePsicologoModal">
         <x-slot name="title">
-            Eliminar Psicólogo
+            Suspender Cuenta Psicólogo
         </x-slot>
 
         <x-slot name="content">
             <div class="mb-4">
-                <p>¿Estás seguro de eliminar al psicólogo seleccionado?</p>
+                <p>¿Estás seguro de suspender la cuenta del psicólogo seleccionado?</p>
             </div>
         </x-slot>
 
