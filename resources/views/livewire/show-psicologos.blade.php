@@ -131,7 +131,13 @@
                         <td class="px-6 py-4 text-right text-sm font-medium flex items-stretch">
                             <a href="#" class="inline-flex mr-2 items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition" wire:click="verPsicologo({{$psicologo->id}})">Ver</a>
                             <a href="#" class="inline-flex mr-2 items-center justify-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition'" wire:click="editPsicologo({{$psicologo->id}})">Editar</a>
-                            <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'" wire:click="deletePsicologo({{$psicologo->id}})"><p class="text-center">Suspender Cuenta</p></a>
+                            
+                            @if ($psicologo->suspended_account == 1)
+                            <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition'" wire:click="activarPsicologo({{$psicologo->id}})"><p class="text-center">Activar Cuenta</p></a>
+                            @else
+                                <a href="#" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'" wire:click="deletePsicologo({{$psicologo->id}})"><p class="text-center">Suspender Cuenta</p></a>    
+                            @endif
+                            
                         </td>
                     </tr>
                 @endforeach
@@ -161,6 +167,25 @@
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="destroyPsicologo" wire:loading.attr="disabled" class="disabled:opacity-25">Confirmar</x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('openDeletePsicologoModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
+        </x-slot>
+
+    </x-jet-dialog-modal>
+
+    <!-- MODAL ACTIVAR CUENTA PSICÓLOGO -->
+    <x-jet-dialog-modal wire:model="openActivatePsicologoModal">
+        <x-slot name="title">
+            Activar Cuenta Psicólogo
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="mb-4">
+                <p>¿Estás seguro de activar la cuenta del psicólogo seleccionado?</p>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="activarCuentaPsicologo" wire:loading.attr="disabled" class="disabled:opacity-25">Confirmar</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="$set('openActivatePsicologoModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">Cancelar</x-jet-danger-button>
         </x-slot>
 
     </x-jet-dialog-modal>

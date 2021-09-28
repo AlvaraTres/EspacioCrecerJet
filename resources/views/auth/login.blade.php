@@ -12,6 +12,12 @@
             </div>
         @endif
 
+        @if (Session::has('error'))
+        <div class="mb-4 font-medium text-lg text-red-600">
+            {{ session('error') }}
+        </div>
+        @endif
+
         <form method="POST" action="{{ route('login') }}" style="background-image: {{asset('images/logo_opacidad_40.png')}}">
             @csrf
 

@@ -230,9 +230,15 @@
                                     <div class="">
                                         @livewire('edit-paciente', ['paciente' => $paciente], key($paciente->id))
                                     </div>
-                                    <div class="">
-                                        @livewire('delete-paciente', ['paciente' => $paciente], key($paciente->id))
-                                    </div>
+                                    @if ($paciente->suspended_account == 1)
+                                        <div class="">
+                                            @livewire('activate-paciente', ['paciente' => $paciente], key($paciente->id))
+                                        </div>
+                                    @else
+                                        <div class="">
+                                            @livewire('delete-paciente', ['paciente' => $paciente], key($paciente->id))
+                                        </div>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

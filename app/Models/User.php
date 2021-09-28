@@ -34,6 +34,7 @@ class User extends Authenticatable
         'sexo',
         'telefono',
         'email',
+        'suspended_account',
         'fecha_nacimiento',
         'formacion',
         'password',

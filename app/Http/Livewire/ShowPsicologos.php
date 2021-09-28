@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 use Carbon\Carbon;
 use App\Models\Roleuser;
 use App\Models\User;
+use App\Models\Suspendedaccount;
 use DB;
 
 class ShowPsicologos extends Component
@@ -29,6 +30,7 @@ class ShowPsicologos extends Component
     public $openEditPsicologoModal = false;
     public $openDeletePsicologoModal = false;
     public $openVerPsicologoModal = false;
+    public $openActivatePsicologoModal = false;
     public $openMail = false;
 
     public $asunto;
@@ -132,7 +134,11 @@ class ShowPsicologos extends Component
 
     public function destroyPsicologo(){
         $psicologo = User::find($this->psicologo_id);
-        $psicologo->delete();
+        
+        $psicologo->suspended_account = 1 ;
+        $psicologo->save();
+        
+        //dd($psicologo);
 
         $this->reset([
             'openDeletePsicologoModal',
@@ -142,7 +148,36 @@ class ShowPsicologos extends Component
 
         $this->dispatchBrowserEvent('swal', [
             'title' => 'Exito!', 
-            'text' => 'El perfil de psicológo fue eliminado con éxito!',
+            'text' => 'La cuenta del psicólogo seleccionado fue suspendida con éxito!',
+            'icon' => 'success'
+        ]);
+    }
+
+    public function activarPsicologo($id)
+    {
+        $psicologo = User::find($id);
+        $this->psicologo_id = $psicologo->id;
+        $this->openActivatePsicologoModal = true;
+    }
+
+    public function activarCuentaPsicologo()
+    {
+        $psicologo = User::find($this->psicologo_id);
+        
+        $psicologo->suspended_account = 0 ;
+        $psicologo->save();
+        
+        //dd($psicologo);
+
+        $this->reset([
+            'openActivatePsicologoModal',
+            'psicologo_id',
+            'psicologo',
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'Exito!', 
+            'text' => 'La cuenta del psicólogo seleccionado fue activada con éxito!',
             'icon' => 'success'
         ]);
     }

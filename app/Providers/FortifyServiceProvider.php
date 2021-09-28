@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use App\Models\User;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,10 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         RateLimiter::for('login', function (Request $request) {
+            $user = User::where( 'email' , '=' , $request->email)->first();
+            if($user->suspended_account == 1){
+                return back()->with('error', 'La cuenta de usuario ha sido desactivada. Para volver a activarla contáctese con contacto@espaciocrecer.cl.');
+            }
             return Limit::perMinute(5)->by($request->email.$request->ip());
         });
 

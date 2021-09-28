@@ -20,6 +20,7 @@ class Paciente extends Model
         'certificado',
         'telefono_paciente',
         'email',
+        'suspended_account',
         'fecha_nacimiento_paciente',
         'patologias_previas',
         'password',

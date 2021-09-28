@@ -1,17 +1,17 @@
 <div>
     <a href="#"
-        class="px-6 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'"
-        wire:click="$set('openDeleteModal', true)">Eliminar</a>
+        class="px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition'"
+        wire:click="$set('openDeleteModal', true)">Suspender</a>
 
     <!-- DELETE MODAL -->
     <x-jet-dialog-modal wire:model="openDeleteModal">
         <x-slot name="title">
-            Eliminar Paciente
+            Suspender Cuenta Paciente
         </x-slot>
 
         <x-slot name="content">
             <div class="mb-4">
-                <p>¿Estás seguro de eliminar al paciente {{$paciente->nombre_paciente}}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }}?</p>
+                <p>¿Estás seguro de suspender la cuente del paciente {{$paciente->nombre_paciente}}&nbsp;{{ $paciente->ap_pat_paciente }}&nbsp;{{ $paciente->ap_mat_paciente }}?</p>
             </div>
         </x-slot>
 
