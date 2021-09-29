@@ -195,6 +195,109 @@
         </x-slot>
     </x-jet-dialog-modal>
 
+    <!-- MODAL ENCUESTA DE SATISFACCIÓN -->
+    <x-jet-dialog-modal wire:model="openEncuestaModal">
+        <x-slot name="title">
+            Encuesta de satisfacción
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="grid grid-cols-1 divide-y divide-green-800">
+                <div>
+                    <p>Pregunta 1/6</p>
+                    <p>¿Cómo evalua usted la cercanía que tuvo con usted nuestro psicólogo seleccionado?</p>
+                    
+                    <div class="rating rating2"><!--
+                        --><a href="#1" title="Give 1 stars">☆</a><!--
+                        --><a href="#2" title="Give 2 stars">☆</a><!--
+                        --><a href="#3" title="Give 3 stars">☆</a><!--
+                        --><a href="#4" title="Give 4 stars">☆</a><!--
+                        --><a href="#5" title="Give 5 star">☆</a>
+                    </div>
+                    
+                    <br>
+                </div>
+                <div>
+                    <p>Pregunta 2/6</p>
+                    <p>¿?</p>
+
+                    <div class="rating rating2"><!--
+                        --><a href="#1" title="Give 1 stars">☆</a><!--
+                        --><a href="#2" title="Give 2 stars">☆</a><!--
+                        --><a href="#3" title="Give 3 stars">☆</a><!--
+                        --><a href="#4" title="Give 4 stars">☆</a><!--
+                        --><a href="#5" title="Give 5 star">☆</a>
+                    </div>
+
+                    <br>
+                </div>
+                <div>
+                    <p>Pregunta 3/6</p>
+                    <p>¿?</p>
+
+                    <div class="rating rating2"><!--
+                        --><a href="#1" title="Give 1 stars">☆</a><!--
+                        --><a href="#2" title="Give 2 stars">☆</a><!--
+                        --><a href="#3" title="Give 3 stars">☆</a><!--
+                        --><a href="#4" title="Give 4 stars">☆</a><!--
+                        --><a href="#5" title="Give 5 star">☆</a>
+                    </div>
+
+                    <br>
+                </div>
+                <div>
+                    <p>Pregunta 4/6</p>
+                    <p>¿?</p>
+
+                    <div class="rating rating2"><!--
+                        --><a href="#1" title="Give 1 stars">☆</a><!--
+                        --><a href="#2" title="Give 2 stars">☆</a><!--
+                        --><a href="#3" title="Give 3 stars">☆</a><!--
+                        --><a href="#4" title="Give 4 stars">☆</a><!--
+                        --><a href="#5" title="Give 5 star">☆</a>
+                    </div>
+
+                    <br>
+                </div>
+                <div>
+                    <p>Pregunta 5/6</p>
+                    <p>¿?</p>
+
+                    <div class="rating rating2"><!--
+                        --><a href="#1" title="Give 1 stars">☆</a><!--
+                        --><a href="#2" title="Give 2 stars">☆</a><!--
+                        --><a href="#3" title="Give 3 stars">☆</a><!--
+                        --><a href="#4" title="Give 4 stars">☆</a><!--
+                        --><a href="#5" title="Give 5 star">☆</a>
+                    </div>
+                    <br>
+                </div>
+                <div>
+                    <p>Pregunta 6/6</p>
+                    <p>¿?</p>
+                  
+                    <div class="rating rating2"><!--
+                        --><a href="#1" title="Give 1 stars">☆</a><!--
+                        --><a href="#2" title="Give 2 stars">☆</a><!--
+                        --><a href="#3" title="Give 3 stars">☆</a><!--
+                        --><a href="#4" title="Give 4 stars">☆</a><!--
+                        --><a href="#5" title="Give 5 star">☆</a>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25">
+                Enviar
+            </x-jet-secondary-button>
+            <x-jet-danger-button wire:click="$set('openEncuestaModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">
+                Cancelar</x-jet-secondary-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+
     @push('js')
         <script>
             document.addEventListener('livewire:load', function() {

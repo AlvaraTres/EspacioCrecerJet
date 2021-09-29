@@ -13,16 +13,18 @@ class ReminderMailAppointmentPaciente extends Mailable implements ShouldQueue
 
     public $subject = 'Recordatorio de cita Espacio Crecer';
 
-    private $reservas;
+    public $reserva;
+    public $paciente;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($reservas)
+    public function __construct($paciente, $reservas)
     {
-        $this->reservas = $reservas;
+        $this->paciente = $paciente;
+        $this->reserva = $reservas;
     }
 
     /**
@@ -32,6 +34,6 @@ class ReminderMailAppointmentPaciente extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('emails.reminder_mail_appointment_paciente')->with('reserva', $this->reservas);
+        return $this->view('emails.reminder_mail_appointment_paciente');
     }
 }

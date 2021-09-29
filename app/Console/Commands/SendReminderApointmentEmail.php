@@ -64,8 +64,9 @@ class SendReminderApointmentEmail extends Command
     private function sendEmailToPaciente($pacienteID, $reservas)
     {
         $paciente = Paciente::find($pacienteID);
+        //dd($reservas);
         
-        $correo = new ReminderMailAppointmentPaciente($reservas);
+        $correo = new ReminderMailAppointmentPaciente($paciente, $reservas);
 
         Mail::to($paciente->email)->send($correo);
     }

@@ -16,6 +16,7 @@ class ShowReservas extends Component
     public $open = false;
     public $openEditModal = false;
     public $openDelModal = false;
+    public $openEncuestaModal = false;
 
     public $events = '';
     public $psicologos = [];
@@ -50,6 +51,9 @@ class ShowReservas extends Component
 
         if(\Auth::user()->id_users_rol == 3)
         {
+
+            $this->showEncuesta();
+
             $paciente = DB::table('pacientes')
                           ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
                           ->select('pacientes.*')
@@ -224,6 +228,28 @@ class ShowReservas extends Component
         $this->events = json_encode($events);
 
         return view('livewire.show-reservas', compact('datos', 'filtPsico', 'filtPaciente','paciente'));
+    }
+
+    //validar si el paciente ya tuvo la primera sesión con su psicólogo
+    public function showEncuesta()
+    {
+        $paciente = DB::table('pacientes')
+                          ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
+                          ->select('pacientes.*')
+                          ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
+                          ->first();
+
+        $primera_reserva = DB::table('reservas')
+                             ->where('reservas.id_paciente', $paciente->id)
+                             ->first();
+
+        if(Carbon::now()->format('Y-m-d H:i:s') >= Carbon::parse($primera_reserva->fecha_hora_reserva)->addHour()->format('Y-m-d H:i:s'))
+        {
+            //FALTA COMPARAR ESTADO DE LA ENCUESTADA = CONTESTADA / NO CONTESTADA
+            $this->openEncuestaModal = true;
+        }
+
+        
     }
 
     public function validarFechaHorario($fechaClick){

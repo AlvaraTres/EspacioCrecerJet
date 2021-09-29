@@ -46,4 +46,8 @@ class Paciente extends Model
     public function reservas(){
         return $this->hasMany('App\Model\Reserva');
     }
+
+    public function encuestas(){
+        return $this->hasOne('App\Model\Encuesta');
+    }
 }

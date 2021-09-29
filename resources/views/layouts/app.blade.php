@@ -24,6 +24,52 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <style type="text/css">
+        /*  
+		 * Rating styles
+		 */
+		.rating {
+			width: 200px;
+			font-size: 30px;
+			overflow:hidden;
+		}
+
+        .rating input {
+            float: left;
+            opacity: 0;
+            position: absolute;
+        }
+
+        .rating a,
+        .rating label {
+			float:left;
+			color: #aaa;
+			text-decoration: none;
+			-webkit-transition: color .4s;
+			-moz-transition: color .4s;
+			-o-transition: color .4s;
+			transition: color .4s;
+		}
+
+        .rating label:hover ~ label,
+        .rating input:focus ~ label,
+        .rating label:hover,
+		.rating a:hover,
+		.rating a:hover ~ a,
+		.rating a:focus,
+		.rating a:focus ~ a	{
+			color: orange;
+			cursor: pointer;
+		}
+
+		.rating2 {
+			direction: rtl;
+		}
+
+		.rating2 a {
+			float:none
+		}
+        /*END CSS RATING SYSTEM*/
+
         .modal{
             transition: opacity 0.25s ease;
         }
