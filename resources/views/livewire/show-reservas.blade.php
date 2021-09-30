@@ -202,94 +202,113 @@
         </x-slot>
 
         <x-slot name="content">
+            @if (Session::has('error'))
+                <div class="mb-4 font-medium text-lg text-red-600">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="grid grid-cols-1 divide-y divide-green-800">
                 <div>
                     <p>Pregunta 1/6</p>
                     <p>¿Cómo evalua usted la cercanía que tuvo con usted nuestro psicólogo seleccionado?</p>
-                    
-                    <div class="rating rating2"><!--
-                        --><a href="#1" title="Give 1 stars">☆</a><!--
-                        --><a href="#2" title="Give 2 stars">☆</a><!--
-                        --><a href="#3" title="Give 3 stars">☆</a><!--
-                        --><a href="#4" title="Give 4 stars">☆</a><!--
-                        --><a href="#5" title="Give 5 star">☆</a>
+
+                    <div class="rating rating2">
+                        <a href="#" wire:click="$set('aq1', 5)" title="Give 5 stars Q1">☆</a>
+                        <a href="#" wire:click="$set('aq1', 4)" title="Give 4 stars Q1">☆</a>
+                        <a href="#" wire:click="$set('aq1', 3)" title="Give 3 stars Q1">☆</a>
+                        <a href="#" wire:click="$set('aq1', 2)" title="Give 2 stars Q1">☆</a>
+                        <a href="#" wire:click="$set('aq1', 1)" title="Give 1 stars Q1">☆</a>
                     </div>
-                    
-                    <br>
+                    <div style="float: right;">
+                        <p>{{$aq1}}/5</p>
+                        <br>
+                    </div>
                 </div>
                 <div>
                     <p>Pregunta 2/6</p>
                     <p>¿?</p>
 
                     <div class="rating rating2"><!--
-                        --><a href="#1" title="Give 1 stars">☆</a><!--
-                        --><a href="#2" title="Give 2 stars">☆</a><!--
-                        --><a href="#3" title="Give 3 stars">☆</a><!--
-                        --><a href="#4" title="Give 4 stars">☆</a><!--
-                        --><a href="#5" title="Give 5 star">☆</a>
+                        --><a href="#" wire:click="$set('aq2', 5)" title="Give 5 stars Q2">☆</a><!--
+                        --><a href="#" wire:click="$set('aq2', 4)" title="Give 4 stars Q2">☆</a><!--
+                        --><a href="#" wire:click="$set('aq2', 3)" title="Give 3 stars Q2">☆</a><!--
+                        --><a href="#" wire:click="$set('aq2', 2)" title="Give 2 stars Q2">☆</a><!--
+                        --><a href="#" wire:click="$set('aq2', 1)" title="Give 1 stars Q2">☆</a>
                     </div>
-
-                    <br>
+                    <div style="float: right;">
+                        <p>{{$aq2}}/5</p>
+                        <br>
+                    </div>
                 </div>
                 <div>
                     <p>Pregunta 3/6</p>
                     <p>¿?</p>
 
                     <div class="rating rating2"><!--
-                        --><a href="#1" title="Give 1 stars">☆</a><!--
-                        --><a href="#2" title="Give 2 stars">☆</a><!--
-                        --><a href="#3" title="Give 3 stars">☆</a><!--
-                        --><a href="#4" title="Give 4 stars">☆</a><!--
-                        --><a href="#5" title="Give 5 star">☆</a>
+                        --><a href="#" wire:click="$set('aq3', 5)" title="Give 5 stars Q3">☆</a><!--
+                        --><a href="#" wire:click="$set('aq3', 4)" title="Give 4 stars Q3">☆</a><!--
+                        --><a href="#" wire:click="$set('aq3', 3)" title="Give 3 stars Q3">☆</a><!--
+                        --><a href="#" wire:click="$set('aq3', 2)" title="Give 2 stars Q3">☆</a><!--
+                        --><a href="#" wire:click="$set('aq3', 1)" title="Give 1 stars Q3">☆</a>
                     </div>
-
-                    <br>
+                    <div style="float: right;">
+                        <p>{{$aq3}}/5</p>
+                        <br>
+                    </div>
                 </div>
                 <div>
                     <p>Pregunta 4/6</p>
                     <p>¿?</p>
 
                     <div class="rating rating2"><!--
-                        --><a href="#1" title="Give 1 stars">☆</a><!--
-                        --><a href="#2" title="Give 2 stars">☆</a><!--
-                        --><a href="#3" title="Give 3 stars">☆</a><!--
-                        --><a href="#4" title="Give 4 stars">☆</a><!--
-                        --><a href="#5" title="Give 5 star">☆</a>
+                        --><a href="#" wire:click="$set('aq4', 5)" title="Give 5 stars Q4">☆</a><!--
+                        --><a href="#" wire:click="$set('aq4', 4)" title="Give 4 stars Q4">☆</a><!--
+                        --><a href="#" wire:click="$set('aq4', 3)" title="Give 3 stars Q4">☆</a><!--
+                        --><a href="#" wire:click="$set('aq4', 2)" title="Give 2 stars Q4">☆</a><!--
+                        --><a href="#" wire:click="$set('aq4', 1)" title="Give 1 stars Q4">☆</a>
                     </div>
-
-                    <br>
+                    <div style="float: right;">
+                        <p>{{$aq4}}/5</p>
+                        <br>
+                    </div>
                 </div>
                 <div>
                     <p>Pregunta 5/6</p>
                     <p>¿?</p>
 
                     <div class="rating rating2"><!--
-                        --><a href="#1" title="Give 1 stars">☆</a><!--
-                        --><a href="#2" title="Give 2 stars">☆</a><!--
-                        --><a href="#3" title="Give 3 stars">☆</a><!--
-                        --><a href="#4" title="Give 4 stars">☆</a><!--
-                        --><a href="#5" title="Give 5 star">☆</a>
+                        --><a href="#" wire:click="$set('aq5', 5)" title="Give 5 stars Q5">☆</a><!--
+                        --><a href="#" wire:click="$set('aq5', 4)" title="Give 4 stars Q5">☆</a><!--
+                        --><a href="#" wire:click="$set('aq5', 3)" title="Give 3 stars Q5">☆</a><!--
+                        --><a href="#" wire:click="$set('aq5', 2)" title="Give 2 stars Q5">☆</a><!--
+                        --><a href="#" wire:click="$set('aq5', 1)" title="Give 1 stars Q5">☆</a>
                     </div>
-                    <br>
+                    <div style="float: right;">
+                        <p>{{$aq5}}/5</p>
+                        <br>
+                    </div>
                 </div>
                 <div>
                     <p>Pregunta 6/6</p>
                     <p>¿?</p>
                   
                     <div class="rating rating2"><!--
-                        --><a href="#1" title="Give 1 stars">☆</a><!--
-                        --><a href="#2" title="Give 2 stars">☆</a><!--
-                        --><a href="#3" title="Give 3 stars">☆</a><!--
-                        --><a href="#4" title="Give 4 stars">☆</a><!--
-                        --><a href="#5" title="Give 5 star">☆</a>
+                        --><a href="#" wire:click="$set('aq6', 5)" title="Give 5 stars Q6">☆</a><!--
+                        --><a href="#" wire:click="$set('aq6', 4)" title="Give 4 stars Q6">☆</a><!--
+                        --><a href="#" wire:click="$set('aq6', 3)" title="Give 3 stars Q6">☆</a><!--
+                        --><a href="#" wire:click="$set('aq6', 2)" title="Give 2 stars Q6">☆</a><!--
+                        --><a href="#" wire:click="$set('aq6', 1)" title="Give 1 stars Q6">☆</a>
                     </div>
-                    <br>
+                    <div style="float: right;">
+                        <p>{{$aq6}}/5</p>
+                        <br>
+                    </div>
                 </div>
             </div>
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:loading.attr="disabled" class="disabled:opacity-25">
+            <x-jet-secondary-button wire:click="sendEncuesta" wire:loading.attr="disabled" class="disabled:opacity-25">
                 Enviar
             </x-jet-secondary-button>
             <x-jet-danger-button wire:click="$set('openEncuestaModal', false)" wire:loading.attr="disabled" class="disabled:opacity-25">

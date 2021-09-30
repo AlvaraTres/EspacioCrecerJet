@@ -8,6 +8,7 @@ use App\Models\Reserva;
 use App\Models\User;
 use App\Models\Paciente;
 use App\Models\Horario;
+use App\Models\Encuesta;
 use DB;
 use Carbon\Carbon;
 
@@ -35,6 +36,14 @@ class ShowReservas extends Component
     public $paciPsico;
     public $id_psi;
     public $psicologoDesignado = ' ';
+
+    //variables de encuesta
+    public $aq1=0; 
+    public $aq2=0;
+    public $aq3=0;
+    public $aq4=0; 
+    public $aq5=0; 
+    public $aq6=0;
 
     protected $rules = [
         'id_usuario' => 'required',
@@ -245,11 +254,51 @@ class ShowReservas extends Component
 
         if(Carbon::now()->format('Y-m-d H:i:s') >= Carbon::parse($primera_reserva->fecha_hora_reserva)->addHour()->format('Y-m-d H:i:s'))
         {
-            //FALTA COMPARAR ESTADO DE LA ENCUESTADA = CONTESTADA / NO CONTESTADA
-            $this->openEncuestaModal = true;
+            $encuesta = Encuesta::where('id_paciente', '=', $paciente->id)->first();
+            if($encuesta == null){
+                $this->openEncuestaModal = true;
+            }
         }
+    }
 
-        
+    public function sendEncuesta()
+    {
+
+        if($this->aq1==0 || $this->aq2==0 || $this->aq3==0 || $this->aq4==0 || $this->aq5==0 || $this->aq6==0 ){
+            return back()->with('error', 'Antes de enviar la encuesta, verifique que todas las preguntas han sido contestadas.');
+        }else{
+            $paciente = DB::table('pacientes')
+                          ->join('users', 'users.rut_usuario', '=' , 'pacientes.rut_paciente')
+                          ->select('pacientes.*')
+                          ->where('pacientes.rut_paciente', '=', \Auth::user()->rut_usuario)
+                          ->first();
+            Encuesta::create([
+                'id_paciente' => $paciente->id,
+                'Q1' => $this->aq1,
+                'Q2' => $this->aq2,
+                'Q3' => $this->aq3,
+                'Q4' => $this->aq4,
+                'Q5' => $this->aq5,
+                'Q6' => $this->aq6,
+                'estado' => 1
+            ]);
+
+            $this->reset([
+                'aq1',
+                'aq2',
+                'aq3',
+                'aq4',
+                'aq5',
+                'aq6',
+                'openEncuestaModal'
+            ]);
+
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'Exito!', 
+                'text' => 'Gracias por contestar nuestra encuesta de satisfacción, esperamos poder brindar siempre el mejor servicio para ti!',
+                'icon' => 'success'
+            ]);
+        }
     }
 
     public function validarFechaHorario($fechaClick){
